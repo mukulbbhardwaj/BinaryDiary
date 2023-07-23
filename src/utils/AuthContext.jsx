@@ -1,6 +1,10 @@
 import { useContext, useState, useEffect, createContext } from "react";
 import { account } from "../api/appwrite";
 import { ID } from "appwrite";
+import { Spinner } from "@chakra-ui/react";
+
+
+
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -66,7 +70,17 @@ export const AuthProvider = ({ children }) => {
   };
   return (
     <AuthContext.Provider value={contextdata}>
-      {loading ? "loading..." : children}
+      {loading ? (
+        <Spinner
+          thickness="4px"
+          speed="0.65s"
+          emptyColor="gray.200"
+          color="red"
+          size="xl"
+        />
+      ) : (
+        children
+      )}
     </AuthContext.Provider>
   );
 };

@@ -13,16 +13,16 @@ const App = () => {
   return (
     <div>
       <AuthProvider>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/post" element={<Post/>}/>
-            <Route element={<PrivateRoutes />}>
-              <Route path="/write" element={<Write />} />
-              <Route path="/profile" element={<UserProfile />} />
-            </Route>
-          </Routes>
+          <Route path="/post" element={<Post />} />
+          <Route element={<PrivateRoutes />}>
+            <Route path="/write" element={<Write />} />
+            <Route path="/profile" element={<UserProfile />} />
+          </Route>
+        </Routes>
       </AuthProvider>
     </div>
   );
