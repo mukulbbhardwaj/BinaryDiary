@@ -1,5 +1,5 @@
 import { Client,Account, Databases } from "appwrite";
-// import "dotenv/config";
+
 
 export const PROJECT_ID = '64bcf34995ac8af3861b';
 export const COLLECTION_ID_BLOGS = "64bd047b72e0a6c1d928";
