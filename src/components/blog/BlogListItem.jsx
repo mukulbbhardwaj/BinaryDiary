@@ -8,18 +8,20 @@ const BlogListItem = () => {
   return (
     <>
       <Box fontSize={"24px"} mx={0} border={"none"} style={{ border: "0px" }}>
-        <Text textAlign={"left"} color={'black'}>{title}</Text>
+        <Text textAlign={"left"} color={"black"}>
+          {title}
+        </Text>
       </Box>
       <Box
         display={"flex"}
+        
         fontWeight={100}
-        border={"none"}
         fontSize={"14px"}
         gap={"1rem"}
         borderBottom="0.5px solid red"
       >
-        <Text style={{ border: "0px" }}>{date} </Text>
-        <Text style={{ border: "0px" }}>{username}</Text>
+        <Text >{date} </Text>
+        <Text >{username}</Text>
       </Box>
     </>
   );

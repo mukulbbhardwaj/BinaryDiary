@@ -12,11 +12,7 @@ const Home = () => {
         display={"flex"}
         flexDir={"column"}
         alignItems={"center"}
-        justifyContent={"center"}
-        width={"80%"}
-        style={{ border: "0px" }}
-        borderColor={"red"}
-        borderWidth={"2px"}
+        justifyContent={"center"}     
       >
         <Box>
           <Text

@@ -34,17 +34,17 @@ const Write = () => {
               borderBottom="2px solid red"
             />
           </Box>
-          {/* <Input
-            type="text"
-            onChange={(e) => setPostContent(e.target.value)}
-            padding={"10px"}
-            fontSize={"32px"}
+
+          <Textarea
+            placeholder="tell your story..."
+            resize={"none"}
             border={"none"}
             outline={"none"}
-            fontWeight={"10"}
-            placeholder="write your story..."
-          /> */}
-          <Textarea placeholder="tell your story..." resize={'none'}  border={'none'} outline={'none'} height={'70vh'}/>
+            height={"70vh"}
+            fontSize={"32px"}
+            fontFamily={"Helvetica Neue"}
+            padding={"10px"}
+          />
         </Box>
       </Box>
     </div>
