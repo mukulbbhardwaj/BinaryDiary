@@ -1,19 +1,79 @@
 import React, { useState } from "react";
-import WriteNavBar from "../misc/WriteNavBar";
-import { Box, Input, Textarea } from "@chakra-ui/react";
-
+import { Alert, Box, Input, Textarea } from "@chakra-ui/react";
+import { Image, Text } from "@chakra-ui/react";
+import logo from "../../../src/asset/logo-sm.png";
+import userLogo from "../../../src/asset/user.png";
+import { Link, useNavigate } from "react-router-dom";
+import { ID } from "appwrite";
+import {
+  databases,
+  DATABASE_ID,
+  COLLECTION_ID_BLOGS,
+} from "../../api/appwrite";
+import { useAuth } from "../../utils/AuthContext";
 const Write = () => {
   const [postTitle, setPostTitle] = useState("");
-  const [postContent, setPostContent] = useState("");
-  const handleInputChange = () => {
-    setPostTitle(postTitle);
-    setPostContent(postContent);
+  const [postBody, setPostBody] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const DOCUMENT_ID = ID.unique();
+  const publishPost = async () => {
+    try {
+      setLoading(true);
+      const post = await databases.createDocument(
+        DATABASE_ID,
+        COLLECTION_ID_BLOGS,
+        DOCUMENT_ID,
+        {
+          title: postTitle,
+          body: postBody,
+          username:user.name,
+        }
+      );
+      console.log(user);
+      // console.log(post);
+      setLoading(false)
+      navigate(`/post/${post.$id}`);
+      
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    
+    }
   };
 
-
-  return (
+  return loading ? (
+    "loading..."
+  ) : (
     <div>
-      <WriteNavBar />
+      <div>
+        <Box
+          display={"flex"}
+          alignItems={"center"}
+          justifyContent={"space-evenly"}
+        >
+          <Link to={"/"}>
+            <Image src={logo} height={"3rem"} width={"3rem"} />
+          </Link>
+          <Text
+            fontSize={"24px"}
+            fontWeight={150}
+            border={"2px solid green"}
+            padding={"0.5rem"}
+            borderRadius={"20px"}
+            boxSize={"max-content"}
+            onClick={publishPost}
+          >
+            publish
+          </Text>
+
+          <Link to={"/profile"}>
+            <Image src={userLogo} height={"2rem"} width={"2rem"} color={"red"} />
+          </Link>
+        </Box>
+      </div>
+
       <Box display={"flex"} alignItems={"center"} justifyContent={"center"}>
         <Box
           display={"flex"}
@@ -36,6 +96,7 @@ const Write = () => {
           </Box>
 
           <Textarea
+            onChange={(e) => setPostBody(e.target.value)}
             placeholder="tell your story..."
             resize={"none"}
             border={"none"}

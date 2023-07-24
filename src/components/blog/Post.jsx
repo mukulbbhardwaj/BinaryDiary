@@ -1,9 +1,34 @@
 import { Box, Text } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import NavBar from "../misc/NavBar";
-
+import { useLocation } from "react-router-dom";
+import {
+  databases,
+  DATABASE_ID,
+  PROJECT_ID,
+  COLLECTION_ID_BLOGS,
+} from "../../api/appwrite";
 
 const Post = () => {
+  useEffect(() => {
+    getPost();
+  }, [])
+  const [postData, setPostData] = useState({})
+
+  const location = useLocation();
+  const DOCUMENT_ID = location.pathname.split("/")[2];
+
+  // console.log(path)
+  const getPost = async () => {
+     const res = await databases.getDocument(
+       DATABASE_ID,
+       COLLECTION_ID_BLOGS,
+       DOCUMENT_ID
+     );
+    setPostData(res);
+  }
+
+  
   return (
     <>
       <NavBar />
@@ -25,16 +50,10 @@ const Post = () => {
               borderBottom={"1px solid black"}
               color={"red"}
             >
-              title
+              {postData.title}
             </Text>
             <Box display={"flex"} flexWrap={"wrap"}>
-        
-           {/* {Post.body} */}
-              culpa. Porro quaerat laudantium necessitatibus cum sunt?
-              Asperiores, modi! Adipisci voluptatibus aliquam autem similique
-              quidem, omnis ad id repellat earum qui eos aliquid culpa, ea nemo
-              accusantium accusamus explicabo, provident vitae! Voluptas, vel
-              sequi!
+        {postData.body}
             </Box>
           </Box>
         </Box>
