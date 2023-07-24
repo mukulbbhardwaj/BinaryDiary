@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import WriteNavBar from "../misc/WriteNavBar";
-import { Box, Input, Text } from "@chakra-ui/react";
+import { Box, Input, Textarea } from "@chakra-ui/react";
 
 const Write = () => {
   const [postTitle, setPostTitle] = useState("");
@@ -9,10 +9,6 @@ const Write = () => {
     setPostTitle(postTitle);
     setPostContent(postContent);
   };
-
-
-
-
 
 
   return (
@@ -37,18 +33,8 @@ const Write = () => {
               placeholder="title..."
               borderBottom="2px solid red"
             />
-            <Text
-              fontSize={"24px"}
-              fontWeight={150}
-              border={"2px solid green"}
-              padding={"0.5rem"}
-              borderRadius={"20px"}
-              boxSize={"max-content"}
-            >
-              publish
-            </Text>
           </Box>
-          <Input
+          {/* <Input
             type="text"
             onChange={(e) => setPostContent(e.target.value)}
             padding={"10px"}
@@ -57,7 +43,8 @@ const Write = () => {
             outline={"none"}
             fontWeight={"10"}
             placeholder="write your story..."
-          />
+          /> */}
+          <Textarea placeholder="tell your story..." resize={'none'}  border={'none'} outline={'none'} height={'70vh'}/>
         </Box>
       </Box>
     </div>
