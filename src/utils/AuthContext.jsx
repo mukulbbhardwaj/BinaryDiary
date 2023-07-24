@@ -72,11 +72,11 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider value={contextdata}>
       {loading ? (
         <Spinner
-          thickness="4px"
-          speed="0.65s"
-          emptyColor="gray.200"
-          color="red"
-          size="xl"
+          // thickness="4px"
+          // speed="0.65s"
+          // emptyColor="gray.200"
+          // color="red"
+          // size="xl"
         />
       ) : (
         children

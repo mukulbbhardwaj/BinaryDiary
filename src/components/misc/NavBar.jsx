@@ -1,9 +1,10 @@
 import React from "react";
-import { Box, Image, Text } from "@chakra-ui/react";
+import { Box, Image, Text, background } from "@chakra-ui/react";
 import logo from "../../../src/asset/logo-sm.png";
 import pfp from "../../../src/asset/user.png";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../utils/AuthContext";
+import { EditIcon, PhoneIcon } from "@chakra-ui/icons";
 
 const NavBar = () => {
   const { user } = useAuth();
@@ -17,26 +18,40 @@ const NavBar = () => {
         <Link to={"/"}>
           <Image src={logo} height={"3rem"} width={"3rem"} />
         </Link>
-        <Link to={"/write"} style={{ textDecoration: "none" }}>
-          <Text
-            fontSize={"24px"}
-            fontWeight={150}
-            border={"2px solid green"}
-            padding={"0.5rem"}
-            borderRadius={"20px"}
-            boxSize={"max-content"}
-          >
-            write
-          </Text>
+        <Link to={"/write"} style={{ textDecoration: "none", color: "black" }}>
+          <Box display={"flex"} alignItems={"center"}>
+            <EditIcon fontWeight={100} fontSize={28} />
+            <Text
+              fontSize={"24px"}
+              fontWeight={150}
+              padding={"0.5rem"}
+              borderRadius={"20px"}
+              boxSize={"max-content"}
+              _hover={{ fontWeight: "300" }}
+            >
+              write
+            </Text>
+          </Box>
         </Link>
 
         {user ? (
           <Link to={"/profile"}>
-            <Image src={pfp} height={"2rem"} width={"2rem"} color={"red"} />
+            <Image
+              src={pfp}
+              height={"2rem"}
+              width={"2rem"}
+              color={"red"}
+           
+            />
           </Link>
         ) : (
           <Link to={"/login"} style={{ textDecoration: "none" }}>
-            <Text fontSize={"24px"} color={"black"} fontWeight={"200"}>
+            <Text
+              fontSize={"24px"}
+              color={"black"}
+              fontWeight={"200"}
+              _hover={{ fontWeight: "300" }}
+            >
               login
             </Text>
           </Link>
