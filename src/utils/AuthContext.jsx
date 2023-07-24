@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }) => {
         userInfo.password
       );
       let accountDetails = await account.get();
-      console.log("account details:", accountDetails);
+      // console.log("account details:", accountDetails);
       setUser(accountDetails);
     } catch (error) {
       console.error(error);
@@ -46,7 +46,6 @@ export const AuthProvider = ({ children }) => {
       );
       await account.createEmailSession(userInfo.email, userInfo.password);
       let accountDetails = await account.get();
-      console.log("account details:", accountDetails);
       setUser(accountDetails);
     } catch (error) {
       console.error(error);
@@ -72,11 +71,11 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider value={contextdata}>
       {loading ? (
         <Spinner
-          // thickness="4px"
-          // speed="0.65s"
-          // emptyColor="gray.200"
-          // color="red"
-          // size="xl"
+          thickness="4px"
+          speed="0.65s"
+          emptyColor="gray.200"
+          color="red"
+          size="xl"
         />
       ) : (
         children

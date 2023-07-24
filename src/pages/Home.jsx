@@ -7,7 +7,6 @@ import moment from "moment";
 import {
   databases,
   DATABASE_ID,
-  PROJECT_ID,
   COLLECTION_ID_BLOGS,
 } from "../api/appwrite";
 
@@ -19,7 +18,6 @@ const Home = () => {
   }, []);
   const getPosts = async () => {
     const res = await databases.listDocuments(DATABASE_ID, COLLECTION_ID_BLOGS);
-    // console.log("RESPONSE:", res);
     setPosts(res.documents);
   };
   return (

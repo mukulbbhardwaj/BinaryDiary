@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Alert, Box, Input, Textarea } from "@chakra-ui/react";
+import React, { useRef, useState } from "react";
+import { Box, Input, Textarea } from "@chakra-ui/react";
 import { Image, Text } from "@chakra-ui/react";
 import logo from "../../../src/asset/logo-sm.png";
 import userLogo from "../../../src/asset/user.png";
@@ -11,6 +11,8 @@ import {
   COLLECTION_ID_BLOGS,
 } from "../../api/appwrite";
 import { useAuth } from "../../utils/AuthContext";
+import JoditEditor from "jodit-react";
+
 const Write = () => {
   const [postTitle, setPostTitle] = useState("");
   const [postBody, setPostBody] = useState("");
@@ -18,6 +20,9 @@ const Write = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const DOCUMENT_ID = ID.unique();
+
+  const editor = useRef(null);
+
   const publishPost = async () => {
     try {
       setLoading(true);
@@ -28,18 +33,14 @@ const Write = () => {
         {
           title: postTitle,
           body: postBody,
-          username:user.name,
+          username: user.name,
         }
       );
-      console.log(user);
-      // console.log(post);
-      setLoading(false)
+      setLoading(false);
       navigate(`/post/${post.$id}`);
-      
     } catch (error) {
       console.error(error);
       setLoading(false);
-    
     }
   };
 
@@ -69,7 +70,12 @@ const Write = () => {
           </Text>
 
           <Link to={"/profile"}>
-            <Image src={userLogo} height={"2rem"} width={"2rem"} color={"red"} />
+            <Image
+              src={userLogo}
+              height={"2rem"}
+              width={"2rem"}
+              color={"red"}
+            />
           </Link>
         </Box>
       </div>
@@ -94,7 +100,7 @@ const Write = () => {
               borderBottom="2px solid red"
             />
           </Box>
-
+          {/* 
           <Textarea
             onChange={(e) => setPostBody(e.target.value)}
             placeholder="tell your story..."
@@ -105,6 +111,11 @@ const Write = () => {
             fontSize={"32px"}
             fontFamily={"Helvetica Neue"}
             padding={"10px"}
+          /> */}
+          <JoditEditor
+            ref={editor}
+            // value={postBody}
+              onChange={(content) => setPostBody(content)}
           />
         </Box>
       </Box>

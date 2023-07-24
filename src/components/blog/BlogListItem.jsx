@@ -12,7 +12,6 @@ const BlogListItem = ({title,username,date}) => {
       </Box>
       <Box
         display={"flex"}
-        
         fontWeight={100}
         fontSize={"14px"}
         gap={"1rem"}
