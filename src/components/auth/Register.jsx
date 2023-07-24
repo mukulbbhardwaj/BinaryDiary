@@ -72,7 +72,7 @@ const Register = () => {
             border={"none"}
             outline={"none"}
             borderBottom="2px solid red"
-            fontWeight={"10"}
+            fontWeight={100}
             placeholder="mukul"
           />
         </FormControl>
@@ -81,7 +81,7 @@ const Register = () => {
             password
           </FormLabel>
           <Input
-            type="text"
+            type="password"
             onChange={(e) => setPassword(e.target.value)}
             padding={"10px"}
             fontSize={"32px"}
