@@ -83,7 +83,7 @@ const Post = () => {
 
               <Box onClick={deletePost}>
 
-                {isAuthor ? <DeleteIcon /> : "Mukul"}
+                {isAuthor ? <DeleteIcon /> : ""}
               </Box>
             </Box>
             <Box marginTop={"2rem"}>
