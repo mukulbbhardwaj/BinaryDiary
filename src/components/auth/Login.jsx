@@ -19,7 +19,6 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     const userInfo = { email, password };
-    // console.log(userInfo)
     loginUser(userInfo);
   };
 
