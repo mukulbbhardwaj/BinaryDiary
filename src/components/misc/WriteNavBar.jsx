@@ -22,6 +22,7 @@ const WriteNavBar = () => {
           padding={"0.5rem"}
           borderRadius={"20px"}
           boxSize={"max-content"}
+          cursor={"pointer"}
         >
           publish
         </Text>

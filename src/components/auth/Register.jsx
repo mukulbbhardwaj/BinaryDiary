@@ -36,7 +36,7 @@ const Register = () => {
         alignItems={"left"}
         flexDir={"column"}
         justifyContent={"center"}
-        mx={"4rem"}
+        margin={"1rem"}
       >
         <Link to={"/"}>
           <Image src={home} width={"2rem"} height={"2rem"} mt={"1rem"} />
@@ -45,13 +45,13 @@ const Register = () => {
           new here? register now!
         </Text>
         <FormControl>
-          <FormLabel fontSize={"48px"} fontWeight={100}>
+          <FormLabel fontSize={"32px"} fontWeight={100}>
             email
           </FormLabel>
           <Input
             type="text"
             padding={"10px"}
-            fontSize={"32px"}
+            fontSize={"24px"}
             border={"none"}
             outline={"none"}
             fontWeight={"10"}
@@ -61,14 +61,14 @@ const Register = () => {
           />
         </FormControl>
         <FormControl border={"2px"} borderColor={"red"}>
-          <FormLabel fontSize={"48px"} fontWeight={100}>
+          <FormLabel fontSize={"32px"} fontWeight={100}>
             username
           </FormLabel>
           <Input
             type="text"
             onChange={(e) => setUsername(e.target.value)}
             padding={"10px"}
-            fontSize={"32px"}
+            fontSize={"24px"}
             border={"none"}
             outline={"none"}
             borderBottom="2px solid red"
@@ -77,14 +77,14 @@ const Register = () => {
           />
         </FormControl>
         <FormControl border={"2px"} borderColor={"red"}>
-          <FormLabel fontSize={"48px"} fontWeight={100}>
+          <FormLabel fontSize={"32px"} fontWeight={100}>
             password
           </FormLabel>
           <Input
             type="password"
             onChange={(e) => setPassword(e.target.value)}
             padding={"10px"}
-            fontSize={"32px"}
+            fontSize={"24px"}
             border={"none"}
             outline={"none"}
             fontWeight={"10"}
@@ -100,11 +100,11 @@ const Register = () => {
           borderRadius={"20px"}
           boxSize={"max-content"}
           onClick={handleRegister}
-        >
+        cursor={'pointer'}>
           SignUp
         </Text>
         <Box position={"relative"} bottom={"1rem"} fontWeight={"200"}>
-          already registered? <Link to="/login">Login</Link>
+          already registered? <Link to="/login" style={{cursor:"pointer"}}>Login</Link>
         </Box>
       </Box>
     </>

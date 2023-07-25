@@ -28,6 +28,7 @@ const NavBar = () => {
               borderRadius={"20px"}
               boxSize={"max-content"}
               _hover={{ fontWeight: "300" }}
+              cursor={"pointer"}
             >
               write
             </Text>
@@ -41,7 +42,7 @@ const NavBar = () => {
               height={"2rem"}
               width={"2rem"}
               color={"red"}
-           
+              cursor={"pointer"}
             />
           </Link>
         ) : (
@@ -51,6 +52,7 @@ const NavBar = () => {
               color={"black"}
               fontWeight={"200"}
               _hover={{ fontWeight: "300" }}
+              cursor={"pointer"}
             >
               login
             </Text>

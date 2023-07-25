@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import {
   FormControl,
   FormLabel,
@@ -35,7 +35,7 @@ const Login = () => {
         alignItems={"left"}
         flexDir={"column"}
         justifyContent={"center"}
-        mx={"4rem"}
+        margin={"1rem"}
       >
         <Link to={"/"}>
           <Image src={home} width={"2rem"} height={"2rem"} mt={"1rem"} />
@@ -44,7 +44,7 @@ const Login = () => {
           welcome back :){" "}
         </Text>
         <FormControl>
-          <FormLabel fontSize={"48px"} fontWeight={100}>
+          <FormLabel fontSize={"32px"} fontWeight={100}>
             email
           </FormLabel>
           <Input
@@ -52,7 +52,7 @@ const Login = () => {
             isRequired
             onChange={(e) => setEmail(e.target.value)}
             padding={"10px"}
-            fontSize={"32px"}
+            fontSize={"24px"}
             border={"none"}
             outline={"none"}
             fontWeight={"10"}
@@ -63,14 +63,14 @@ const Login = () => {
           />
         </FormControl>
         <FormControl>
-          <FormLabel fontSize={"48px"} fontWeight={100}>
+          <FormLabel fontSize={"32px"} fontWeight={100}>
             password
           </FormLabel>
           <Input
             type="password"
             onChange={(e) => setPassword(e.target.value)}
             padding={"10px"}
-            fontSize={"32px"}
+            fontSize={"24px"}
             border={"none"}
             outline={"none"}
             placeholder="******"
@@ -79,17 +79,22 @@ const Login = () => {
             autoComplete="password"
           />
         </FormControl>
-        <Text
-          fontSize={"24px"}
-          fontWeight={150}
-          border={"2px solid green"}
-          padding={"0.5rem"}
-          borderRadius={"20px"}
-          boxSize={"max-content"}
-          onClick={handleLogin}
-        >
-          Login
-        </Text>
+        <Box display={"flex"} alignItems={"center"} gap={"1rem"}>
+          <Text
+            fontSize={"24px"}
+            fontWeight={150}
+            border={"2px solid green"}
+            padding={"0.5rem"}
+            borderRadius={"20px"}
+            boxSize={"max-content"}
+            onClick={handleLogin}
+            cursor={"pointer"}
+          >
+            Login
+          </Text>
+          <Link>forget password?</Link>
+        </Box>
+
         <Box position={"relative"} bottom={"1rem"} fontWeight={"200"}>
           not registered? <Link to="/register">register</Link>
         </Box>
