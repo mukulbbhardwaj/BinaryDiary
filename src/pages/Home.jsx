@@ -4,11 +4,7 @@ import NavBar from "../components/misc/NavBar";
 import BlogListItem from "../components/blog/BlogListItem";
 import { Link } from "react-router-dom";
 import moment from "moment";
-import {
-  databases,
-  DATABASE_ID,
-  COLLECTION_ID_BLOGS,
-} from "../api/appwrite";
+import { databases, DATABASE_ID, COLLECTION_ID_BLOGS } from "../api/appwrite";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -40,7 +36,11 @@ const Home = () => {
             article to read
           </Text>
           {posts.map((post) => (
-            <Link to={`/post/${post.$id}`} style={{ textDecoration: "none" }} key={post.$id}>
+            <Link
+              to={`/post/${post.$id}`}
+              style={{ textDecoration: "none" }}
+              key={post.$id}
+            >
               <BlogListItem
                 title={post.title}
                 date={moment(post.$createdAt).format("DD MMMM,YYYY")}

@@ -31,8 +31,9 @@ const Post = () => {
   };
   const date = moment(postData.$createdAt).format("DD MMMM,YYYY");
 
-  const isAuthor = (user.name === postData.name);
-
+  const isAuthor = (user.name === postData.username);
+  console.log("username", user.name)
+  console.log("author", postData.username)
   const deletePost = async () => {
     if (!isAuthor) return;
     await databases.deleteDocument(
@@ -79,11 +80,10 @@ const Post = () => {
                   {date}
                 </Text>
               </Box>
-              
+
               <Box onClick={deletePost}>
-                {
-                  isAuthor?<DeleteIcon/>:""
-                }
+
+                {isAuthor ? <DeleteIcon /> : "Mukul"}
               </Box>
             </Box>
             <Box marginTop={"2rem"}>

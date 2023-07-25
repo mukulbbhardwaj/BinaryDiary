@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Box, Text } from "@chakra-ui/react";
 import BlogListItem from "../blog/BlogListItem";
 import NavBar from "../misc/NavBar";
+import moment from "moment";
 import { useAuth } from "../../utils/AuthContext";
 import {
   databases,
@@ -71,22 +72,23 @@ const UserProfile = () => {
             articles by you...
           </Text>
 
-          {userPosts.map((post) => {
+          {userPosts.map((post) => (
 
             <Link
               to={`/post/${post.$id}`}
               style={{ textDecoration: "none" }}
               key={post.$id}
             >
-              {console.log(post)}
+              {/* {console.log(post)}
               {console.log(user.name)}
+              {post.title} */}
               <BlogListItem
                 title={post.title}
+                date={moment(post.$createdAt).format("DD MMMM,YYYY")}
                 username={post.name}
-                // date={post.createdAt}
               />
-            </Link>;
-          })}
+            </Link>
+          ))}
         </Box>
       </Box>
     </>

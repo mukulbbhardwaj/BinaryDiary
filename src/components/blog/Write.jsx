@@ -1,6 +1,11 @@
 import React, { useRef, useState } from "react";
-import { Box, Input, Textarea } from "@chakra-ui/react";
-import { Image, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Input,
+  Image,
+  Text,
+} from "@chakra-ui/react";
+
 import logo from "../../../src/asset/logo-sm.png";
 import userLogo from "../../../src/asset/user.png";
 import { Link, useNavigate } from "react-router-dom";
@@ -23,9 +28,17 @@ const Write = () => {
 
   const editor = useRef(null);
 
-  const publishPost = async () => {
+
+  const publishPost = async (e) => {
+    e.preventDefault();
     try {
       setLoading(true);
+      if (!(postTitle.length>0 && postBody.length > 0)) {
+        alert("title or body cannot be empty")
+        setLoading(false);
+        return;
+      }
+
       const post = await databases.createDocument(
         DATABASE_ID,
         COLLECTION_ID_BLOGS,
@@ -100,24 +113,14 @@ const Write = () => {
               borderBottom="2px solid red"
             />
           </Box>
-          {/* 
-          <Textarea
-            onChange={(e) => setPostBody(e.target.value)}
-            placeholder="tell your story..."
-            resize={"none"}
-            border={"none"}
-            outline={"none"}
-            height={"70vh"}
-            fontSize={"32px"}
-            fontFamily={"Helvetica Neue"}
-            padding={"10px"}
-          /> */}
+          
           <JoditEditor
             ref={editor}
-            // value={postBody}
-              onChange={(content) => setPostBody(content)}
+            value={postBody}
+            onChange={(content) => setPostBody(content)}
           />
         </Box>
+     
       </Box>
     </div>
   );
