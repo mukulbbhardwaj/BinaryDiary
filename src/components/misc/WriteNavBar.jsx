@@ -17,12 +17,14 @@ const WriteNavBar = () => {
         </Link>
         <Text
           fontSize={"24px"}
-          fontWeight={150}
-          border={"2px solid green"}
+          fontWeight={650}
           padding={"0.5rem"}
           borderRadius={"20px"}
           boxSize={"max-content"}
+          _hover={{ color: "white" }}
           cursor={"pointer"}
+          color={"gray"}
+          
         >
           publish
         </Text>

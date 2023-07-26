@@ -60,8 +60,8 @@ const Write = () => {
   return loading ? (
     "loading..."
   ) : (
-    <div>
-      <div>
+    <Box width={"600px"}>
+      <Box width={"60%"} alignItems={"center"}>
         <Box
           display={"flex"}
           alignItems={"center"}
@@ -72,11 +72,14 @@ const Write = () => {
           </Link>
           <Text
             fontSize={"24px"}
-            fontWeight={150}
-            border={"2px solid green"}
+            fontWeight={650}
             padding={"0.5rem"}
             borderRadius={"20px"}
             boxSize={"max-content"}
+            _hover={{ color: "white" }}
+            cursor={"pointer"}
+            color={"gray"}
+            border={"0.5px solid gray"}
             onClick={publishPost}
           >
             publish
@@ -91,7 +94,7 @@ const Write = () => {
             />
           </Link>
         </Box>
-      </div>
+      </Box>
 
       <Box display={"flex"} alignItems={"center"} justifyContent={"center"}>
         <Box
@@ -104,25 +107,26 @@ const Write = () => {
             <Input
               type="text"
               onChange={(e) => setPostTitle(e.target.value)}
-              padding={"10px"}
               fontSize={"64px"}
-              border={"none"}
-              outline={"none"}
-              fontWeight={"10"}
-              placeholder="title..."
-              borderBottom="2px solid red"
+              fontWeight={"800"}
+              borderBottom={"1px solid #332c32"}
+              color={"#cfbccc"}
+                margin={"0.5rem"}
+                bgColor={'inherit'} 
+                outline={0}
+                border={0}
+                placeholder="title..."
             />
           </Box>
-          
+
           <JoditEditor
             ref={editor}
             value={postBody}
             onChange={(content) => setPostBody(content)}
           />
         </Box>
-     
       </Box>
-    </div>
+    </Box>
   );
 };
 

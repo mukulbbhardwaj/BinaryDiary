@@ -31,9 +31,9 @@ const Post = () => {
   };
   const date = moment(postData.$createdAt).format("DD MMMM,YYYY");
 
-  const isAuthor = (user.name === postData.username);
-  console.log("username", user.name)
-  console.log("author", postData.username)
+  const isAuthor = user.name === postData.username;
+  console.log("username", user.name);
+  console.log("author", postData.username);
   const deletePost = async () => {
     if (!isAuthor) return;
     await databases.deleteDocument(
@@ -51,18 +51,18 @@ const Post = () => {
         <Box
           display={"flex"}
           flexDir={"column"}
-          alignItems={"center"}
           justifyContent={"center"}
           style={{ border: "0px" }}
           borderColor={"red"}
           borderWidth={"2px"}
+          width={"600px"}
         >
           <div>
             <Text
               fontSize={"64px"}
-              fontWeight={"100"}
-              borderBottom={"1px solid black"}
-              color={"red"}
+              fontWeight={"800"}
+              borderBottom={"1px solid #332c32"}
+              color={"#cfbccc"}
               margin={"0.5rem"}
             >
               {postData.title}
@@ -71,23 +71,21 @@ const Post = () => {
               <Box
                 display={"flex"}
                 flexDir={"column"}
-                fontWeight={100}
+                fontWeight={300}
                 fontSize={"14px"}
-                borderBottom="0.5px solid red"
+               
               >
                 <Text m={0}>{postData.username}</Text>
-                <Text m={0} fontSize={"12px"}>
+                <Text m={0} fontSize={"14px"}>
                   {date}
                 </Text>
               </Box>
 
-              <Box onClick={deletePost}>
-
-                {isAuthor ? <DeleteIcon /> : ""}
-              </Box>
+              <Box onClick={deletePost}>{isAuthor ? <DeleteIcon /> : ""}</Box>
             </Box>
-            <Box marginTop={"2rem"}>
+            <Box marginTop={"2rem"} fontSize={"24px"}>
               <div dangerouslySetInnerHTML={{ __html: postData.body }}></div>
+              <Text textAlign={'center'} fontSize={'64px'} > ...</Text>
             </Box>
           </div>
         </Box>

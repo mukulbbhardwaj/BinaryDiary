@@ -5,6 +5,7 @@ import pfp from "../../../src/asset/user.png";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../utils/AuthContext";
 import { EditIcon} from "@chakra-ui/icons";
+import { color } from "framer-motion";
 
 const NavBar = () => {
   const { user } = useAuth();
@@ -23,12 +24,13 @@ const NavBar = () => {
             <EditIcon fontWeight={100} fontSize={28} />
             <Text
               fontSize={"24px"}
-              fontWeight={150}
+              fontWeight={650}
               padding={"0.5rem"}
               borderRadius={"20px"}
               boxSize={"max-content"}
-              _hover={{ fontWeight: "300" }}
+              _hover={{color:'white' }}
               cursor={"pointer"}
+              color={'gray'}
             >
               write
             </Text>

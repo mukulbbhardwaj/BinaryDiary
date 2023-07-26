@@ -18,22 +18,21 @@ const Home = () => {
   };
   return (
     <>
-      <NavBar />
-
       <Box
         display={"flex"}
         flexDir={"column"}
         alignItems={"center"}
         justifyContent={"center"}
       >
-        <Box>
+        <Box width={"600px"}>
+          <NavBar />
           <Text
             fontSize={"64px"}
-            fontWeight={"100"}
-            borderBottom={"1px solid black"}
-            color={"red"}
+            fontWeight={"800"}
+            borderBottom={"1px solid #332c32"}
+            color={"#a0d9cb"}
           >
-            article to read
+            articles to read
           </Text>
           {posts.map((post) => (
             <Link
