@@ -20,17 +20,20 @@ const NavBar = () => {
           <Image src={logo} height={"3rem"} width={"3rem"} />
         </Link>
         <Link to={"/write"} style={{ textDecoration: "none", color: "black" }}>
-          <Box display={"flex"} alignItems={"center"}>
-            <EditIcon fontWeight={100} fontSize={28} />
+          <Box
+            display={"flex"}
+            alignItems={"center"}
+            _hover={{ color: "white" }}
+          >
+            <EditIcon fontWeight={100} fontSize={28} color={"gray"} />
             <Text
               fontSize={"24px"}
               fontWeight={650}
               padding={"0.5rem"}
               borderRadius={"20px"}
               boxSize={"max-content"}
-              _hover={{color:'white' }}
               cursor={"pointer"}
-              color={'gray'}
+              color={"gray"}
             >
               write
             </Text>

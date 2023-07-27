@@ -6,7 +6,9 @@ import {
   Box,
   Text,
   Image,
+
 } from "@chakra-ui/react";
+import { ViewIcon } from "@chakra-ui/icons";
 import { Link, useNavigate } from "react-router-dom";
 import home from "../../asset/home.png";
 import { useAuth } from "../../utils/AuthContext";
@@ -15,7 +17,12 @@ const Login = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const { user, loginUser } = useAuth();
+  const [show, setShow] = useState(false);
 
+  const showPass = () => {
+    setShow(!show);
+    console.log(show)
+  }
   const handleLogin = async (e) => {
     e.preventDefault();
     const userInfo = { email, password };
@@ -40,15 +47,23 @@ const Login = () => {
         <Link to={"/"}>
           <Image src={home} width={"2rem"} height={"2rem"} mt={"1rem"} />
         </Link>
-        <Text fontSize={"64px"} fontWeight={200} color={"red"}>
-          welcome back :){" "}
+        <Text
+          fontSize={'64px'}
+          // fontSize={"64px"}
+          fontWeight={900}
+          color={"#e86f66"}
+        >
+          welcome
+          <Text margin={0} color={"#c7f2c9"}>
+            back :)
+          </Text>
         </Text>
         <FormControl>
-          <FormLabel fontSize={"32px"} fontWeight={100}>
+          <FormLabel fontSize={"32px"} fontWeight={300}>
             email
           </FormLabel>
           <Input
-            type="text"
+            type="email"
             isRequired
             onChange={(e) => setEmail(e.target.value)}
             padding={"10px"}
@@ -57,27 +72,32 @@ const Login = () => {
             outline={"none"}
             fontWeight={"10"}
             placeholder="mukul@google.com"
-            borderBottom="2px solid red"
+            borderBottom="1px solid #e86f66"
             autoComplete="email"
             name="email"
+            bgColor={"inherit"}
+            color={"#9c99bd"}
           />
         </FormControl>
         <FormControl>
-          <FormLabel fontSize={"32px"} fontWeight={100}>
+          <FormLabel fontSize={"32px"} fontWeight={300}>
             password
           </FormLabel>
           <Input
-            type="password"
+            type={show ? "text" : "password"}
             onChange={(e) => setPassword(e.target.value)}
             padding={"10px"}
             fontSize={"24px"}
             border={"none"}
             outline={"none"}
             placeholder="******"
-            borderBottom="2px solid red"
+            borderBottom="1px solid #e86f66"
             name="password"
             autoComplete="password"
+            bgColor={"inherit"}
+            color={"#9c99bd"}
           />
+          <ViewIcon onClick={showPass} color={show ? "white" : "black"} />
         </FormControl>
         <Box display={"flex"} alignItems={"center"} gap={"1rem"}>
           <Text

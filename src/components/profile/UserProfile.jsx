@@ -29,66 +29,75 @@ const UserProfile = () => {
  
   return (
     <>
-      <NavBar />
       <Box
         display={"flex"}
         flexDir={"column"}
         alignItems={"center"}
         justifyContent={"center"}
-        textAlign={"left"}
       >
-        <Box>
+        <Box width={"600px"}>
+          <NavBar />
           <Box
             display={"flex"}
-            justifyContent={"space-between"}
+            flexDir={"column"}
             alignItems={"center"}
+            justifyContent={"center"}
           >
             <Box>
-              <Text fontSize={"24px"} fontWeight={300}>
-                {user.name}
+              <Box
+                display={"flex"}
+                justifyContent={"space-around"}
+                alignItems={"center"}
+              >
+                <Box>
+                  <Text fontSize={"24px"} fontWeight={700} color={"#ebc5c3"}>
+                    {user.name}
+                  </Text>
+                  <Text fontWeight={400} fontSize={'18px'} color={"#b8b1b0"}>
+                    {user.email}
+                  </Text>
+                </Box>
+                <Text
+                  fontSize={"24px"}
+                  fontWeight={150}
+                  border={"2px solid red"}
+                  _hover={{ bgColor: "red", color: "white" }}
+                  padding={"0.5rem"}
+                  borderRadius={"20px"}
+                  boxSize={"max-content"}
+                  onClick={logOutUser}
+                  cursor={"pointer"}
+                >
+                  logout
+                </Text>
+              </Box>
+              <Text
+                fontSize={"64px"}
+                fontWeight={"800"}
+                borderBottom={"1px solid #332c32"}
+                color={"#a0d9cb"}
+              >
+                articles by you...
               </Text>
-              <Text fontWeight={100}>{user.email}</Text>
-            </Box>
-            <Text
-              fontSize={"24px"}
-              fontWeight={150}
-              border={"2px solid red"}
-              _hover={{ bgColor: "red", color: "white" }}
-              padding={"0.5rem"}
-              borderRadius={"20px"}
-              boxSize={"max-content"}
-              onClick={logOutUser}
-              cursor={"pointer"}
-            >
-              logout
-            </Text>
-          </Box>
-          <Text
-            fontSize={"64px"}
-            fontWeight={"100"}
-            borderBottom={"1px solid black"}
-            color={"red"}
-          >
-            articles by you...
-          </Text>
 
-          {userPosts.map((post) => (
-
-            <Link
-              to={`/post/${post.$id}`}
-              style={{ textDecoration: "none" }}
-              key={post.$id}
-            >
-              {/* {console.log(post)}
+              {userPosts.map((post) => (
+                <Link
+                  to={`/post/${post.$id}`}
+                  style={{ textDecoration: "none" }}
+                  key={post.$id}
+                >
+                  {/* {console.log(post)}
               {console.log(user.name)}
               {post.title} */}
-              <BlogListItem
-                title={post.title}
-                date={moment(post.$createdAt).format("DD MMMM,YYYY")}
-                username={post.name}
-              />
-            </Link>
-          ))}
+                  <BlogListItem
+                    title={post.title}
+                    date={moment(post.$createdAt).format("DD MMMM,YYYY")}
+                    username={post.name}
+                  />
+                </Link>
+              ))}
+            </Box>
+          </Box>
         </Box>
       </Box>
     </>

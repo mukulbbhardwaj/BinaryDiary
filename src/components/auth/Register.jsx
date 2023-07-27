@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { ViewIcon } from "@chakra-ui/icons";
 import {
   FormControl,
   FormLabel,
@@ -23,6 +24,13 @@ const Register = () => {
     }
   });
 
+  const [show, setShow] = useState(false);
+
+  const showPass = () => {
+    setShow(!show);
+    console.log(show);
+  };
+
   const handleRegister = (e) => {
     e.preventDefault();
     const userInfo = { email, username, password };
@@ -41,8 +49,11 @@ const Register = () => {
         <Link to={"/"}>
           <Image src={home} width={"2rem"} height={"2rem"} mt={"1rem"} />
         </Link>
-        <Text fontSize={"64px"} fontWeight={200} color={"red"}>
-          new here? register now!
+        <Text fontSize={"64px"} fontWeight={900} color={"#e86f66"}>
+          new here?{" "}
+          <Text margin={0} color={"#c7f2c9"}>
+            register now!
+          </Text>
         </Text>
         <FormControl>
           <FormLabel fontSize={"32px"} fontWeight={100}>
@@ -58,6 +69,7 @@ const Register = () => {
             borderBottom="2px solid red"
             placeholder="mukul@google.com"
             onChange={(e) => setEmail(e.target.value)}
+            bgColor={"inherit"}
           />
         </FormControl>
         <FormControl border={"2px"} borderColor={"red"}>
@@ -74,6 +86,7 @@ const Register = () => {
             borderBottom="2px solid red"
             fontWeight={100}
             placeholder="mukul"
+            bgColor={"inherit"}
           />
         </FormControl>
         <FormControl border={"2px"} borderColor={"red"}>
@@ -81,7 +94,7 @@ const Register = () => {
             password
           </FormLabel>
           <Input
-            type="password"
+            type={show ? "text" : "password"}
             onChange={(e) => setPassword(e.target.value)}
             padding={"10px"}
             fontSize={"24px"}
@@ -90,7 +103,9 @@ const Register = () => {
             fontWeight={"10"}
             borderBottom="2px solid red"
             placeholder="******"
+            bgColor={"inherit"}
           />
+          <ViewIcon onClick={showPass} color={show ? "white" : "black"} />
         </FormControl>
         <Text
           fontSize={"24px"}
@@ -100,11 +115,15 @@ const Register = () => {
           borderRadius={"20px"}
           boxSize={"max-content"}
           onClick={handleRegister}
-        cursor={'pointer'}>
+          cursor={"pointer"}
+        >
           SignUp
         </Text>
         <Box position={"relative"} bottom={"1rem"} fontWeight={"200"}>
-          already registered? <Link to="/login" style={{cursor:"pointer"}}>Login</Link>
+          already registered?{" "}
+          <Link to="/login" style={{ cursor: "pointer" }}>
+            Login
+          </Link>
         </Box>
       </Box>
     </>

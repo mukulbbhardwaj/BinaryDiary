@@ -5,6 +5,7 @@ import BlogListItem from "../components/blog/BlogListItem";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import { databases, DATABASE_ID, COLLECTION_ID_BLOGS } from "../api/appwrite";
+import Footer from "../components/misc/Footer";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -24,7 +25,7 @@ const Home = () => {
         alignItems={"center"}
         justifyContent={"center"}
       >
-        <Box width={"600px"}>
+        <Box width={['200px','400px','600px']}>
           <NavBar />
           <Text
             fontSize={"64px"}
@@ -48,6 +49,7 @@ const Home = () => {
             </Link>
           ))}
         </Box>
+      <Footer/>
       </Box>
     </>
   );

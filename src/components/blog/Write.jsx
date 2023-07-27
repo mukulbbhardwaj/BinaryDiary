@@ -1,13 +1,11 @@
-import React, { useRef, useState } from "react";
-import {
-  Box,
-  Input,
-  Image,
-  Text,
-} from "@chakra-ui/react";
-
+import React, { useRef, useState ,useEffect} from "react";
+import { Box, Input, Image, Text, Textarea } from "@chakra-ui/react";
+import EditorJS from "@editorjs/editorjs";
+// import { Box } from "@chakra-ui/react";
+import Header from "@editorjs/header";
+import List from "@editorjs/list";
 import logo from "../../../src/asset/logo-sm.png";
-import userLogo from "../../../src/asset/user.png";
+import pfp from "../../../src/asset/user.png";
 import { Link, useNavigate } from "react-router-dom";
 import { ID } from "appwrite";
 import {
@@ -16,7 +14,9 @@ import {
   COLLECTION_ID_BLOGS,
 } from "../../api/appwrite";
 import { useAuth } from "../../utils/AuthContext";
-import JoditEditor from "jodit-react";
+
+import WriteNavBar from "../misc/WriteNavBar";
+import Editor from "./Editor";
 
 const Write = () => {
   const [postTitle, setPostTitle] = useState("");
@@ -26,15 +26,26 @@ const Write = () => {
   const { user } = useAuth();
   const DOCUMENT_ID = ID.unique();
 
-  const editor = useRef(null);
 
 
+     useEffect(() => {
+       if (ejInstance.current === null) {
+         initEditor();
+       }
+       return () => {
+         ejInstance?.current?.destroy();
+         ejInstance.current = null;
+       };
+     }, []);
+
+
+  // console.log(publish)
   const publishPost = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
-      if (!(postTitle.length>0 && postBody.length > 0)) {
-        alert("title or body cannot be empty")
+      if (!(postTitle.length > 0 && postBody.length > 0)) {
+        alert("title or body cannot be empty");
         setLoading(false);
         return;
       }
@@ -57,76 +68,144 @@ const Write = () => {
     }
   };
 
+
+
+
+
+const ejInstance = useRef();
+const initEditor = () => {
+  const editor = new EditorJS({
+    holder: "editorBox",
+    onReady: () => {
+      ejInstance.current = editor;
+    },
+    autofocus: true,
+    onChange: async () => {
+      let content = await editor.save();
+      console.log(content.blocks);
+      setPostBody(content.blocks);
+      console.log("content",postBody);
+    },
+    tools: {
+      header: Header,
+      list: List,
+    },
+  });
+};
+
+
+
   return loading ? (
     "loading..."
   ) : (
-    <Box width={"600px"}>
-      <Box width={"60%"} alignItems={"center"}>
-        <Box
-          display={"flex"}
-          alignItems={"center"}
-          justifyContent={"space-evenly"}
-        >
-          <Link to={"/"}>
-            <Image src={logo} height={"3rem"} width={"3rem"} />
-          </Link>
-          <Text
-            fontSize={"24px"}
-            fontWeight={650}
-            padding={"0.5rem"}
-            borderRadius={"20px"}
-            boxSize={"max-content"}
-            _hover={{ color: "white" }}
-            cursor={"pointer"}
-            color={"gray"}
-            border={"0.5px solid gray"}
-            onClick={publishPost}
+    <>
+      <Box
+        display={"flex"}
+        flexDir={"column"}
+        alignItems={"center"}
+        justifyContent={"center"}
+      >
+        <Box width={"600px"}>
+          <Box
+            display={"flex"}
+            alignItems={"center"}
+            justifyContent={"space-evenly"}
           >
-            publish
-          </Text>
+            <Link to={"/"}>
+              <Image src={logo} height={"3rem"} width={"3rem"} />
+            </Link>
+            <Link
+              to={"/write"}
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              <Box display={"flex"} alignItems={"center"}>
+                <Text
+                  fontSize={"24px"}
+                  fontWeight={650}
+                  padding={"0.5rem"}
+                  borderRadius={"20px"}
+                  boxSize={"max-content"}
+                  _hover={{ color: "white" }}
+                  cursor={"pointer"}
+                  color={"gray"}
+                  onClick={publishPost}
+                >
+                  publish
+                </Text>
+              </Box>
+            </Link>
 
-          <Link to={"/profile"}>
-            <Image
-              src={userLogo}
-              height={"2rem"}
-              width={"2rem"}
-              color={"red"}
-            />
-          </Link>
-        </Box>
-      </Box>
-
-      <Box display={"flex"} alignItems={"center"} justifyContent={"center"}>
-        <Box
-          display={"flex"}
-          flexDir={"column"}
-          justifyContent={"center"}
-          width={"60%"}
-        >
-          <Box display={"flex"} alignItems={"center"}>
-            <Input
-              type="text"
-              onChange={(e) => setPostTitle(e.target.value)}
-              fontSize={"64px"}
-              fontWeight={"800"}
-              borderBottom={"1px solid #332c32"}
-              color={"#cfbccc"}
-                margin={"0.5rem"}
-                bgColor={'inherit'} 
-                outline={0}
-                border={0}
-                placeholder="title..."
-            />
+            {user ? (
+              <Link to={"/profile"}>
+                <Image
+                  src={pfp}
+                  height={"2rem"}
+                  width={"2rem"}
+                  color={"red"}
+                  cursor={"pointer"}
+                />
+              </Link>
+            ) : (
+              <Link to={"/login"} style={{ textDecoration: "none" }}>
+                <Text
+                  fontSize={"24px"}
+                  color={"black"}
+                  fontWeight={"200"}
+                  _hover={{ fontWeight: "300" }}
+                  cursor={"pointer"}
+                >
+                  login
+                </Text>
+              </Link>
+            )}
           </Box>
-
-          <JoditEditor
-            ref={editor}
-            value={postBody}
-            onChange={(content) => setPostBody(content)}
-          />
+          <Box display={"flex"} alignItems={"center"} justifyContent={"center"}>
+            <Box
+              display={"flex"}
+              flexDir={"column"}
+              justifyContent={"center"}
+              width={"60%"}
+            >
+              <Box display={"flex"}>
+                <Box>
+                  <Textarea
+                    type="text"
+                    onChange={(e) => setPostTitle(e.target.value)}
+                    fontSize={"48px"}
+                    fontWeight={"800"}
+                    borderBottom={"1px solid #332c32"}
+                    color={"#cfbccc"}
+                    margin={"0.5rem"}
+                    bgColor={"inherit"}
+                    outline={0}
+                    border={0}
+                    placeholder="title..."
+                    resize={"none"}
+                    width={"400px"}
+                    fontFamily={"helvetica"}
+                  />
+                  {/* <Input
+                    type="text"
+                    onChange={(e) => setPostBody(e.target.value)}
+                    fontWeight={"800"}
+                    borderBottom={"1px solid #332c32"}
+                    color={"#cfbccc"}
+                    margin={"0.5rem"}
+                    bgColor={"inherit"}
+                    outline={0}
+                    border={0}
+                    placeholder="write your story"
+                    marginTop={"2rem"}
+                    fontSize={"24px"}
+                  /> */}
+                  <div id="editorBox"></div>
+                </Box>
+              </Box>
+            </Box>
+          </Box>
         </Box>
       </Box>
-    </Box>
+    </>
   );
 };
 

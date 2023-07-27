@@ -58,15 +58,18 @@ const Post = () => {
           width={"600px"}
         >
           <div>
-            <Text
+            <Box
+              display={'flex'}
               fontSize={"64px"}
               fontWeight={"800"}
               borderBottom={"1px solid #332c32"}
               color={"#cfbccc"}
               margin={"0.5rem"}
             >
+              <Text wordBreak={'break-word'}>
               {postData.title}
-            </Text>
+              </Text>
+            </Box>
             <Box display={"flex"} justifyContent={"space-between"}>
               <Box
                 display={"flex"}
@@ -83,7 +86,7 @@ const Post = () => {
 
               <Box onClick={deletePost}>{isAuthor ? <DeleteIcon /> : ""}</Box>
             </Box>
-            <Box marginTop={"2rem"} fontSize={"24px"}>
+            <Box marginTop={"2rem"} fontSize={"24px"} >
               <div dangerouslySetInnerHTML={{ __html: postData.body }}></div>
               <Text textAlign={'center'} fontSize={'64px'} > ...</Text>
             </Box>

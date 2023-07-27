@@ -5,7 +5,7 @@ const BlogListItem = ({title,username,date}) => {
 
   return (
     <Box
-      bgColor={"#111d24"}
+      bgColor={"#1f222b"}
       borderRadius={"4px"}
       padding={"12px"}
       marginBottom={"8px"}
@@ -23,6 +23,7 @@ const BlogListItem = ({title,username,date}) => {
           border={"0"}
           margin={"0"}
           _hover={{ textDecor: "underline", textDecorationColor: "white" }}
+          wordBreak={'break-word'}
         >
           {title}
         </Text>
