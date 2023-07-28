@@ -18,16 +18,16 @@ import {
   COLLECTION_ID_BLOGS,
 } from "../../api/appwrite";
 
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../utils/AuthContext";
 
 const PublishPostModal = ({ children, postBody, postTitle }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
-    const toast = useToast();
-    const { user } = useAuth();
-    const DOCUMENT_ID = ID.unique();
-    console.log('title', postTitle, 'body', postBody);
+  const toast = useToast();
+  const { user } = useAuth();
+  const DOCUMENT_ID = ID.unique();
+  console.log("title", postTitle, "body", postBody);
   const publishPost = async () => {
     if (!(postTitle.length > 0 && postBody.length > 0)) {
       toast({
@@ -55,14 +55,14 @@ const PublishPostModal = ({ children, postBody, postTitle }) => {
         isClosable: true,
       });
       console.log("body", postBody);
-   
+
       navigate(`/post/${post.$id}`);
     } catch (error) {
       console.error(error);
-        toast({
-            status: "error",
-            duration:2000,
-  })
+      toast({
+        status: "error",
+        duration: 2000,
+      });
     }
   };
 

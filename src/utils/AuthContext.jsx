@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect, createContext } from "react";
 import { account } from "../api/appwrite";
 import { ID } from "appwrite";
-import { Spinner,Box, useToast } from "@chakra-ui/react";
+import { Spinner, Box, useToast } from "@chakra-ui/react";
 
 const AuthContext = createContext();
 
@@ -9,7 +9,6 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(false);
   const toast = useToast();
-
 
   useEffect(() => {
     checkUserStatus();
@@ -23,28 +22,28 @@ export const AuthProvider = ({ children }) => {
           title: "fill password and email",
           status: "warning",
           duration: 2000,
-          isClosable:true,
-        })
+          isClosable: true,
+        });
         setLoading(false);
-        return
+        return;
       }
       if (userInfo.password.length < 8) {
         toast({
           title: "password must be atleast 8 characters",
           status: "warning",
           duration: 2000,
-          isClosable:true
-        })
-        setLoading(false)
-        return
+          isClosable: true,
+        });
+        setLoading(false);
+        return;
       }
       await account.createEmailSession(userInfo.email, userInfo.password);
       let accountDetails = await account.get();
       setUser(accountDetails);
     } catch (error) {
       console.error(error);
-      alert('Something went wrong try again')
-      setLoading(false)
+      alert("Something went wrong try again");
+      setLoading(false);
     }
 
     setLoading(false);
@@ -55,16 +54,16 @@ export const AuthProvider = ({ children }) => {
   };
   const registerUser = async (userInfo) => {
     setLoading(true);
-     if (!userInfo.email || !userInfo.password || !userInfo.username) {
-       toast({
-         title: "fill all fields",
-         status: "warning",
-         duration: 2000,
-         isClosable: true,
-       });
-       setLoading(false);
-       return;
-     }
+    if (!userInfo.email || !userInfo.password || !userInfo.username) {
+      toast({
+        title: "fill all fields",
+        status: "warning",
+        duration: 2000,
+        isClosable: true,
+      });
+      setLoading(false);
+      return;
+    }
     if (userInfo.password.length < 8) {
       toast({
         title: "password must be atleast 8 characters",
@@ -75,17 +74,17 @@ export const AuthProvider = ({ children }) => {
       setLoading(false);
       return;
     }
-     if (userInfo.username.length < 6) {
-       toast({
-         title: "username must be atleast 6 characters",
-         status: "warning",
-         duration: 2000,
-         isClosable: true,
-       });
-       setLoading(false);
-       return;
-     }
-  
+    if (userInfo.username.length < 6) {
+      toast({
+        title: "username must be atleast 6 characters",
+        status: "warning",
+        duration: 2000,
+        isClosable: true,
+      });
+      setLoading(false);
+      return;
+    }
+
     try {
       await account.create(
         ID.unique(),
@@ -98,8 +97,8 @@ export const AuthProvider = ({ children }) => {
       setUser(accountDetails);
     } catch (error) {
       console.error(error);
-      alert(error)
-      setLoading(false)
+      alert(error);
+      setLoading(false);
     }
     setLoading(false);
   };
@@ -128,13 +127,12 @@ export const AuthProvider = ({ children }) => {
           alignItems={"center"}
           justifyContent={"center"}
         >
-         
-            <Spinner
-              thickness="4px"
-              speed="0.65s"
-              emptyColor="gray.200"
-              size="xl"
-            />
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            size="xl"
+          />
         </Box>
       ) : (
         children

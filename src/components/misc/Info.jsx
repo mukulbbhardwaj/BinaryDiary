@@ -6,9 +6,7 @@ import {
   Tr,
   Th,
   Td,
-
   TableContainer,
-
 } from "@chakra-ui/react";
 
 const Info = () => {

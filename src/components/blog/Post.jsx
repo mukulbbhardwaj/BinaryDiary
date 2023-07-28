@@ -1,8 +1,4 @@
-import {
-  Box,
-  Text,
-  Button,
-} from "@chakra-ui/react";
+import { Box, Text, Button } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 
 import NavBar from "../misc/NavBar";
@@ -26,7 +22,6 @@ const Post = () => {
     getPost();
   }, []);
 
- 
   const location = useLocation();
   const DOCUMENT_ID = location.pathname.split("/")[2];
   const getPost = async () => {
@@ -40,8 +35,6 @@ const Post = () => {
   const date = moment(postData.$createdAt).format("DD MMMM,YYYY");
 
   const isAuthor = user.name === postData.username;
-
-
 
   return (
     <>
@@ -102,7 +95,11 @@ const Post = () => {
                     ""
                   )}
                 </Box>
-                <Box marginTop={"2rem"} fontSize={{ base: "18px", md: "24px" }} color={'#838a8f'}>
+                <Box
+                  marginTop={"2rem"}
+                  fontSize={{ base: "18px", md: "24px" }}
+                  color={"#838a8f"}
+                >
                   <ReactMarkdown
                     className="markdown"
                     children={postData.body}

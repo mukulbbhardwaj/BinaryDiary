@@ -1,4 +1,4 @@
-import { React} from "react";
+import { React } from "react";
 import { Box, Image, Text } from "@chakra-ui/react";
 import logo from "../../../src/asset/logo-sm.png";
 import pfp from "../../../src/asset/user.png";
@@ -6,9 +6,9 @@ import { Link } from "react-router-dom";
 import PublishPostModal from "../modals/PublishPostModal";
 import { useAuth } from "../../utils/AuthContext";
 
-const WriteNavBar = ({postBody,postTitle}) => {
+const WriteNavBar = ({ postBody, postTitle }) => {
   const { user } = useAuth();
-  
+
   return (
     <div>
       <Box

@@ -1,11 +1,10 @@
 import React from "react";
-import { Box, Image, Text} from "@chakra-ui/react";
+import { Box, Image, Text } from "@chakra-ui/react";
 import logo from "../../../src/asset/logo-sm.png";
 import pfp from "../../../src/asset/user.png";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../utils/AuthContext";
-import { EditIcon} from "@chakra-ui/icons";
-
+import { EditIcon } from "@chakra-ui/icons";
 
 const NavBar = () => {
   const { user } = useAuth();

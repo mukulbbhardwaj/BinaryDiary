@@ -26,7 +26,7 @@ const UserProfile = () => {
     );
     setUserPosts(res.documents);
   };
- 
+
   return (
     <>
       <Box
@@ -59,7 +59,7 @@ const UserProfile = () => {
                     {user.email}
                   </Text>
                 </Box>
-              
+
                 <Button colorScheme="teal" onClick={logOutUser}>
                   logout
                 </Button>

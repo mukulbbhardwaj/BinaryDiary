@@ -9,7 +9,6 @@ import {
   Button,
   InputRightElement,
   InputGroup,
-
 } from "@chakra-ui/react";
 import { ViewIcon } from "@chakra-ui/icons";
 import { Link, useNavigate } from "react-router-dom";
@@ -24,14 +23,14 @@ const Login = () => {
 
   const showPass = () => {
     setShow(!show);
-  }
-  const guestLogin = async(e) => {
+  };
+  const guestLogin = async (e) => {
     const userInfo = {
       email: "guest@binary.com",
-      password: "binarydiary"
+      password: "binarydiary",
     };
-    loginUser(userInfo)
-  }
+    loginUser(userInfo);
+  };
   const handleLogin = async (e) => {
     e.preventDefault();
     const userInfo = { email, password };
