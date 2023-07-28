@@ -1,9 +1,27 @@
-import React, { useRef, useState ,useEffect} from "react";
-import { Box, Input, Image, Text, Textarea } from "@chakra-ui/react";
-import EditorJS from "@editorjs/editorjs";
+import React, { useRef, useState, useEffect } from "react";
+import {
+  Box,
+  Input,
+  Image,
+  Text,
+  Textarea,
+  useStatStyles,
+  Button
+} from "@chakra-ui/react";
+
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+} from "@chakra-ui/react";
 // import { Box } from "@chakra-ui/react";
-import Header from "@editorjs/header";
-import List from "@editorjs/list";
+
+import ReactMarkdown from "react-markdown";
 import logo from "../../../src/asset/logo-sm.png";
 import pfp from "../../../src/asset/user.png";
 import { Link, useNavigate } from "react-router-dom";
@@ -15,31 +33,19 @@ import {
 } from "../../api/appwrite";
 import { useAuth } from "../../utils/AuthContext";
 
-import WriteNavBar from "../misc/WriteNavBar";
-import Editor from "./Editor";
-
 const Write = () => {
   const [postTitle, setPostTitle] = useState("");
-  const [postBody, setPostBody] = useState("");
+  const [postBody, setPostBody] = useState("Hello");
   const [loading, setLoading] = useState(false);
+  const [preview, setPreview] = useState(false);
+  const [isInfo, setIsInfo] = useState(false);
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   const navigate = useNavigate();
   const { user } = useAuth();
   const DOCUMENT_ID = ID.unique();
 
-
-
-     useEffect(() => {
-       if (ejInstance.current === null) {
-         initEditor();
-       }
-       return () => {
-         ejInstance?.current?.destroy();
-         ejInstance.current = null;
-       };
-     }, []);
-
-
-  // console.log(publish)
   const publishPost = async (e) => {
     e.preventDefault();
     try {
@@ -67,33 +73,6 @@ const Write = () => {
       setLoading(false);
     }
   };
-
-
-
-
-
-const ejInstance = useRef();
-const initEditor = () => {
-  const editor = new EditorJS({
-    holder: "editorBox",
-    onReady: () => {
-      ejInstance.current = editor;
-    },
-    autofocus: true,
-    onChange: async () => {
-      let content = await editor.save();
-      console.log(content.blocks);
-      setPostBody(content.blocks);
-      console.log("content",postBody);
-    },
-    tools: {
-      header: Header,
-      list: List,
-    },
-  });
-};
-
-
 
   return loading ? (
     "loading..."
@@ -167,15 +146,15 @@ const initEditor = () => {
               width={"60%"}
             >
               <Box display={"flex"}>
-                <Box>
+                <Box margin={0}>
                   <Textarea
                     type="text"
                     onChange={(e) => setPostTitle(e.target.value)}
                     fontSize={"48px"}
                     fontWeight={"800"}
-                    borderBottom={"1px solid #332c32"}
+                    borderBottom={"1px solid red"}
                     color={"#cfbccc"}
-                    margin={"0.5rem"}
+                    margin={0}
                     bgColor={"inherit"}
                     outline={0}
                     border={0}
@@ -183,22 +162,80 @@ const initEditor = () => {
                     resize={"none"}
                     width={"400px"}
                     fontFamily={"helvetica"}
+                    // height={'10px'}
                   />
-                  {/* <Input
-                    type="text"
-                    onChange={(e) => setPostBody(e.target.value)}
-                    fontWeight={"800"}
-                    borderBottom={"1px solid #332c32"}
-                    color={"#cfbccc"}
-                    margin={"0.5rem"}
-                    bgColor={"inherit"}
-                    outline={0}
-                    border={0}
-                    placeholder="write your story"
-                    marginTop={"2rem"}
-                    fontSize={"24px"}
-                  /> */}
-                  <div id="editorBox"></div>
+                  {/* <div id="editorBox"></div>*/}
+                  <Box display={"flex"} gap={"20px"}>
+                    <Text
+                      bgColor={"#1f222b"}
+                      onClick={(e) => setPreview(!preview)}
+                      cursor={"pointer"}
+                      padding={"4px"}
+                      borderRadius={"6px"}
+                      _hover={{ color: "white" }}
+                      width={"70px"}
+                      textAlign={"center"}
+                    >
+                      {preview ? "edit" : "preview"}
+                    </Text>
+                    <Text
+                      bgColor={"#1f222b"}
+                      // onClick={(e) => setIsInfo(!isInfo)}
+                      onClick={onOpen}
+                      cursor={"pointer"}
+                      padding={"4px"}
+                      borderRadius={"6px"}
+                      _hover={{ color: "white" }}
+                      width={"70px"}
+                      textAlign={"center"}
+                    >
+                      info
+                    </Text>
+                    {console.log(isInfo)}
+                    <Box
+                      // display={isInfo ? "none" : "block"}
+                      // bgColor={"black"}
+                      // width={"400px"}
+                      // height={"600px"}
+                    >
+                      <Modal isOpen={isOpen} onClose={onClose}>
+                        <ModalOverlay />
+                        <ModalContent>
+                          <ModalHeader>Modal Title</ModalHeader>
+                          <ModalCloseButton />
+                          <ModalBody>
+                           
+                          </ModalBody>
+
+                          <ModalFooter>
+                            <Button colorScheme="blue" mr={3} onClick={onClose}>
+                              Close
+                            </Button>
+                          </ModalFooter>
+                        </ModalContent>
+                      </Modal>
+                    </Box>
+                  </Box>
+                  {preview ? (
+                    <Box>
+                      <ReactMarkdown>{postBody}</ReactMarkdown>
+                    </Box>
+                  ) : (
+                    <Textarea
+                      resize={"unset"}
+                      backgroundColor={"inherit"}
+                      color={"#cfbccc"}
+                      fontSize={"24px"}
+                      fontFamily={"helvetica"}
+                      width={"400px"}
+                      height={"100px"}
+                      border={"none"}
+                      outline={"none"}
+                      value={postBody}
+                      onChange={(e) => setPostBody(e.target.value)}
+                    >
+                    </Textarea>
+                  )}
                 </Box>
               </Box>
             </Box>

@@ -34,7 +34,6 @@ const BlogListItem = ({title,username,date}) => {
         fontSize={"14px"}
         gap={"1rem"}
         color={"white"}
-        // borderBottom="0.5px solid red"
       >
         <Text>{date} </Text>
         <Text>{username}</Text>

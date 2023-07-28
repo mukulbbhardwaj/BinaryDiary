@@ -11,6 +11,7 @@ import {
 import moment from "moment";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { useAuth } from "../../utils/AuthContext";
+import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 
 const Post = () => {
   const [postData, setPostData] = useState({});
@@ -87,7 +88,8 @@ const Post = () => {
               <Box onClick={deletePost}>{isAuthor ? <DeleteIcon /> : ""}</Box>
             </Box>
             <Box marginTop={"2rem"} fontSize={"24px"} >
-              <div dangerouslySetInnerHTML={{ __html: postData.body }}></div>
+              {/* <div dangerouslySetInnerHTML={{ __html: postData.body }}></div> */}
+              <ReactMarkdown>{ postData.body}</ReactMarkdown>
               <Text textAlign={'center'} fontSize={'64px'} > ...</Text>
             </Box>
           </div>
