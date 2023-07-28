@@ -6,9 +6,9 @@ import {
   Text,
   Textarea,
   useStatStyles,
-  Button
+  Button,
 } from "@chakra-ui/react";
-
+import infoPage from "../../asset/md-info.png";
 import {
   Modal,
   ModalOverlay,
@@ -192,19 +192,24 @@ const Write = () => {
                       info
                     </Text>
                     {console.log(isInfo)}
-                    <Box
-                      // display={isInfo ? "none" : "block"}
-                      // bgColor={"black"}
-                      // width={"400px"}
-                      // height={"600px"}
-                    >
+                    <Box width={"600px"}>
                       <Modal isOpen={isOpen} onClose={onClose}>
                         <ModalOverlay />
-                        <ModalContent>
-                          <ModalHeader>Modal Title</ModalHeader>
-                          <ModalCloseButton />
-                          <ModalBody>
-                           
+                        <ModalContent
+                          display={"flex"}
+                          flexDir={"column"}
+                          alignItems={"center"}
+                          justifyContent={"center"}
+                        >
+                          {/* <ModalHeader>Modal Title</ModalHeader> */}
+                          {/* <ModalCloseButton /> */}
+                          <ModalBody display={"flex"} justifyContent={"center"}>
+                            <Image
+                              src={infoPage}
+                              width={"600px"}
+                              height={"600px"}
+                              marginTop={"40px"}
+                            ></Image>
                           </ModalBody>
 
                           <ModalFooter>
@@ -233,8 +238,7 @@ const Write = () => {
                       outline={"none"}
                       value={postBody}
                       onChange={(e) => setPostBody(e.target.value)}
-                    >
-                    </Textarea>
+                    ></Textarea>
                   )}
                 </Box>
               </Box>

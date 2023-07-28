@@ -13,12 +13,15 @@ import { DeleteIcon } from "@chakra-ui/icons";
 import { useAuth } from "../../utils/AuthContext";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 
+
 const Post = () => {
   const [postData, setPostData] = useState({});
   const { user } = useAuth();
   useEffect(() => {
     getPost();
   }, []);
+  const data = ' # sjdhjks'
+  console.log("# mukul")
   const navigate = useNavigate();
   const location = useLocation();
   const DOCUMENT_ID = location.pathname.split("/")[2];
