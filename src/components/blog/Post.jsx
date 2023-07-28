@@ -79,6 +79,7 @@ const Post = () => {
                     flexDir={"column"}
                     fontWeight={300}
                     fontSize={"14px"}
+                    color={"#d9d2bf"}
                   >
                     <Text m={0}>{postData.username}</Text>
                     <Text m={0} fontSize={"14px"}>
