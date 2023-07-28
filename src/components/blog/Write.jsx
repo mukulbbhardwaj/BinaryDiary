@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   Box,
-  Image,
   Text,
   Textarea,
   Button,
@@ -11,25 +10,15 @@ import {
   ModalFooter,
   ModalBody,
   useDisclosure,
-  useToast,
 } from "@chakra-ui/react";
-import PublishPostModal from "../modals/PublishPostModal";
-import infoPage from "../../asset/md-info.png";
+
 // import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
-import logo from "../../../src/asset/logo-sm.png";
-import pfp from "../../../src/asset/user.png";
-import { Link, useNavigate } from "react-router-dom";
-import { ID } from "appwrite";
-import {
-  databases,
-  DATABASE_ID,
-  COLLECTION_ID_BLOGS,
-} from "../../api/appwrite";
-import { useAuth } from "../../utils/AuthContext";
+
 import WriteNavBar from "../misc/WriteNavBar";
+import Info from "../misc/Info";
 
 const Write = () => {
   const [postTitle, setPostTitle] = useState("");
@@ -38,10 +27,7 @@ const Write = () => {
   const [preview, setPreview] = useState(false);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const toast = useToast();
-  const navigate = useNavigate();
-  const { user } = useAuth();
-  const DOCUMENT_ID = ID.unique();
+
   console.log("body", postBody);
 
   return loading ? (
@@ -89,7 +75,7 @@ const Write = () => {
                     width={{ base: "300px", md: "800px" }}
                   />
 
-                  <Box display={"flex"} gap={"20px"}>
+                  <Box display={"flex"} gap={"20px"} margin={"1rem"}>
                     <Text
                       bgColor={"#1f222b"}
                       onClick={(e) => setPreview(!preview)}
@@ -124,12 +110,7 @@ const Write = () => {
                           justifyContent={"center"}
                         >
                           <ModalBody display={"flex"} justifyContent={"center"}>
-                            <Image
-                              src={infoPage}
-                              width={"600px"}
-                              height={"600px"}
-                              marginTop={"40px"}
-                            ></Image>
+                            <Info />
                           </ModalBody>
 
                           <ModalFooter>
@@ -164,6 +145,7 @@ const Write = () => {
                       value={postBody}
                       onChange={(e) => setPostBody(e.target.value)}
                       width={{ base: "300px", md: "800px" }}
+                      boxShadow={"none"}
                     ></Textarea>
                   )}
                 </Box>

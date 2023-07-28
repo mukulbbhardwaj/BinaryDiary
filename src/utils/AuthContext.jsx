@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect, createContext } from "react";
 import { account } from "../api/appwrite";
 import { ID } from "appwrite";
-import { Spinner,Box, flexbox, useToast } from "@chakra-ui/react";
+import { Spinner,Box, useToast } from "@chakra-ui/react";
 
 const AuthContext = createContext();
 

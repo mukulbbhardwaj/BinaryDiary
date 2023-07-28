@@ -7,7 +7,6 @@ import {
   Text,
   Image,
   Button,
-  InputRightAddon,
   InputRightElement,
   InputGroup,
 

@@ -1,21 +1,12 @@
 import {
   Box,
   Text,
-  useToast,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  useDisclosure,
   Button,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 
 import NavBar from "../misc/NavBar";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import {
   databases,
   DATABASE_ID,
@@ -35,10 +26,7 @@ const Post = () => {
     getPost();
   }, []);
 
-  const toast = useToast();
-
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const navigate = useNavigate();
+ 
   const location = useLocation();
   const DOCUMENT_ID = location.pathname.split("/")[2];
   const getPost = async () => {
@@ -53,14 +41,7 @@ const Post = () => {
 
   const isAuthor = user.name === postData.username;
 
-  const deletePost = async () => {
-    await databases.deleteDocument(
-      DATABASE_ID,
-      COLLECTION_ID_BLOGS,
-      DOCUMENT_ID
-    );
-    navigate("/");
-  };
+
 
   return (
     <>

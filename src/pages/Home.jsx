@@ -26,13 +26,14 @@ const Home = () => {
         justifyContent={"center"}
         bgColor={"#22293e"}
       >
-        <Box width={{"base":"300px", "md":"800px"}} >
+        <Box width={{ base: "300px", md: "800px" }}>
           <NavBar />
           <Text
             fontSize={"64px"}
             fontWeight={"800"}
             borderBottom={"1px solid #332c32"}
             color={"#a0d9cb"}
+            margin={"2rem"}
           >
             articles to read
           </Text>

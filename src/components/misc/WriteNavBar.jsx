@@ -1,4 +1,4 @@
-import { React,useState } from "react";
+import { React} from "react";
 import { Box, Image, Text } from "@chakra-ui/react";
 import logo from "../../../src/asset/logo-sm.png";
 import pfp from "../../../src/asset/user.png";

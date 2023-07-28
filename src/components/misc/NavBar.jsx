@@ -5,7 +5,7 @@ import pfp from "../../../src/asset/user.png";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../utils/AuthContext";
 import { EditIcon} from "@chakra-ui/icons";
-import { color } from "framer-motion";
+
 
 const NavBar = () => {
   const { user } = useAuth();

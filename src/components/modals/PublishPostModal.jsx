@@ -18,7 +18,7 @@ import {
   COLLECTION_ID_BLOGS,
 } from "../../api/appwrite";
 
-import { useLocation, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { useAuth } from "../../utils/AuthContext";
 
 const PublishPostModal = ({ children, postBody, postTitle }) => {
