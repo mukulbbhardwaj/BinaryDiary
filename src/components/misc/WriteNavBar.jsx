@@ -3,10 +3,10 @@ import { Box, Image, Text } from "@chakra-ui/react";
 import logo from "../../../src/asset/logo-sm.png";
 import pfp from "../../../src/asset/user.png";
 import { Link } from "react-router-dom";
-
+import PublishPostModal from "../modals/PublishPostModal";
 import { useAuth } from "../../utils/AuthContext";
 
-const WriteNavBar = () => {
+const WriteNavBar = ({postBody,postTitle}) => {
   const { user } = useAuth();
   
   return (
@@ -21,20 +21,20 @@ const WriteNavBar = () => {
         </Link>
         <Link to={"/write"} style={{ textDecoration: "none", color: "black" }}>
           <Box display={"flex"} alignItems={"center"}>
-           
-            <Text
-              fontSize={"24px"}
-              fontWeight={650}
-              padding={"0.5rem"}
-              borderRadius={"20px"}
-              boxSize={"max-content"}
-              _hover={{color:'white' }}
-              cursor={"pointer"}
-              color={'gray'}
-          
-            >
-              publish
-            </Text>
+            <PublishPostModal postBody={postBody} postTitle={postTitle}>
+              <Text
+                fontSize={"24px"}
+                fontWeight={650}
+                padding={"0.5rem"}
+                borderRadius={"20px"}
+                boxSize={"max-content"}
+                _hover={{ color: "white" }}
+                cursor={"pointer"}
+                color={"gray"}
+              >
+                publish
+              </Text>
+            </PublishPostModal>
           </Box>
         </Link>
 

@@ -6,6 +6,10 @@ import {
   Box,
   Text,
   Image,
+  Button,
+  InputRightAddon,
+  InputRightElement,
+  InputGroup,
 
 } from "@chakra-ui/react";
 import { ViewIcon } from "@chakra-ui/icons";
@@ -21,7 +25,13 @@ const Login = () => {
 
   const showPass = () => {
     setShow(!show);
-    console.log(show)
+  }
+  const guestLogin = async(e) => {
+    const userInfo = {
+      email: "guest@binary.com",
+      password: "binarydiary"
+    };
+    loginUser(userInfo)
   }
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -42,13 +52,15 @@ const Login = () => {
         alignItems={"left"}
         flexDir={"column"}
         justifyContent={"center"}
-        margin={"1rem"}
+        padding={"100px"}
+        color={"#838a8f"}
+        bgColor={"#22293e"}
       >
         <Link to={"/"}>
           <Image src={home} width={"2rem"} height={"2rem"} mt={"1rem"} />
         </Link>
         <Text
-          fontSize={'64px'}
+          fontSize={"64px"}
           // fontSize={"64px"}
           fontWeight={900}
           color={"#e86f66"}
@@ -77,46 +89,65 @@ const Login = () => {
             name="email"
             bgColor={"inherit"}
             color={"#9c99bd"}
+            width={"400px"}
+            borderRadius={0}
           />
         </FormControl>
         <FormControl>
           <FormLabel fontSize={"32px"} fontWeight={300}>
             password
           </FormLabel>
-          <Input
-            type={show ? "text" : "password"}
-            onChange={(e) => setPassword(e.target.value)}
-            padding={"10px"}
-            fontSize={"24px"}
-            border={"none"}
-            outline={"none"}
-            placeholder="******"
-            borderBottom="1px solid #e86f66"
-            name="password"
-            autoComplete="password"
-            bgColor={"inherit"}
-            color={"#9c99bd"}
-          />
-          <ViewIcon onClick={showPass} color={show ? "white" : "black"} />
+          <InputGroup width={"400px"}>
+            <Input
+              type={show ? "text" : "password"}
+              onChange={(e) => setPassword(e.target.value)}
+              padding={""}
+              fontSize={"24px"}
+              border={"none"}
+              outline={"none"}
+              placeholder="******"
+              borderBottom="1px solid #e86f66"
+              name="password"
+              autoComplete="password"
+              bgColor={"inherit"}
+              color={"#9c99bd"}
+              borderRadius={0}
+            />
+            <InputRightElement>
+              <ViewIcon onClick={showPass} color={show ? "white" : "black"} />
+            </InputRightElement>
+          </InputGroup>
         </FormControl>
-        <Box display={"flex"} alignItems={"center"} gap={"1rem"}>
-          <Text
-            fontSize={"24px"}
-            fontWeight={150}
-            border={"2px solid green"}
-            padding={"0.5rem"}
-            borderRadius={"20px"}
-            boxSize={"max-content"}
-            onClick={handleLogin}
-            cursor={"pointer"}
+        <Box
+          display={"flex"}
+          alignItems={"center"}
+          gap={"1rem"}
+          margin={"2rem 0 2rem 0"}
+        >
+          <Button onClick={handleLogin}>Login</Button>
+          <Button
+            variant={"outline"}
+            color={"#bfdbba"}
+            _hover={{ color: "#a2b0de" }}
+            onClick={guestLogin}
           >
-            Login
-          </Text>
-          <Link>forget password?</Link>
+            guest login
+          </Button>
+          {/* TODO: Add forget password */}
         </Box>
 
-        <Box position={"relative"} bottom={"1rem"} fontWeight={"200"}>
-          not registered? <Link to="/register">register</Link>
+        <Box
+          position={"relative"}
+          bottom={"1rem"}
+          display={"flex"}
+          gap={"4px"}
+          fontWeight={"200"}
+          alignItems={"center"}
+        >
+          not registered?{" "}
+          <Text color={"white"} _hover={{ color: "gray" }}>
+            <Link to="/register">register</Link>
+          </Text>
         </Box>
       </Box>
     </>

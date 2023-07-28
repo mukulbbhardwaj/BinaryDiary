@@ -8,11 +8,13 @@ import UserProfile from "./components/profile/UserProfile";
 import PrivateRoutes from "./utils/PrivateRoutes";
 import { AuthProvider } from "./utils/AuthContext";
 import Post from "./components/blog/Post";
+import { ChakraProvider } from "@chakra-ui/react";
 
 const App = () => {
   return (
     <div>
       <AuthProvider>
+       
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />

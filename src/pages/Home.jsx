@@ -24,8 +24,9 @@ const Home = () => {
         flexDir={"column"}
         alignItems={"center"}
         justifyContent={"center"}
+        bgColor={"#22293e"}
       >
-        <Box width={['200px','400px','600px']}>
+        <Box width={{"base":"300px", "md":"800px"}} >
           <NavBar />
           <Text
             fontSize={"64px"}
@@ -49,7 +50,7 @@ const Home = () => {
             </Link>
           ))}
         </Box>
-      <Footer/>
+        <Footer />
       </Box>
     </>
   );

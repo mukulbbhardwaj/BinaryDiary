@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Button, Text } from "@chakra-ui/react";
 import BlogListItem from "../blog/BlogListItem";
 import NavBar from "../misc/NavBar";
 import moment from "moment";
@@ -34,8 +34,10 @@ const UserProfile = () => {
         flexDir={"column"}
         alignItems={"center"}
         justifyContent={"center"}
+        bgColor={"#22293e"}
+        color={"#838a8f"}
       >
-        <Box width={"600px"}>
+        <Box width={{ base: "300px", md: "800px" }}>
           <NavBar />
           <Box
             display={"flex"}
@@ -53,23 +55,14 @@ const UserProfile = () => {
                   <Text fontSize={"24px"} fontWeight={700} color={"#ebc5c3"}>
                     {user.name}
                   </Text>
-                  <Text fontWeight={400} fontSize={'18px'} color={"#b8b1b0"}>
+                  <Text fontWeight={400} fontSize={"18px"} color={"#b8b1b0"}>
                     {user.email}
                   </Text>
                 </Box>
-                <Text
-                  fontSize={"24px"}
-                  fontWeight={150}
-                  border={"2px solid red"}
-                  _hover={{ bgColor: "red", color: "white" }}
-                  padding={"0.5rem"}
-                  borderRadius={"20px"}
-                  boxSize={"max-content"}
-                  onClick={logOutUser}
-                  cursor={"pointer"}
-                >
+              
+                <Button colorScheme="teal" onClick={logOutUser}>
                   logout
-                </Text>
+                </Button>
               </Box>
               <Text
                 fontSize={"64px"}
@@ -86,9 +79,6 @@ const UserProfile = () => {
                   style={{ textDecoration: "none" }}
                   key={post.$id}
                 >
-                  {/* {console.log(post)}
-              {console.log(user.name)}
-              {post.title} */}
                   <BlogListItem
                     title={post.title}
                     date={moment(post.$createdAt).format("DD MMMM,YYYY")}

@@ -7,6 +7,9 @@ import {
   Box,
   Text,
   Image,
+  InputGroup,
+  InputRightElement,
+  Button,
 } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
 import home from "../../asset/home.png";
@@ -44,13 +47,15 @@ const Register = () => {
         alignItems={"left"}
         flexDir={"column"}
         justifyContent={"center"}
-        margin={"1rem"}
+        padding={"100px"}
+        color={"#838a8f"}
+        bgColor={"#22293e"}
       >
         <Link to={"/"}>
           <Image src={home} width={"2rem"} height={"2rem"} mt={"1rem"} />
         </Link>
         <Text fontSize={"64px"} fontWeight={900} color={"#e86f66"}>
-          new here?{" "}
+          new here?
           <Text margin={0} color={"#c7f2c9"}>
             register now!
           </Text>
@@ -66,13 +71,15 @@ const Register = () => {
             border={"none"}
             outline={"none"}
             fontWeight={"10"}
-            borderBottom="2px solid red"
             placeholder="mukul@google.com"
             onChange={(e) => setEmail(e.target.value)}
             bgColor={"inherit"}
+            borderBottom="1px solid #e86f66"
+            borderRadius={0}
+            width={"400px"}
           />
         </FormControl>
-        <FormControl border={"2px"} borderColor={"red"}>
+        <FormControl>
           <FormLabel fontSize={"32px"} fontWeight={100}>
             username
           </FormLabel>
@@ -83,47 +90,62 @@ const Register = () => {
             fontSize={"24px"}
             border={"none"}
             outline={"none"}
-            borderBottom="2px solid red"
+            borderBottom="1px solid #e86f66"
             fontWeight={100}
             placeholder="mukul"
             bgColor={"inherit"}
+            borderRadius={0}
+            width={"400px"}
           />
         </FormControl>
-        <FormControl border={"2px"} borderColor={"red"}>
+        <FormControl>
           <FormLabel fontSize={"32px"} fontWeight={100}>
             password
           </FormLabel>
-          <Input
-            type={show ? "text" : "password"}
-            onChange={(e) => setPassword(e.target.value)}
-            padding={"10px"}
-            fontSize={"24px"}
-            border={"none"}
-            outline={"none"}
-            fontWeight={"10"}
-            borderBottom="2px solid red"
-            placeholder="******"
-            bgColor={"inherit"}
-          />
-          <ViewIcon onClick={showPass} color={show ? "white" : "black"} />
+
+          <InputGroup width={"400px"}>
+            <Input
+              type={show ? "text" : "password"}
+              onChange={(e) => setPassword(e.target.value)}
+              padding={"10px"}
+              fontSize={"24px"}
+              border={"none"}
+              outline={"none"}
+              placeholder="******"
+              borderBottom="1px solid #e86f66"
+              name="password"
+              autoComplete="password"
+              bgColor={"inherit"}
+              color={"#9c99bd"}
+              borderRadius={0}
+            />
+            <InputRightElement>
+              <ViewIcon onClick={showPass} color={show ? "white" : "black"} />
+            </InputRightElement>
+          </InputGroup>
         </FormControl>
-        <Text
-          fontSize={"24px"}
-          fontWeight={150}
-          border={"2px solid green"}
-          padding={"0.5rem"}
-          borderRadius={"20px"}
-          boxSize={"max-content"}
-          onClick={handleRegister}
-          cursor={"pointer"}
+        <Box
+          display={"flex"}
+          alignItems={"center"}
+          gap={"1rem"}
+          margin={"2rem 0 2rem 0"}
         >
-          SignUp
-        </Text>
-        <Box position={"relative"} bottom={"1rem"} fontWeight={"200"}>
+          <Button onClick={handleRegister}>SignUp</Button>
+        </Box>
+        <Box
+          position={"relative"}
+          bottom={"1rem"}
+          display={"flex"}
+          gap={"4px"}
+          fontWeight={"200"}
+          alignItems={"center"}
+        >
           already registered?{" "}
-          <Link to="/login" style={{ cursor: "pointer" }}>
-            Login
-          </Link>
+          <Text color={"white"} _hover={{ color: "gray" }}>
+            <Link to="/login" style={{ cursor: "pointer" }}>
+              login
+            </Link>
+          </Text>
         </Box>
       </Box>
     </>
