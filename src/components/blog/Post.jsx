@@ -92,7 +92,12 @@ const Post = () => {
                   color={"#cfbccc"}
                   margin={"0.5rem"}
                 >
-                  <Text wordBreak={"break-word"}>{postData.title}</Text>
+                  <Text
+                    wordBreak={"break-word"}
+                    fontSize={{ base: "32px", md: "48px" }}
+                  >
+                    {postData.title}
+                  </Text>
                 </Box>
                 <Box display={"flex"} justifyContent={"space-between"}>
                   <Box
@@ -116,7 +121,7 @@ const Post = () => {
                     ""
                   )}
                 </Box>
-                <Box marginTop={"2rem"} fontSize={"24px"}>
+                <Box marginTop={"2rem"} fontSize={{ base: "18px", md: "24px" }} color={'#838a8f'}>
                   <ReactMarkdown
                     className="markdown"
                     children={postData.body}

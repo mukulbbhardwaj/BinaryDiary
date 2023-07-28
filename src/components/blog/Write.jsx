@@ -42,7 +42,7 @@ const Write = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const DOCUMENT_ID = ID.unique();
-  console.log('body', postBody);
+  console.log("body", postBody);
 
   return loading ? (
     "loading..."
@@ -62,9 +62,16 @@ const Write = () => {
               display={"flex"}
               flexDir={"column"}
               justifyContent={"center"}
+              alignItems={"center"}
             >
-              <Box display={"flex"}>
-                <Box margin={0}>
+              <Box>
+                <Box
+                  margin={0}
+                  display={"flex"}
+                  alignItems={"center"}
+                  justifyContent={"center"}
+                  flexDir={"column"}
+                >
                   <Textarea
                     type="text"
                     onChange={(e) => setPostTitle(e.target.value)}
@@ -79,6 +86,7 @@ const Write = () => {
                     placeholder="title..."
                     resize={"none"}
                     fontFamily={"helvetica"}
+                    width={{ base: "300px", md: "800px" }}
                   />
 
                   <Box display={"flex"} gap={"20px"}>
@@ -139,6 +147,7 @@ const Write = () => {
                         className="markdown"
                         children={postBody}
                         remarkPlugins={[remarkGfm]}
+                        width={{ base: "300px", md: "800px" }}
                       />
                       {/* <ReactMarkdown>{ postBody}</ReactMarkdown> */}
                     </Box>
@@ -154,6 +163,7 @@ const Write = () => {
                       outline={"none"}
                       value={postBody}
                       onChange={(e) => setPostBody(e.target.value)}
+                      width={{ base: "300px", md: "800px" }}
                     ></Textarea>
                   )}
                 </Box>
