@@ -55,11 +55,10 @@ const Login = () => {
         bgColor={"#22293e"}
       >
         <Link to={"/"}>
-          <Image src={home} width={"2rem"} height={"2rem"} mt={"1rem"} />
+          <Image src={home} width={"24px"} height={"24px"} mt={"1rem"} />
         </Link>
         <Text
-          fontSize={"64px"}
-          // fontSize={"64px"}
+          fontSize={{ base: "32px", md: "64px" }}
           fontWeight={900}
           color={"#e86f66"}
         >
@@ -69,7 +68,11 @@ const Login = () => {
           </Text>
         </Text>
         <FormControl>
-          <FormLabel fontSize={"32px"} fontWeight={300}>
+          <FormLabel
+            fontSize={{ base: "18px", md: "32px" }}
+            fontWeight={300}
+            marginTop={"1rem"}
+          >
             email
           </FormLabel>
           <Input
@@ -77,30 +80,33 @@ const Login = () => {
             isRequired
             onChange={(e) => setEmail(e.target.value)}
             padding={"10px"}
-            fontSize={"24px"}
+            fontSize={{ base: "18px", md: "32px" }}
             border={"none"}
             outline={"none"}
-            fontWeight={"10"}
             placeholder="mukul@google.com"
             borderBottom="1px solid #e86f66"
             autoComplete="email"
             name="email"
             bgColor={"inherit"}
             color={"#9c99bd"}
-            width={"400px"}
             borderRadius={0}
+            width={{ base: "200px", md: "400px" }}
           />
         </FormControl>
         <FormControl>
-          <FormLabel fontSize={"32px"} fontWeight={300}>
+          <FormLabel
+            fontSize={{ base: "18px", md: "32px" }}
+            fontWeight={300}
+            marginTop={"1rem"}
+          >
             password
           </FormLabel>
-          <InputGroup width={"400px"}>
+          <InputGroup width={{ base: "200px", md: "400px" }}>
             <Input
               type={show ? "text" : "password"}
               onChange={(e) => setPassword(e.target.value)}
               padding={""}
-              fontSize={"24px"}
+              fontSize={{ base: "18px", md: "32px" }}
               border={"none"}
               outline={"none"}
               placeholder="******"

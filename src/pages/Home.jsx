@@ -15,7 +15,11 @@ const Home = () => {
     getPosts();
   }, []);
   const getPosts = async () => {
-    const res = await databases.listDocuments(DATABASE_ID, COLLECTION_ID_BLOGS , [Query.orderDesc("$createdAt")]);
+    const res = await databases.listDocuments(
+      DATABASE_ID,
+      COLLECTION_ID_BLOGS,
+      [Query.orderDesc("$createdAt")]
+    );
     setPosts(res.documents);
   };
   return (

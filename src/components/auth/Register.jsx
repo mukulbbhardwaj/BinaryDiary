@@ -52,63 +52,76 @@ const Register = () => {
         bgColor={"#22293e"}
       >
         <Link to={"/"}>
-          <Image src={home} width={"2rem"} height={"2rem"} mt={"1rem"} />
+          <Image src={home} width={"24px"} height={"24px"} mt={"1rem"} />
         </Link>
-        <Text fontSize={"64px"} fontWeight={900} color={"#e86f66"}>
+        <Text
+          fontSize={{ base: "32px", md: "64px" }}
+          fontWeight={900}
+          color={"#e86f66"}
+        >
           new here?
           <Text margin={0} color={"#c7f2c9"}>
             register now!
           </Text>
         </Text>
         <FormControl>
-          <FormLabel fontSize={"32px"} fontWeight={100}>
+          <FormLabel
+            fontSize={{ base: "18px", md: "32px" }}
+            fontWeight={300}
+            marginTop={"1rem"}
+          >
             email
           </FormLabel>
           <Input
             type="text"
             padding={"10px"}
-            fontSize={"24px"}
+            fontSize={{ base: "18px", md: "32px" }}
             border={"none"}
             outline={"none"}
-            fontWeight={"10"}
             placeholder="mukul@google.com"
             onChange={(e) => setEmail(e.target.value)}
             bgColor={"inherit"}
             borderBottom="1px solid #e86f66"
             borderRadius={0}
-            width={"400px"}
+            width={{ base: "200px", md: "400px" }}
           />
         </FormControl>
         <FormControl>
-          <FormLabel fontSize={"32px"} fontWeight={100}>
+          <FormLabel
+            fontSize={{ base: "18px", md: "32px" }}
+            fontWeight={300}
+            marginTop={"1rem"}
+          >
             username
           </FormLabel>
           <Input
             type="text"
             onChange={(e) => setUsername(e.target.value)}
             padding={"10px"}
-            fontSize={"24px"}
+            fontSize={{ base: "18px", md: "32px" }}
             border={"none"}
             outline={"none"}
             borderBottom="1px solid #e86f66"
-            fontWeight={100}
             placeholder="mukul"
             bgColor={"inherit"}
             borderRadius={0}
-            width={"400px"}
+            width={{ base: "200px", md: "400px" }}
           />
         </FormControl>
         <FormControl>
-          <FormLabel fontSize={"32px"} fontWeight={100}>
+          <FormLabel
+            fontSize={{ base: "18px", md: "32px" }}
+            fontWeight={300}
+            marginTop={"1rem"}
+          >
             password
           </FormLabel>
 
-          <InputGroup width={"400px"}>
+          <InputGroup width={{ base: "200px", md: "400px" }}>
             <Input
               type={show ? "text" : "password"}
               onChange={(e) => setPassword(e.target.value)}
               padding={"10px"}
-              fontSize={"24px"}
               border={"none"}
               outline={"none"}
               placeholder="******"
@@ -118,6 +131,7 @@ const Register = () => {
               bgColor={"inherit"}
               color={"#9c99bd"}
               borderRadius={0}
+              fontSize={{ base: "18px", md: "32px" }}
             />
             <InputRightElement>
               <ViewIcon onClick={showPass} color={show ? "white" : "black"} />

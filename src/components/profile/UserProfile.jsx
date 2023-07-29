@@ -22,7 +22,7 @@ const UserProfile = () => {
     const res = await databases.listDocuments(
       DATABASE_ID,
       COLLECTION_ID_BLOGS,
-      [Query.equal("username", [user.name])]
+      [Query.equal("username", [user.name]), Query.orderDesc("$createdAt")]
     );
     setUserPosts(res.documents);
   };
