@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import moment from "moment";
 import { databases, DATABASE_ID, COLLECTION_ID_BLOGS } from "../api/appwrite";
 import Footer from "../components/misc/Footer";
+import { Query } from "appwrite";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -14,7 +15,7 @@ const Home = () => {
     getPosts();
   }, []);
   const getPosts = async () => {
-    const res = await databases.listDocuments(DATABASE_ID, COLLECTION_ID_BLOGS);
+    const res = await databases.listDocuments(DATABASE_ID, COLLECTION_ID_BLOGS , [Query.orderDesc("$createdAt")]);
     setPosts(res.documents);
   };
   return (

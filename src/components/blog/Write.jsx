@@ -42,114 +42,108 @@ const Write = () => {
       >
         <Box width={{ base: "300px", md: "800px" }}>
           <WriteNavBar postBody={postBody} postTitle={postTitle} />
-          <Box display={"flex"} alignItems={"center"} justifyContent={"center"}>
+
+          <Box
+            margin={0}
+            display={"flex"}
+            alignItems={"center"}
+            justifyContent={"center"}
+            flexDir={"column"}
+          >
+            <Textarea
+              type="text"
+              onChange={(e) => setPostTitle(e.target.value)}
+              fontSize={"48px"}
+              fontWeight={"800"}
+              borderBottom={"1px solid red"}
+              color={"#cfbccc"}
+              margin={0}
+              bgColor={"inherit"}
+              outline={0}
+              border={0}
+              placeholder="title..."
+              resize={"none"}
+              fontFamily={"helvetica"}
+              width={{ base: "300px", md: "800px" }}
+            />
+
             <Box
               display={"flex"}
-              flexDir={"column"}
-              justifyContent={"center"}
-              alignItems={"center"}
+              width={'-moz-max-content'}
+                textAlign={'center'}
+                gap={'4px'}
             >
+              <Text
+                bgColor={"#1f222b"}
+                onClick={(e) => setPreview(!preview)}
+                cursor={"pointer"}
+                padding={"4px"}
+                borderRadius={"6px"}
+                _hover={{ color: "white" }}
+                width={"70px"}
+              >
+                {preview ? "edit" : "preview"}
+              </Text>
+              <Text
+                bgColor={"#1f222b"}
+                onClick={onOpen}
+                cursor={"pointer"}
+                padding={"4px"}
+                borderRadius={"6px"}
+                _hover={{ color: "white" }}
+                width={"70px"}
+                textAlign={"center"}
+              >
+                info
+                </Text>
+                
               <Box>
-                <Box
-                  margin={0}
-                  display={"flex"}
-                  alignItems={"center"}
-                  justifyContent={"center"}
-                  flexDir={"column"}
-                >
-                  <Textarea
-                    type="text"
-                    onChange={(e) => setPostTitle(e.target.value)}
-                    fontSize={"48px"}
-                    fontWeight={"800"}
-                    borderBottom={"1px solid red"}
-                    color={"#cfbccc"}
-                    margin={0}
-                    bgColor={"inherit"}
-                    outline={0}
-                    border={0}
-                    placeholder="title..."
-                    resize={"none"}
-                    fontFamily={"helvetica"}
-                    width={{ base: "300px", md: "800px" }}
-                  />
+                <Modal isOpen={isOpen} onClose={onClose}>
+                  <ModalOverlay />
+                  <ModalContent
+                    display={"flex"}
+                    flexDir={"column"}
+                    alignItems={"center"}
+                    justifyContent={"center"}
+                  >
+                    <ModalBody display={"flex"} justifyContent={"center"}>
+                      <Info />
+                    </ModalBody>
 
-                  <Box display={"flex"} gap={"20px"} margin={"1rem"}>
-                    <Text
-                      bgColor={"#1f222b"}
-                      onClick={(e) => setPreview(!preview)}
-                      cursor={"pointer"}
-                      padding={"4px"}
-                      borderRadius={"6px"}
-                      _hover={{ color: "white" }}
-                      width={"70px"}
-                      textAlign={"center"}
-                    >
-                      {preview ? "edit" : "preview"}
-                    </Text>
-                    <Text
-                      bgColor={"#1f222b"}
-                      onClick={onOpen}
-                      cursor={"pointer"}
-                      padding={"4px"}
-                      borderRadius={"6px"}
-                      _hover={{ color: "white" }}
-                      width={"70px"}
-                      textAlign={"center"}
-                    >
-                      info
-                    </Text>
-                    <Box width={"600px"}>
-                      <Modal isOpen={isOpen} onClose={onClose}>
-                        <ModalOverlay />
-                        <ModalContent
-                          display={"flex"}
-                          flexDir={"column"}
-                          alignItems={"center"}
-                          justifyContent={"center"}
-                        >
-                          <ModalBody display={"flex"} justifyContent={"center"}>
-                            <Info />
-                          </ModalBody>
-
-                          <ModalFooter>
-                            <Button colorScheme="blue" mr={3} onClick={onClose}>
-                              Close
-                            </Button>
-                          </ModalFooter>
-                        </ModalContent>
-                      </Modal>
-                    </Box>
-                  </Box>
-                  {preview ? (
-                    <Box>
-                      <ReactMarkdown
-                        className="markdown"
-                        children={postBody}
-                        remarkPlugins={[remarkGfm]}
-                        width={{ base: "300px", md: "800px" }}
-                      />
-                      {/* <ReactMarkdown>{ postBody}</ReactMarkdown> */}
-                    </Box>
-                  ) : (
-                    <Textarea
-                      resize={"none"}
-                      backgroundColor={"inherit"}
-                      color={"#cfbccc"}
-                      fontSize={"24px"}
-                      fontFamily={"helvetica"}
-                      height={"100vh"}
-                      border={"none"}
-                      outline={"none"}
-                      value={postBody}
-                      onChange={(e) => setPostBody(e.target.value)}
-                      width={{ base: "300px", md: "800px" }}
-                      boxShadow={"none"}
-                    ></Textarea>
-                  )}
-                </Box>
+                    <ModalFooter>
+                      <Button colorScheme="blue" mr={3} onClick={onClose}>
+                        Close
+                      </Button>
+                    </ModalFooter>
+                  </ModalContent>
+                </Modal>
               </Box>
             </Box>
+            {preview ? (
+              <Box>
+                <ReactMarkdown
+                  className="markdown"
+                  children={postBody}
+                  remarkPlugins={[remarkGfm]}
+                  width={{ base: "300px", md: "800px" }}
+                />
+              </Box>
+            ) : (
+              <Textarea
+                resize={"none"}
+                backgroundColor={"inherit"}
+                color={"#cfbccc"}
+                fontSize={"24px"}
+                fontFamily={"helvetica"}
+                height={"100vh"}
+                border={"none"}
+                outline={"none"}
+                value={postBody}
+                onChange={(e) => setPostBody(e.target.value)}
+                width={{ base: "300px", md: "800px" }}
+                boxShadow={"none"}
+              ></Textarea>
+            )}
           </Box>
         </Box>
       </Box>
