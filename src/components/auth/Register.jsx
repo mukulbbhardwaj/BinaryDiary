@@ -144,7 +144,7 @@ const Register = () => {
           gap={"1rem"}
           margin={"2rem 0 2rem 0"}
         >
-          <Button onClick={handleRegister}>SignUp</Button>
+          <Button onClick={handleRegister}>register!</Button>
         </Box>
         <Box
           position={"relative"}
