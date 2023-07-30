@@ -3,6 +3,8 @@
 An open source blogging service to share knowledge, stories and experiences.
 
 
+<img src = "https://github.com/mukulbbhardwaj/BinaryDiary/blob/main/demo-img/home.png" alt = "Binary Diary Demo Image" >
+
 ## How things are done ;-
 The complete application is basically divided into two parts
 1. Client
