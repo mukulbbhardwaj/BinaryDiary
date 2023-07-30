@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Image, Text } from "@chakra-ui/react";
+import { Box, Button, Image, Text } from "@chakra-ui/react";
 import logo from "../../../src/asset/logo-sm.png";
 import pfp from "../../../src/asset/user.png";
 import { Link } from "react-router-dom";
@@ -51,15 +51,10 @@ const NavBar = () => {
           </Link>
         ) : (
           <Link to={"/login"} style={{ textDecoration: "none" }}>
-            <Text
-              fontSize={"24px"}
-              color={"black"}
-              fontWeight={"200"}
-              _hover={{ fontWeight: "300" }}
-              cursor={"pointer"}
+            <Button
             >
               login
-            </Text>
+            </Button>
           </Link>
         )}
       </Box>
