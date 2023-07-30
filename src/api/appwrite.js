@@ -1,13 +1,9 @@
 import { Client,Account, Databases } from "appwrite";
 
 
-
-
-
-
-export const PROJECT_ID = '64bcf34995ac8af3861b';
-export const COLLECTION_ID_BLOGS = "64bd047b72e0a6c1d928";
-export const DATABASE_ID = "64bd04631a3d473d1330";
+export const PROJECT_ID = process.env.REACT_APP_PROJECT_ID ;
+export const COLLECTION_ID_BLOGS = process.env.REACT_APP_COLLECTION_ID_BLOGS;
+export const DATABASE_ID = process.env.REACT_APP_DATABASE_ID; ;
 
 
 const client = new Client();
