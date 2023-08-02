@@ -43,7 +43,7 @@ const Post = () => {
         flexDir={"column"}
         alignItems={"center"}
         justifyContent={"center"}
-        bgColor={"#22293e"}
+       bgColor={"#141E24"}
       >
         <Box width={{ base: "300px", md: "800px" }}>
           <NavBar />
