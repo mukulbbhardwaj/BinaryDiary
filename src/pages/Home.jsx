@@ -29,7 +29,7 @@ const Home = () => {
         flexDir={"column"}
         alignItems={"center"}
         justifyContent={"center"}
-        bgColor={"#22293e"}
+         bgColor={"#141E24"}
       >
         <Box width={{ base: "300px", md: "800px" }}>
           <NavBar />
@@ -37,7 +37,7 @@ const Home = () => {
             fontSize={"64px"}
             fontWeight={"800"}
             borderBottom={"1px solid #332c32"}
-            color={"#a0d9cb"}
+       color={"#A2ABDD"}
             margin={"2rem"}
           >
             articles to read
