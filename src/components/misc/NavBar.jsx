@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Button, Image, Text } from "@chakra-ui/react";
+import { Box, Button, Image, Text, Tooltip } from "@chakra-ui/react";
 import logo from "../../../src/asset/logo-sm.png";
 import pfp from "../../../src/asset/user.png";
 import { Link } from "react-router-dom";
@@ -14,18 +14,22 @@ const NavBar = () => {
         display={"flex"}
         alignItems={"center"}
         justifyContent={"space-evenly"}
+        marginTop={"2rem"}
       >
         <Link to={"/"}>
           <Image src={logo} height={"3rem"} width={"3rem"} />
         </Link>
         <Link to={"/write"} style={{ textDecoration: "none", color: "black" }}>
-          <Box
-            display={"flex"}
-            alignItems={"center"}
-            _hover={{ color: "white" }}
-          >
-            <EditIcon fontWeight={100} fontSize={28} color={"gray"} />
-            <Text
+          <Box display={"flex"} alignItems={"center"}>
+            <Tooltip label="write" hasArrow>
+              <EditIcon
+                fontWeight={100}
+                fontSize={28}
+                color={"gray"}
+                _hover={{ color: "white" }}
+              />
+            </Tooltip>
+            {/* <Text
               fontSize={"24px"}
               fontWeight={650}
               padding={"0.5rem"}
@@ -33,9 +37,10 @@ const NavBar = () => {
               boxSize={"max-content"}
               cursor={"pointer"}
               color={"gray"}
+              _hover={{ color: "white" }}
             >
               write
-            </Text>
+            </Text> */}
           </Box>
         </Link>
 
@@ -51,10 +56,7 @@ const NavBar = () => {
           </Link>
         ) : (
           <Link to={"/login"} style={{ textDecoration: "none" }}>
-            <Button
-            >
-              login
-            </Button>
+            <Button>login</Button>
           </Link>
         )}
       </Box>

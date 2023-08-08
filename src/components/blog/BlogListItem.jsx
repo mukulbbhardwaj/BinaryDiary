@@ -5,10 +5,11 @@ const BlogListItem = ({title,username,date}) => {
 
   return (
     <Box
-      bgColor={"#1f222b"}
+      bgColor={"#17181c"}
       borderRadius={"4px"}
       padding={"12px"}
       marginBottom={"8px"}
+      border={"1px solid #131414"}
     >
       <Box
         fontSize={"24px"}
@@ -19,11 +20,11 @@ const BlogListItem = ({title,username,date}) => {
       >
         <Text
           textAlign={"left"}
-          color={"#cfbccc"}
+          color={"#d1d1d1"}
           border={"0"}
           margin={"0"}
           _hover={{ textDecor: "underline", textDecorationColor: "white" }}
-          wordBreak={'break-word'}
+          wordBreak={"break-word"}
         >
           {title}
         </Text>

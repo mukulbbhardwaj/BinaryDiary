@@ -2,7 +2,7 @@ import { Box, Text, Button } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 
 import NavBar from "../misc/NavBar";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   databases,
   DATABASE_ID,
@@ -43,7 +43,7 @@ const Post = () => {
         flexDir={"column"}
         alignItems={"center"}
         justifyContent={"center"}
-       bgColor={"#141E24"}
+        bgColor={"#1a1b1f"}
       >
         <Box width={{ base: "300px", md: "800px" }}>
           <NavBar />
@@ -63,7 +63,7 @@ const Post = () => {
                   fontSize={"64px"}
                   fontWeight={"800"}
                   borderBottom={"1px solid #332c32"}
-                  color={"#cfbccc"}
+                  color={"#d1d1d1"}
                   margin={"0.5rem"}
                 >
                   <Text
@@ -87,11 +87,16 @@ const Post = () => {
                     </Text>
                   </Box>
                   {isAuthor ? (
-                    <DeletePostModal>
-                      <Button>
-                        <DeleteIcon />
-                      </Button>
-                    </DeletePostModal>
+                    <Box display={"flex"} gap={"4px"}>
+                      <Link to={`/edit/${DOCUMENT_ID}`}>
+                        <Button size={"sm"}>edit</Button>
+                      </Link>
+                      <DeletePostModal>
+                        <Button size={"sm"}>
+                          <DeleteIcon />
+                        </Button>
+                      </DeletePostModal>
+                    </Box>
                   ) : (
                     ""
                   )}
@@ -99,7 +104,7 @@ const Post = () => {
                 <Box
                   marginTop={"2rem"}
                   fontSize={{ base: "18px", md: "24px" }}
-                  color={"#838a8f"}
+                  color={"#bdbebf"}
                 >
                   <ReactMarkdown
                     className="markdown"

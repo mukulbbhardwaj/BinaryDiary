@@ -1,6 +1,6 @@
 html{
 
-background-color:#141E24;
+background-color:#1a1b1f;
     color: #838a8f;
 }
 body {
@@ -10,8 +10,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  
-
 }
 
 code {
@@ -20,5 +18,19 @@ code {
 }
 .markdown > * {
   all: revert;
+}
+
+.btn{
+  font-size: 18px;
+  font-weight: 400;
+  padding: 4px;
+  border-radius: 9px;
+  box-sizing:content-box;
+  cursor: pointer;
+  color: gray;
+  border: 1px solid white;
+}
+.btn:hover{
+  color: white;
 }
 

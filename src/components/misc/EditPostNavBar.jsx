@@ -12,8 +12,9 @@ import {
   DATABASE_ID,
   COLLECTION_ID_BLOGS,
 } from "../../api/appwrite";
+import UpdatePostModal from "../modals/UpdatePostModal";
 
-const WriteNavBar = ({ postBody, postTitle }) => {
+const EditPostNavBar = ({ postBody, postTitle }) => {
   const { user } = useAuth();
   const toast = useToast();
   const navigate = useNavigate();
@@ -22,10 +23,10 @@ const WriteNavBar = ({ postBody, postTitle }) => {
   const DOCUMENT_ID = ID.unique();
   const saveToDraft = async () => {
     try {
-      const post = await databases.createDocument(
+      const post = await databases.updateDocument(
         DATABASE_ID,
         COLLECTION_ID_BLOGS,
-        DOCUMENT_ID,
+        POST_ID,
         {
           title: postTitle,
           body: postBody,
@@ -58,19 +59,20 @@ const WriteNavBar = ({ postBody, postTitle }) => {
         <Link to={"/"}>
           <Image src={logo} height={"3rem"} width={"3rem"} />
         </Link>
-        <Link to={"/write"} style={{ textDecoration: "none", color: "black" }}>
-          <Box display={"flex"} alignItems={"center"} gap={"4px"}>
-            <PublishPostModal postBody={postBody} postTitle={postTitle}>
-              <Text className="btn">publish</Text>
-            </PublishPostModal>
-            <Text
-             className="btn"
-              onClick={saveToDraft}
-            >
-              save to draft
-            </Text>
-          </Box>
-        </Link>
+        {/* <Link to={"/write"} style={{ textDecoration: "none", color: "black" }}> */}
+        <Box display={"flex"} alignItems={"center"} gap={'4px'}>
+          <UpdatePostModal
+            postBody={postBody}
+            postTitle={postTitle}
+            POST_ID={POST_ID}
+          >
+            <Text className="btn">publish</Text>
+          </UpdatePostModal>
+          <Text className="btn" onClick={saveToDraft}>
+            save to draft
+          </Text>
+        </Box>
+        {/* </Link> */}
 
         {user ? (
           <Link to={"/profile"}>
@@ -100,4 +102,4 @@ const WriteNavBar = ({ postBody, postTitle }) => {
   );
 };
 
-export default WriteNavBar;
+export default EditPostNavBar;

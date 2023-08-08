@@ -18,7 +18,7 @@ const Home = () => {
     const res = await databases.listDocuments(
       DATABASE_ID,
       COLLECTION_ID_BLOGS,
-      [Query.orderDesc("$createdAt")]
+      [Query.orderDesc("$createdAt"), Query.equal("isDraft", "false")]
     );
     setPosts(res.documents);
   };
@@ -29,15 +29,15 @@ const Home = () => {
         flexDir={"column"}
         alignItems={"center"}
         justifyContent={"center"}
-         bgColor={"#141E24"}
+        bgColor={"#1a1b1f"}
       >
         <Box width={{ base: "300px", md: "800px" }}>
           <NavBar />
           <Text
-            fontSize={"64px"}
-            fontWeight={"800"}
+            fontSize={{ base: "32px", lg: "48px" }}
+            fontWeight={"600"}
             borderBottom={"1px solid #332c32"}
-       color={"#A2ABDD"}
+            color={"gray"}
             margin={"2rem"}
           >
             articles to read

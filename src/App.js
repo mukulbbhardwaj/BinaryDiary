@@ -9,7 +9,7 @@ import PrivateRoutes from "./utils/PrivateRoutes";
 import { AuthProvider } from "./utils/AuthContext";
 import Post from "./components/blog/Post";
 import { ChakraProvider } from "@chakra-ui/react";
-
+import Edit from "./components/blog/Edit";
 const App = () => {
   return (
     <div>
@@ -23,6 +23,7 @@ const App = () => {
           <Route element={<PrivateRoutes />}>
             <Route path="/write" element={<Write />} />
             <Route path="/profile" element={<UserProfile />} />
+            <Route path="/edit/:postId" element={<Edit/>}/>
           </Route>
         </Routes>
       </AuthProvider>

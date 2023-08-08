@@ -18,12 +18,13 @@ const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const { user, loginUser } = useAuth();
+  const { user, loginUser,googleLogin } = useAuth();
   const [show, setShow] = useState(false);
 
   const showPass = () => {
     setShow(!show);
   };
+
   const guestLogin = async (e) => {
     const userInfo = {
       email: "guest@binary.com",
@@ -51,25 +52,23 @@ const Login = () => {
         flexDir={"column"}
         justifyContent={"center"}
         padding={"100px"}
-        color={"#838a8f"}
-        bgColor={"#22293e"}
+        bgColor={"#1a1b1f"}
+        color={"white"}
       >
         <Link to={"/"}>
           <Image src={home} width={"24px"} height={"24px"} mt={"1rem"} />
         </Link>
         <Text
           fontSize={{ base: "32px", md: "64px" }}
-          fontWeight={900}
-          color={"#e86f66"}
+          fontWeight={300}
+          color={"gray"}
         >
           welcome
-          <Text margin={0} color={"#c7f2c9"}>
-            back :)
-          </Text>
+          <Text margin={0}>back :)</Text>
         </Text>
         <FormControl>
           <FormLabel
-            fontSize={{ base: "18px", md: "32px" }}
+            fontSize={{ base: "14px", md: "24px" }}
             fontWeight={300}
             marginTop={"1rem"}
           >
@@ -79,23 +78,21 @@ const Login = () => {
             type="email"
             isRequired
             onChange={(e) => setEmail(e.target.value)}
-            padding={"10px"}
-            fontSize={{ base: "18px", md: "32px" }}
-            border={"none"}
+            padding={"20px 0px 20px 10px"}
+            fontSize={{ base: "14px", md: "24px" }}
             outline={"none"}
             placeholder="mukul@google.com"
-            borderBottom="1px solid #e86f66"
+            border={"1px solid gray"}
             autoComplete="email"
             name="email"
             bgColor={"inherit"}
-            color={"#9c99bd"}
-            borderRadius={0}
+            borderRadius={"9px"}
             width={{ base: "200px", md: "400px" }}
           />
         </FormControl>
         <FormControl>
           <FormLabel
-            fontSize={{ base: "18px", md: "32px" }}
+            fontSize={{ base: "14px", md: "24px" }}
             fontWeight={300}
             marginTop={"1rem"}
           >
@@ -105,17 +102,17 @@ const Login = () => {
             <Input
               type={show ? "text" : "password"}
               onChange={(e) => setPassword(e.target.value)}
-              padding={""}
-              fontSize={{ base: "18px", md: "32px" }}
-              border={"none"}
+              padding={"20px 0px 20px 10px"}
+              fontSize={{ base: "14px", md: "24px" }}
+              border={"1px solid gray"}
               outline={"none"}
-              placeholder="******"
-              borderBottom="1px solid #e86f66"
-              name="password"
-              autoComplete="password"
+              placeholder="mukul@google.com"
+              autoComplete="email"
+              name="email"
               bgColor={"inherit"}
               color={"#9c99bd"}
-              borderRadius={0}
+              borderRadius={"9px"}
+              width={{ base: "200px", md: "400px" }}
             />
             <InputRightElement>
               <ViewIcon onClick={showPass} color={show ? "white" : "black"} />
@@ -127,18 +124,19 @@ const Login = () => {
           alignItems={"center"}
           gap={"1rem"}
           margin={"2rem 0 2rem 0"}
-
-        
         >
-          <Button onClick={handleLogin}>login</Button>
+          <Button onClick={handleLogin}>Login</Button>
           <Button
             variant={"outline"}
             color={"#bfdbba"}
             _hover={{ color: "#a2b0de" }}
             onClick={guestLogin}
           >
-            guest login
+            Guest Login
           </Button>
+          {/* <Button onClick={handleGoogleLogin}>
+            Login with Google
+          </Button> */}
           {/* TODO: Add forget password */}
         </Box>
 

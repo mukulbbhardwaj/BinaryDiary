@@ -14,6 +14,24 @@ export const AuthProvider = ({ children }) => {
     checkUserStatus();
   }, []);
 
+  // const googleLogin = async (e) => {
+  //   e.preventDefault();
+
+  //   try {
+  //     account.createOAuth2Session(
+  //       "google",
+  //       "http://localhost:3000/",
+  //       "http://localhost:3000/login"
+  //     );
+  //     let accountDetails = await account.get();
+  //     console.log("mukul");
+  //     setUser(accountDetails);
+  //     console.log(user);
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
+
   const loginUser = async (userInfo) => {
     setLoading(true);
     try {
@@ -111,11 +129,11 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   };
   const contextdata = {
-    data: "data",
     user,
     loginUser,
     logOutUser,
     registerUser,
+    // googleLogin,
   };
   return (
     <AuthContext.Provider value={contextdata}>

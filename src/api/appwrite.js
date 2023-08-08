@@ -13,6 +13,6 @@ client
   .setProject(PROJECT_ID);
 
 export const databases = new Databases(client);
-
 export const account = new Account(client);
+
 export default client;

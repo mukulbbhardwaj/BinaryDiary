@@ -14,17 +14,36 @@ import { Link } from "react-router-dom";
 const UserProfile = () => {
   const { user, logOutUser } = useAuth();
   const [userPosts, setUserPosts] = useState([]);
-
+  const [userDrafts, setUserDrafts] = useState([]);
+  const [draftBtnState, setDraftBtnState] = useState(false);
   useEffect(() => {
-    getUserPosts();
+    getPublishedPosts();
+    getDraftPosts();
   }, []);
-  const getUserPosts = async () => {
+  const getPublishedPosts = async () => {
     const res = await databases.listDocuments(
       DATABASE_ID,
       COLLECTION_ID_BLOGS,
-      [Query.equal("username", [user.name]), Query.orderDesc("$createdAt")]
+      [
+        Query.equal("username", [user.name]),
+        Query.orderDesc("$createdAt"),
+        Query.equal("isDraft", "false"),
+      ]
     );
     setUserPosts(res.documents);
+  };
+
+  const getDraftPosts = async () => {
+    const res = await databases.listDocuments(
+      DATABASE_ID,
+      COLLECTION_ID_BLOGS,
+      [
+        Query.equal("username", [user.name]),
+        Query.orderDesc("$createdAt"),
+        Query.equal("isDraft", "true"),
+      ]
+    );
+    setUserDrafts(res.documents);
   };
 
   return (
@@ -34,7 +53,7 @@ const UserProfile = () => {
         flexDir={"column"}
         alignItems={"center"}
         justifyContent={"center"}
-        bgColor={"#22293e"}
+        bgColor={"#1a1b1f"}
         color={"#838a8f"}
       >
         <Box width={{ base: "300px", md: "800px" }}>
@@ -60,32 +79,89 @@ const UserProfile = () => {
                   </Text>
                 </Box>
 
-                <Button colorScheme="teal" onClick={logOutUser}>
-                  logout
-                </Button>
-              </Box>
-              <Text
-                fontSize={"64px"}
-                fontWeight={"800"}
-                borderBottom={"1px solid #332c32"}
-                color={"#a0d9cb"}
-              >
-                articles by you...
-              </Text>
-
-              {userPosts.map((post) => (
-                <Link
-                  to={`/post/${post.$id}`}
-                  style={{ textDecoration: "none" }}
-                  key={post.$id}
+                <Text
+                  className="btn"
+                  _hover={{ color: "#f0567a" }}
+                  onClick={logOutUser}
                 >
-                  <BlogListItem
-                    title={post.title}
-                    date={moment(post.$createdAt).format("DD MMMM,YYYY")}
-                    username={post.name}
-                  />
-                </Link>
-              ))}
+                  logout
+                </Text>
+              </Box>
+              <Box width={{ base: "300px", md: "800px" }}>
+                <Text
+                  fontSize={{ base: "32px", lg: "48px" }}
+                  fontWeight={"600"}
+                  borderBottom={"1px solid #332c32"}
+                  color={"gray"}
+                  margin={"2rem"}
+                >
+                  articles by you...
+                </Text>
+
+                <Box
+                  display={"flex"}
+                  justifyContent={"center"}
+                  gap={"4px"}
+                  marginBottom={"8px"}
+                >
+                  <Text
+                    bgColor={"#1f222b"}
+                    cursor={"pointer"}
+                    padding={"4px"}
+                    borderRadius={"6px"}
+                    _hover={{ color: "white" }}
+                    border={"1px solid #5c595a"}
+                    onClick={(e) => setDraftBtnState(false)}
+                  >
+                    Published
+                  </Text>
+                  <Text
+                    bgColor={"#1f222b"}
+                    cursor={"pointer"}
+                    padding={"4px"}
+                    borderRadius={"6px"}
+                    border={"1px solid #5c595a"}
+                    _hover={{ color: "white" }}
+                    onClick={(e) => setDraftBtnState(true)}
+                  >
+                    Drafts
+                  </Text>
+                </Box>
+
+                {draftBtnState ? (
+                  <>
+                    {userDrafts.map((post) => (
+                      <Link
+                        to={`/post/${post.$id}`}
+                        style={{ textDecoration: "none" }}
+                        key={post.$id}
+                      >
+                        <BlogListItem
+                          title={post.title}
+                          date={moment(post.$createdAt).format("DD MMMM,YYYY")}
+                          username={post.name}
+                        />
+                      </Link>
+                    ))}
+                  </>
+                ) : (
+                  <>
+                    {userPosts.map((post) => (
+                      <Link
+                        to={`/post/${post.$id}`}
+                        style={{ textDecoration: "none" }}
+                        key={post.$id}
+                      >
+                        <BlogListItem
+                          title={post.title}
+                          date={moment(post.$createdAt).format("DD MMMM,YYYY")}
+                          username={post.name}
+                        />
+                      </Link>
+                    ))}
+                  </>
+                )}
+              </Box>
             </Box>
           </Box>
         </Box>

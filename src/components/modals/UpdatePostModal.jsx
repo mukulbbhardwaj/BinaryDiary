@@ -21,31 +21,39 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../utils/AuthContext";
 
-const PublishPostModal = ({ children, postBody, postTitle,isDraft }) => {
+const UpdatePostModal = ({
+  children,
+  postBody,
+  postTitle,
+  isDraft,
+  POST_ID,
+}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
   const toast = useToast();
   const { user } = useAuth();
-  const DOCUMENT_ID = ID.unique();
+
   const publishPost = async () => {
-    if (!(postTitle.length > 0 && postBody.length > 0)) {
-      toast({
-        title: "Complete all the feilds",
-        duration: 9000,
-        isClosable: true,
-      });
-      return;
+    if (postTitle !== undefined && postBody !== undefined) {
+      if (!(postTitle.length > 0 && postBody.length > 0)) {
+        toast({
+          title: "Complete all the feilds",
+          duration: 9000,
+          isClosable: true,
+        });
+        return;
+      }
     }
     try {
-      const post = await databases.createDocument(
+      const post = await databases.updateDocument(
         DATABASE_ID,
         COLLECTION_ID_BLOGS,
-        DOCUMENT_ID,
+        POST_ID,
         {
           title: postTitle,
           body: postBody,
           username: user.name,
-          isDraft:"false"
+          isDraft: "false",
         }
       );
       toast({
@@ -67,8 +75,8 @@ const PublishPostModal = ({ children, postBody, postTitle,isDraft }) => {
   };
   const updatePost = () => {
     toast({
-      title: "updated"
-    })
+      title: "updated",
+    });
   };
 
   return (
@@ -82,7 +90,11 @@ const PublishPostModal = ({ children, postBody, postTitle,isDraft }) => {
           <ModalBody>done writing? want to publish this?</ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={isDraft?updatePost:publishPost}>
+            <Button
+              colorScheme="blue"
+              mr={3}
+              onClick={isDraft ? updatePost : publishPost}
+            >
               Yes
             </Button>
             <Button variant="ghost" colorScheme="telegram" onClick={onClose}>
@@ -95,4 +107,4 @@ const PublishPostModal = ({ children, postBody, postTitle,isDraft }) => {
   );
 };
 
-export default PublishPostModal;
+export default UpdatePostModal;

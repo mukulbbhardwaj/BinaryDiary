@@ -48,16 +48,16 @@ const Register = () => {
         flexDir={"column"}
         justifyContent={"center"}
         padding={"100px"}
-        color={"#838a8f"}
-        bgColor={"#22293e"}
+        bgColor={"#1a1b1f"}
+        color={"white"}
       >
         <Link to={"/"}>
           <Image src={home} width={"24px"} height={"24px"} mt={"1rem"} />
         </Link>
         <Text
           fontSize={{ base: "32px", md: "64px" }}
-          fontWeight={900}
-          color={"#e86f66"}
+          fontWeight={300}
+          color={"gray"}
         >
           new here?
           <Text margin={0} color={"#c7f2c9"}>
@@ -66,29 +66,31 @@ const Register = () => {
         </Text>
         <FormControl>
           <FormLabel
-            fontSize={{ base: "18px", md: "32px" }}
+            fontSize={{ base: "14px", md: "24px" }}
             fontWeight={300}
             marginTop={"1rem"}
           >
             email
           </FormLabel>
           <Input
-            type="text"
-            padding={"10px"}
-            fontSize={{ base: "18px", md: "32px" }}
-            border={"none"}
+            type="email"
+            isRequired
+            onChange={(e) => setEmail(e.target.value)}
+            padding={"20px 0px 20px 10px"}
+            fontSize={{ base: "14px", md: "24px" }}
             outline={"none"}
             placeholder="mukul@google.com"
-            onChange={(e) => setEmail(e.target.value)}
+            border={"1px solid gray"}
+            autoComplete="email"
+            name="email"
             bgColor={"inherit"}
-            borderBottom="1px solid #e86f66"
-            borderRadius={0}
+            borderRadius={"9px"}
             width={{ base: "200px", md: "400px" }}
           />
         </FormControl>
         <FormControl>
           <FormLabel
-            fontSize={{ base: "18px", md: "32px" }}
+            fontSize={{ base: "14px", md: "24px" }}
             fontWeight={300}
             marginTop={"1rem"}
           >
@@ -96,21 +98,23 @@ const Register = () => {
           </FormLabel>
           <Input
             type="text"
-            onChange={(e) => setUsername(e.target.value)}
-            padding={"10px"}
-            fontSize={{ base: "18px", md: "32px" }}
-            border={"none"}
+            isRequired
+            onChange={(e) => setEmail(e.target.value)}
+            padding={"20px 0px 20px 10px"}
+            fontSize={{ base: "14px", md: "24px" }}
             outline={"none"}
-            borderBottom="1px solid #e86f66"
-            placeholder="mukul"
+            placeholder="mukul@google.com"
+            border={"1px solid gray"}
+            autoComplete="email"
+            name="email"
             bgColor={"inherit"}
-            borderRadius={0}
+            borderRadius={"9px"}
             width={{ base: "200px", md: "400px" }}
           />
         </FormControl>
         <FormControl>
           <FormLabel
-            fontSize={{ base: "18px", md: "32px" }}
+            fontSize={{ base: "14px", md: "24px" }}
             fontWeight={300}
             marginTop={"1rem"}
           >
@@ -121,17 +125,17 @@ const Register = () => {
             <Input
               type={show ? "text" : "password"}
               onChange={(e) => setPassword(e.target.value)}
-              padding={"10px"}
-              border={"none"}
+              padding={"20px 0px 20px 10px"}
+              fontSize={{ base: "14px", md: "24px" }}
+              border={"1px solid gray"}
               outline={"none"}
-              placeholder="******"
-              borderBottom="1px solid #e86f66"
-              name="password"
-              autoComplete="password"
+              placeholder="mukul@google.com"
+              autoComplete="email"
+              name="email"
               bgColor={"inherit"}
               color={"#9c99bd"}
-              borderRadius={0}
-              fontSize={{ base: "18px", md: "32px" }}
+              borderRadius={"9px"}
+              width={{ base: "200px", md: "400px" }}
             />
             <InputRightElement>
               <ViewIcon onClick={showPass} color={show ? "white" : "black"} />
