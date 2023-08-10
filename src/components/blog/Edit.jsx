@@ -23,6 +23,7 @@ import EditPostNavBar from "../misc/EditPostNavBar";
 // import WriteNavBar from "../misc/WriteNavBar";
 import Info from "../misc/Info";
 import { useLocation } from "react-router-dom";
+import Footer from "../misc/Footer";
 
 const Edit = ({}) => {
   const [loading, setLoading] = useState(false);
@@ -162,7 +163,8 @@ const Edit = ({}) => {
               ></Textarea>
             )}
           </Box>
-        </Box>
+          </Box>
+          <Footer/>
       </Box>
     </>
   );

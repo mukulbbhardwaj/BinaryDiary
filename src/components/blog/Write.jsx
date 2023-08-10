@@ -17,6 +17,10 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import WriteNavBar from "../misc/WriteNavBar";
 import Info from "../misc/Info";
+import TagsItem from "../misc/TagsItem";
+import AddTagsModal from "../modals/AddTagsMenu";
+import AddTagsMenu from "../modals/AddTagsMenu";
+import Footer from "../misc/Footer";
 
 const Write = () => {
   const [postTitle, setPostTitle] = useState("");
@@ -25,7 +29,7 @@ const Write = () => {
   const [preview, setPreview] = useState(false);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-
+  const addTags = () => {};
   return loading ? (
     "loading..."
   ) : (
@@ -67,6 +71,16 @@ const Write = () => {
               fontFamily={"helvetica"}
               width={{ base: "300px", md: "800px" }}
             />
+            <Box
+              width={"100%"}
+              display={"flex"}
+              gap={"1rem"}
+              marginBottom={"1rem"}
+              alignItems={"center"}
+            >
+              {/* <Text>Tags:</Text>
+              <AddTagsMenu /> */}
+            </Box>
 
             <Box
               display={"flex"}
@@ -81,7 +95,6 @@ const Write = () => {
                 padding={"4px"}
                 borderRadius={"6px"}
                 _hover={{ color: "white" }}
-                width={"70px"}
                 border={"1px solid #5c595a"}
               >
                 {preview ? "edit" : "preview"}
@@ -93,7 +106,6 @@ const Write = () => {
                 padding={"4px"}
                 borderRadius={"6px"}
                 _hover={{ color: "white" }}
-                width={"70px"}
                 textAlign={"center"}
                 border={"1px solid #5c595a"}
               >
@@ -149,6 +161,7 @@ const Write = () => {
             )}
           </Box>
         </Box>
+        <Footer />
       </Box>
     </>
   );

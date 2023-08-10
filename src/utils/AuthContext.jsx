@@ -72,6 +72,7 @@ export const AuthProvider = ({ children }) => {
   };
   const registerUser = async (userInfo) => {
     setLoading(true);
+    console.log(userInfo)
     if (!userInfo.email || !userInfo.password || !userInfo.username) {
       toast({
         title: "fill all fields",

@@ -13,6 +13,7 @@ import {
   COLLECTION_ID_BLOGS,
 } from "../../api/appwrite";
 import UpdatePostModal from "../modals/UpdatePostModal";
+import Logo from "./Logo";
 
 const EditPostNavBar = ({ postBody, postTitle }) => {
   const { user } = useAuth();
@@ -57,7 +58,8 @@ const EditPostNavBar = ({ postBody, postTitle }) => {
         marginTop={"2rem"}
       >
         <Link to={"/"}>
-          <Image src={logo} height={"3rem"} width={"3rem"} />
+          {/* <Image src={logo} height={"3rem"} width={"3rem"} /> */}
+          <Logo/>
         </Link>
         {/* <Link to={"/write"} style={{ textDecoration: "none", color: "black" }}> */}
         <Box display={"flex"} alignItems={"center"} gap={'4px'}>

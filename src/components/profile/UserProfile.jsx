@@ -67,8 +67,12 @@ const UserProfile = () => {
             <Box>
               <Box
                 display={"flex"}
-                justifyContent={"space-around"}
+                justifyContent={"space-between"}
                 alignItems={"center"}
+                margin={"100px"}
+                border={"1px solid #26282e"}
+                padding={"1rem"}
+                borderRadius={"1rem"}
               >
                 <Box>
                   <Text fontSize={"24px"} fontWeight={700} color={"#ebc5c3"}>
@@ -95,7 +99,7 @@ const UserProfile = () => {
                   color={"gray"}
                   margin={"2rem"}
                 >
-                  articles by you...
+                  Your Articles:
                 </Text>
 
                 <Box

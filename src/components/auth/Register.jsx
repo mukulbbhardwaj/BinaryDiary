@@ -31,7 +31,6 @@ const Register = () => {
 
   const showPass = () => {
     setShow(!show);
-    console.log(show);
   };
 
   const handleRegister = (e) => {
@@ -99,11 +98,11 @@ const Register = () => {
           <Input
             type="text"
             isRequired
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => setUsername(e.target.value)}
             padding={"20px 0px 20px 10px"}
             fontSize={{ base: "14px", md: "24px" }}
             outline={"none"}
-            placeholder="mukul@google.com"
+            placeholder="mukulbhardwaj"
             border={"1px solid gray"}
             autoComplete="email"
             name="email"
@@ -129,7 +128,7 @@ const Register = () => {
               fontSize={{ base: "14px", md: "24px" }}
               border={"1px solid gray"}
               outline={"none"}
-              placeholder="mukul@google.com"
+              placeholder="********"
               autoComplete="email"
               name="email"
               bgColor={"inherit"}

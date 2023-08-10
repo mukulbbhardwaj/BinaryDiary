@@ -14,6 +14,7 @@ import { useAuth } from "../../utils/AuthContext";
 
 import ReactMarkdown from "react-markdown";
 import DeletePostModal from "../modals/DeletePostModal";
+import Footer from "../misc/Footer";
 
 const Post = () => {
   const [postData, setPostData] = useState({});
@@ -118,6 +119,7 @@ const Post = () => {
             </Box>
           </Box>
         </Box>
+              <Footer />
       </Box>
     </>
   );

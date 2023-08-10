@@ -5,6 +5,7 @@ import pfp from "../../../src/asset/user.png";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../utils/AuthContext";
 import { EditIcon } from "@chakra-ui/icons";
+import Logo from "./Logo";
 
 const NavBar = () => {
   const { user } = useAuth();
@@ -17,7 +18,8 @@ const NavBar = () => {
         marginTop={"2rem"}
       >
         <Link to={"/"}>
-          <Image src={logo} height={"3rem"} width={"3rem"} />
+          {/* <Image src={logo} height={"3rem"} width={"3rem"} /> */}
+          <Logo/>
         </Link>
         <Link to={"/write"} style={{ textDecoration: "none", color: "black" }}>
           <Box display={"flex"} alignItems={"center"}>
