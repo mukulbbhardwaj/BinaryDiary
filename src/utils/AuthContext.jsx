@@ -67,7 +67,7 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   };
   const logOutUser = async () => {
-    account.deleteSession("current");
+    await account.deleteSession("current");
     setUser(null);
   };
   const registerUser = async (userInfo) => {

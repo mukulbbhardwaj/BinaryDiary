@@ -8,7 +8,7 @@ const HomeBanner = () => {
         display={"flex"}
         justifyContent={"center"}
         alignItems={"center"}
-        margin={"100px"}
+        margin={{base:"10px","lg":"100px"}}
         flexDir={"column"}
         border={"0.5px solid #2b2c33"}
         borderRadius={'1rem'}

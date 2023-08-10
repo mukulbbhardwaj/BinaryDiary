@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../utils/AuthContext";
 import { EditIcon } from "@chakra-ui/icons";
 import Logo from "./Logo";
+import UserMenu from "./UserMenu";
 
 const NavBar = () => {
   const { user } = useAuth();
@@ -47,15 +48,7 @@ const NavBar = () => {
         </Link>
 
         {user ? (
-          <Link to={"/profile"}>
-            <Image
-              src={pfp}
-              height={"2rem"}
-              width={"2rem"}
-              color={"red"}
-              cursor={"pointer"}
-            />
-          </Link>
+       <UserMenu/>
         ) : (
           <Link to={"/login"} style={{ textDecoration: "none" }}>
             <Button>login</Button>

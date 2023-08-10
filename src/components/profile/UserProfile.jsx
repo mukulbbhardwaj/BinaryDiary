@@ -12,7 +12,7 @@ import {
 import { Query } from "appwrite";
 import { Link } from "react-router-dom";
 const UserProfile = () => {
-  const { user, logOutUser } = useAuth();
+  const { user } = useAuth();
   const [userPosts, setUserPosts] = useState([]);
   const [userDrafts, setUserDrafts] = useState([]);
   const [draftBtnState, setDraftBtnState] = useState(false);
@@ -66,32 +66,19 @@ const UserProfile = () => {
           >
             <Box>
               <Box
-                display={"flex"}
-                justifyContent={"space-between"}
-                alignItems={"center"}
-                margin={"100px"}
                 border={"1px solid #26282e"}
-                padding={"1rem"}
+                padding={"2rem"}
                 borderRadius={"1rem"}
+                margin={{ base: "10px", lg: "100px" }}
               >
-                <Box>
-                  <Text fontSize={"24px"} fontWeight={700} color={"#ebc5c3"}>
-                    {user.name}
-                  </Text>
-                  <Text fontWeight={400} fontSize={"18px"} color={"#b8b1b0"}>
-                    {user.email}
-                  </Text>
-                </Box>
-
-                <Text
-                  className="btn"
-                  _hover={{ color: "#f0567a" }}
-                  onClick={logOutUser}
-                >
-                  logout
+                <Text fontSize={"24px"} fontWeight={700} color={"#ebc5c3"}>
+                  {user.name}
+                </Text>
+                <Text fontWeight={400} fontSize={"18px"} color={"#b8b1b0"}>
+                  {user.email}
                 </Text>
               </Box>
-              <Box width={{ base: "300px", md: "800px" }}>
+              <Box>
                 <Text
                   fontSize={{ base: "32px", lg: "48px" }}
                   fontWeight={"600"}

@@ -33,7 +33,7 @@ const AddTagsMenu = () => {
   };
   return (
     <>
-      <Menu>
+      <Menu >
         <MenuButton
           as={IconButton}
           aria-label="Options"
