@@ -43,7 +43,7 @@ const Home = () => {
               color={"gray"}
               margin={"2rem"}
             >
-              Articles to read :
+              Articles to read:
             </Text>
             {posts.map((post) => (
               <Link
