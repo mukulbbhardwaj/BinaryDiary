@@ -4,10 +4,10 @@ import {
   MenuItem,
   MenuList,
   IconButton,
-    MenuButton,
-  MenuDivider
+  MenuButton,
+  MenuDivider,
 } from "@chakra-ui/react";
-import { AddIcon, HamburgerIcon } from "@chakra-ui/icons";
+import { HamburgerIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../utils/AuthContext";
 // import{logoutUser} from '../'

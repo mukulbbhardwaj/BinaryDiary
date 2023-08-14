@@ -1,11 +1,8 @@
 import { React } from "react";
 import { Box, Image, Text, useToast } from "@chakra-ui/react";
-import logo from "../../../src/asset/logo-sm.png";
 import pfp from "../../../src/asset/user.png";
-import { Link, useNavigate } from "react-router-dom";
-import PublishPostModal from "../modals/PublishPostModal";
+import { Link } from "react-router-dom";
 import { useAuth } from "../../utils/AuthContext";
-import { ID } from "appwrite";
 import { useLocation } from "react-router-dom";
 import {
   databases,
@@ -18,13 +15,11 @@ import Logo from "./Logo";
 const EditPostNavBar = ({ postBody, postTitle }) => {
   const { user } = useAuth();
   const toast = useToast();
-  const navigate = useNavigate();
   const location = useLocation();
   const POST_ID = location.pathname.split("/")[2];
-  const DOCUMENT_ID = ID.unique();
   const saveToDraft = async () => {
     try {
-      const post = await databases.updateDocument(
+       await databases.updateDocument(
         DATABASE_ID,
         COLLECTION_ID_BLOGS,
         POST_ID,
@@ -59,10 +54,10 @@ const EditPostNavBar = ({ postBody, postTitle }) => {
       >
         <Link to={"/"}>
           {/* <Image src={logo} height={"3rem"} width={"3rem"} /> */}
-          <Logo/>
+          <Logo />
         </Link>
         {/* <Link to={"/write"} style={{ textDecoration: "none", color: "black" }}> */}
-        <Box display={"flex"} alignItems={"center"} gap={'4px'}>
+        <Box display={"flex"} alignItems={"center"} gap={"4px"}>
           <UpdatePostModal
             postBody={postBody}
             postTitle={postTitle}

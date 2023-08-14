@@ -1,6 +1,5 @@
 import { Box, Text, Button } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-
 import NavBar from "../misc/NavBar";
 import { Link, useLocation } from "react-router-dom";
 import {
@@ -11,7 +10,7 @@ import {
 import moment from "moment";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { useAuth } from "../../utils/AuthContext";
-
+import ShareLinks from './SharLinks'
 import ReactMarkdown from "react-markdown";
 import DeletePostModal from "../modals/DeletePostModal";
 import Footer from "../misc/Footer";
@@ -34,9 +33,7 @@ const Post = () => {
     setPostData(res);
   };
   const date = moment(postData.$createdAt).format("DD MMMM,YYYY");
-
   const isAuthor = user.name === postData.username;
-
   return (
     <>
       <Box
@@ -87,20 +84,24 @@ const Post = () => {
                       {date}
                     </Text>
                   </Box>
-                  {isAuthor ? (
-                    <Box display={"flex"} gap={"4px"}>
-                      <Link to={`/edit/${DOCUMENT_ID}`}>
-                        <Button size={"sm"}>edit</Button>
-                      </Link>
-                      <DeletePostModal>
-                        <Button size={"sm"}>
-                          <DeleteIcon />
-                        </Button>
-                      </DeletePostModal>
-                    </Box>
-                  ) : (
-                    ""
-                  )}
+
+                  <Box display={"flex"} alignItems={"center"} gap={"4px"}>
+                  <ShareLinks/>
+                    {isAuthor ? (
+                      <Box display={"flex"} gap={"4px"}>
+                        <Link to={`/edit/${DOCUMENT_ID}`}>
+                          <Button size={"sm"}>edit</Button>
+                        </Link>
+                        <DeletePostModal>
+                          <Button size={"sm"}>
+                            <DeleteIcon />
+                          </Button>
+                        </DeletePostModal>
+                      </Box>
+                    ) : (
+                      ""
+                    )}
+                  </Box>
                 </Box>
                 <Box
                   marginTop={"2rem"}
@@ -119,7 +120,7 @@ const Post = () => {
             </Box>
           </Box>
         </Box>
-              <Footer />
+        <Footer />
       </Box>
     </>
   );
