@@ -7,8 +7,7 @@ import { Route, Routes } from "react-router-dom";
 import UserProfile from "./components/profile/UserProfile";
 import PrivateRoutes from "./utils/PrivateRoutes";
 import { AuthProvider } from "./utils/AuthContext";
-import Post from "./components/blog/Post";
-import { ChakraProvider } from "@chakra-ui/react";
+import Main from "./components/blog/post/Main";
 import Edit from "./components/blog/Edit";
 const App = () => {
   return (
@@ -19,7 +18,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path= '/post/:postid' element={<Post />} />
+          <Route path= '/post/:postid' element={<Main />} />
           <Route element={<PrivateRoutes />}>
             <Route path="/write" element={<Write />} />
             <Route path="/profile" element={<UserProfile />} />
