@@ -1,7 +1,7 @@
-import React from 'react'
+import React from "react";
 import ReactMarkdown from "react-markdown";
-import { Box ,Text} from '@chakra-ui/react';
-const PostBody = ({postData}) => {
+import { Box, Text } from "@chakra-ui/react";
+const PostBody = ({ postData }) => {
   return (
     <>
       <Box
@@ -12,13 +12,13 @@ const PostBody = ({postData}) => {
         fontSize={"20px"}
       >
         <ReactMarkdown className="markdown" children={postData.body} />
+       
       </Box>
       <Text textAlign={"center"} fontSize={"64px"} color={"white"}>
-        {" "}
-        . . .{" "}
+        . . .
       </Text>
     </>
   );
-}
+};
 
-export default PostBody
+export default PostBody;
