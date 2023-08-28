@@ -59,7 +59,7 @@ export const AuthProvider = ({ children }) => {
       let accountDetails = await account.get();
       setUser(accountDetails);
     } catch (error) {
-      console.error(error);
+      // console.error(error);
       alert("Something went wrong try again");
       setLoading(false);
     }
@@ -72,7 +72,7 @@ export const AuthProvider = ({ children }) => {
   };
   const registerUser = async (userInfo) => {
     setLoading(true);
-    console.log(userInfo)
+    // console.log(userInfo)
     if (!userInfo.email || !userInfo.password || !userInfo.username) {
       toast({
         title: "fill all fields",
@@ -115,7 +115,7 @@ export const AuthProvider = ({ children }) => {
       let accountDetails = await account.get();
       setUser(accountDetails);
     } catch (error) {
-      console.error(error);
+      // console.error(error);
       alert(error);
       setLoading(false);
     }
