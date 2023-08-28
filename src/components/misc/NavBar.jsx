@@ -19,7 +19,7 @@ const NavBar = () => {
         <Link to={"/"}>
           <Logo/>
         </Link>
-        <Link to={"/write"} style={{ textDecoration: "none", color: "black" }}>
+        <Link to={"/write"} style={{ textDecoration: "none", color: "black" }} aria-label="write your blog">
           <Box display={"flex"} alignItems={"center"}>
             <Tooltip label="write" hasArrow>
               <EditIcon
@@ -27,6 +27,7 @@ const NavBar = () => {
                 fontSize={28}
                 color={"gray"}
                 _hover={{ color: "white" }}
+
               />
             </Tooltip>
           </Box>

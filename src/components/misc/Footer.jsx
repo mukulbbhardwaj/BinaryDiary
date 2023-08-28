@@ -32,7 +32,11 @@ const Footer = () => {
         </Box>
         <Box marginTop={"10px"} marginBottom={"75px"}>
           <Link href="https://twitter.com/mukulbbhardwaj" target="_blank">
-            <Image src={twitter} width={"24px"}></Image>
+            <Image src={twitter}
+              alt="twitter"
+              width={"24px"}
+            aria-label="Twitter Account"
+            ></Image>
           </Link>
         </Box>
       </Box>

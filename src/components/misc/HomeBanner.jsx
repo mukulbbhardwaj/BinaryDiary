@@ -1,4 +1,4 @@
-import { Box, Image, Text } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import React from "react";
 // import banner from "../../asset/big-banner.png";
 const HomeBanner = () => {

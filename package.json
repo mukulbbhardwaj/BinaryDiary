@@ -51,5 +51,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "description": "An open source blogging service to share knowledge, stories and experiences.",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC"
 }
