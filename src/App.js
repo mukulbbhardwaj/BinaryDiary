@@ -1,5 +1,6 @@
-import React from "react";
+import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
+import { useColorMode } from "@chakra-ui/react";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import Home from "./pages/Home";
@@ -11,6 +12,12 @@ import PrivateRoutes from "./utils/PrivateRoutes";
 import { AuthProvider } from "./utils/AuthContext";
 
 export default function App() {
+  const { colorMode } = useColorMode();
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", colorMode);
+  }, [colorMode]);
+
   return (
     <AuthProvider>
       <Routes>
