@@ -39,98 +39,102 @@ export default function Login() {
 
   return (
     <PageLayout>
-      <Box as="main" py={{ base: 8, md: 12 }} maxW="400px" mx="auto">
-        <RouterLink to="/">
-          <Text
-            fontSize="sm"
-            color="text.muted"
-            _hover={{ color: "brand.400" }}
-            mb={8}
-            display="inline-block"
-          >
-            ← Back to home
+      <Box as="main" py={{ base: 8, md: 12 }} w="100%" maxW="420px" mx="auto">
+        <Box
+          bg="surface.card"
+          border="1px solid"
+          borderColor="surface.border"
+          borderRadius="2xl"
+          p={{ base: 6, md: 8 }}
+          boxShadow="card"
+        >
+          <RouterLink to="/">
+            <Text
+              fontSize="sm"
+              color="text.muted"
+              _hover={{ color: "brand.400" }}
+              mb={6}
+              display="inline-block"
+            >
+              ← Back to home
+            </Text>
+          </RouterLink>
+
+          <Text as="h1" fontSize={{ base: "2xl", md: "3xl" }} fontWeight="700" color="text.primary" mb={1} letterSpacing="-0.02em">
+            Welcome back
           </Text>
-        </RouterLink>
+          <Text color="text.muted" mb={8} fontSize="md">
+            Sign in to continue to Binary Diary
+          </Text>
 
-        <Text as="h1" fontSize={{ base: "2xl", md: "4xl" }} fontWeight="600" color="text.primary" mb={1}>
-          Welcome back
-        </Text>
-        <Text color="text.muted" mb={8}>
-          Sign in to continue to Binary Diary
-        </Text>
-
-        <form onSubmit={handleSubmit}>
-          <VStack align="stretch" spacing={5}>
-            <FormControl isRequired>
-              <FormLabel fontSize="sm" fontWeight="500" color="text.secondary">
-                Email
-              </FormLabel>
-              <Input
-                type="email"
-                placeholder="you@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                autoComplete="email"
-                bg="surface.card"
-                borderColor="surface.border"
-                _focus={{ borderColor: "brand.500", boxShadow: "0 0 0 1px var(--chakra-colors-brand-500)" }}
-              />
-            </FormControl>
-
-            <FormControl isRequired>
-              <FormLabel fontSize="sm" fontWeight="500" color="text.secondary">
-                Password
-              </FormLabel>
-              <InputGroup>
+          <form onSubmit={handleSubmit}>
+            <VStack align="stretch" spacing={5}>
+              <FormControl isRequired>
+                <FormLabel fontSize="sm" fontWeight="600" color="text.secondary">
+                  Email
+                </FormLabel>
                 <Input
-                  type={showPassword ? "text" : "password"}
-                  placeholder="••••••••"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  autoComplete="current-password"
-                  bg="surface.card"
-                  borderColor="surface.border"
-                  _focus={{ borderColor: "brand.500", boxShadow: "0 0 0 1px var(--chakra-colors-brand-500)" }}
+                  type="email"
+                  placeholder="you@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  autoComplete="email"
+                  size="lg"
+                  borderRadius="lg"
                 />
-                <InputRightElement>
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    aria-label={showPassword ? "Hide password" : "Show password"}
-                    onClick={() => setShowPassword((p) => !p)}
-                  >
-                    {showPassword ? <ViewOffIcon /> : <ViewIcon />}
-                  </Button>
-                </InputRightElement>
-              </InputGroup>
-            </FormControl>
+              </FormControl>
 
-            <VStack w="100%" align="stretch" spacing={3} pt={2}>
-              <Button type="submit" colorScheme="brand" size="lg" w="100%">
-                Sign in
-              </Button>
-              <Button
-                type="button"
-                variant="outline"
-                size="lg"
-                w="100%"
-                onClick={handleGuestLogin}
-                borderColor="surface.border"
-                color="text.secondary"
-                _hover={{ bg: "surface.muted", color: "text.primary" }}
-              >
-                Continue as guest
-              </Button>
+              <FormControl isRequired>
+                <FormLabel fontSize="sm" fontWeight="600" color="text.secondary">
+                  Password
+                </FormLabel>
+                <InputGroup size="lg">
+                  <Input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="••••••••"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    autoComplete="current-password"
+                    borderRadius="lg"
+                  />
+                  <InputRightElement>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      aria-label={showPassword ? "Hide password" : "Show password"}
+                      onClick={() => setShowPassword((p) => !p)}
+                    >
+                      {showPassword ? <ViewOffIcon /> : <ViewIcon />}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
+              </FormControl>
+
+              <VStack w="100%" align="stretch" spacing={3} pt={2}>
+                <Button type="submit" colorScheme="brand" size="lg" w="100%">
+                  Sign in
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="lg"
+                  w="100%"
+                  onClick={handleGuestLogin}
+                  borderRadius="lg"
+                >
+                  Continue as guest
+                </Button>
+              </VStack>
             </VStack>
-          </VStack>
-        </form>
+          </form>
 
-        <Text mt={8} fontSize="sm" color="text.muted">
-          Don’t have an account?{" "}
-          <Link as={RouterLink} to="/register" color="brand.400" fontWeight="500" _hover={{ textDecoration: "underline" }}>
-            Sign up
-          </Link>
-        </Text>
+          <Text mt={8} fontSize="sm" color="text.muted" textAlign="center">
+            Don’t have an account?{" "}
+            <Link as={RouterLink} to="/register" color="brand.400" fontWeight="600" _hover={{ textDecoration: "underline" }}>
+              Sign up
+            </Link>
+          </Text>
+        </Box>
       </Box>
     </PageLayout>
   );

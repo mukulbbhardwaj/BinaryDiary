@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Box, Spinner, Alert, AlertIcon, AlertTitle, Tooltip } from "@chakra-ui/react";
+import { Box, Spinner, Alert, AlertIcon, AlertTitle, Tooltip, VStack, Text } from "@chakra-ui/react";
 import { ChevronUpIcon } from "@chakra-ui/icons";
 import { Link, useParams } from "react-router-dom";
 import moment from "moment";
@@ -41,9 +41,12 @@ export default function Main() {
   if (loading) {
     return (
       <PageLayout>
-        <Box py={20} display="flex" justifyContent="center">
-          <Spinner size="xl" color="brand.500" />
-        </Box>
+        <VStack py={24} spacing={4}>
+          <Spinner size="xl" color="brand.500" thickness="3px" />
+          <Text color="text.muted" fontSize="sm">
+            Loading post...
+          </Text>
+        </VStack>
       </PageLayout>
     );
   }
@@ -52,7 +55,7 @@ export default function Main() {
     return (
       <PageLayout>
         <Box py={12}>
-          <Alert status="error" borderRadius="lg">
+          <Alert status="error" borderRadius="xl" variant="subtle">
             <AlertIcon />
             <AlertTitle>{error ?? "Post not found"}</AlertTitle>
           </Alert>
@@ -94,9 +97,9 @@ export default function Main() {
             display="flex"
             alignItems="center"
             justifyContent="center"
-            _hover={{ bg: "surface.muted" }}
+            _hover={{ bg: "surface.muted", boxShadow: "card-hover" }}
             boxShadow="lg"
-            transition="all 0.15s"
+            transition="all 0.2s"
           >
             <ChevronUpIcon boxSize={6} />
           </Box>

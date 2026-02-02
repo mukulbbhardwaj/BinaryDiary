@@ -1,9 +1,9 @@
 import { Box, Button, Image, Link } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 import { useAuth } from "../../utils/AuthContext";
+import { useToast } from "@chakra-ui/react";
 import { ID } from "appwrite";
 import { databases, DATABASE_ID, COLLECTION_ID_BLOGS } from "../../api/appwrite";
-import { useToast } from "@chakra-ui/react";
 import Logo from "./Logo";
 import PublishPostModal from "../modals/PublishPostModal";
 import pfp from "../../asset/user.png";
@@ -31,12 +31,18 @@ export default function WriteNavBar({ postBody, postTitle }) {
   return (
     <Box
       as="nav"
+      position="sticky"
+      top={0}
+      zIndex={10}
+      w="100%"
+      py={4}
+      mb={2}
+      bg="surface.bg"
+      borderBottom="1px solid"
+      borderColor="surface.border"
       display="flex"
       alignItems="center"
       justifyContent="space-between"
-      py={6}
-      borderBottom="1px solid"
-      borderColor="surface.border"
     >
       <RouterLink to="/">
         <Logo />
@@ -44,16 +50,14 @@ export default function WriteNavBar({ postBody, postTitle }) {
 
       <Box display="flex" alignItems="center" gap={3}>
         <PublishPostModal postBody={postBody} postTitle={postTitle}>
-          <Button size="sm" colorScheme="brand">
+          <Button size="sm" colorScheme="brand" borderRadius="lg">
             Publish
           </Button>
         </PublishPostModal>
         <Button
           size="sm"
           variant="outline"
-          borderColor="surface.border"
-          color="text.secondary"
-          _hover={{ bg: "surface.muted", color: "text.primary" }}
+          borderRadius="lg"
           onClick={saveToDraft}
         >
           Save draft
@@ -61,10 +65,10 @@ export default function WriteNavBar({ postBody, postTitle }) {
 
         {user ? (
           <Link as={RouterLink} to="/profile" display="inline-flex" alignItems="center" _hover={{ opacity: 0.9 }}>
-            <Image src={pfp} alt="" boxSize={8} borderRadius="full" objectFit="cover" />
+            <Image src={pfp} alt="" boxSize={8} borderRadius="full" objectFit="cover" border="2px solid" borderColor="surface.border" />
           </Link>
         ) : (
-          <Button as={RouterLink} to="/login" size="sm" colorScheme="brand" variant="outline">
+          <Button as={RouterLink} to="/login" size="sm" colorScheme="brand" variant="outline" borderRadius="lg">
             Sign in
           </Button>
         )}

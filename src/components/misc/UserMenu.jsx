@@ -15,15 +15,16 @@ export default function UserMenu() {
         variant="outline"
         borderColor="surface.border"
         color="text.primary"
+        borderRadius="lg"
         _hover={{ bg: "surface.muted" }}
         _active={{ bg: "surface.muted" }}
       />
-      <MenuList bg="surface.card" borderColor="surface.border" color="text.primary" minW="160px">
-        <MenuItem as={RouterLink} to="/profile" bg="transparent" _hover={{ bg: "surface.muted" }}>
+      <MenuList bg="surface.card" borderColor="surface.border" border="1px solid" color="text.primary" minW="180px" borderRadius="xl" py={2} boxShadow="lg">
+        <MenuItem as={RouterLink} to="/profile" bg="transparent" _hover={{ bg: "surface.muted" }} borderRadius="md" fontWeight="500">
           Account
         </MenuItem>
         <MenuDivider borderColor="surface.border" />
-        <MenuItem bg="transparent" _hover={{ bg: "surface.muted" }} onClick={logOutUser}>
+        <MenuItem bg="transparent" _hover={{ bg: "surface.muted" }} onClick={logOutUser} borderRadius="md" fontWeight="500">
           Sign out
         </MenuItem>
       </MenuList>

@@ -29,12 +29,18 @@ export default function EditPostNavBar({ postBody, postTitle, postId }) {
   return (
     <Box
       as="nav"
+      position="sticky"
+      top={0}
+      zIndex={10}
+      w="100%"
+      py={4}
+      mb={2}
+      bg="surface.bg"
+      borderBottom="1px solid"
+      borderColor="surface.border"
       display="flex"
       alignItems="center"
       justifyContent="space-between"
-      py={6}
-      borderBottom="1px solid"
-      borderColor="surface.border"
     >
       <RouterLink to="/">
         <Logo />
@@ -42,27 +48,20 @@ export default function EditPostNavBar({ postBody, postTitle, postId }) {
 
       <Box display="flex" alignItems="center" gap={3}>
         <UpdatePostModal postBody={postBody} postTitle={postTitle} postId={postId}>
-          <Button size="sm" colorScheme="brand">
+          <Button size="sm" colorScheme="brand" borderRadius="lg">
             Publish
           </Button>
         </UpdatePostModal>
-        <Button
-          size="sm"
-          variant="outline"
-          borderColor="surface.border"
-          color="text.secondary"
-          _hover={{ bg: "surface.muted", color: "text.primary" }}
-          onClick={saveToDraft}
-        >
+        <Button size="sm" variant="outline" borderRadius="lg" onClick={saveToDraft}>
           Save draft
         </Button>
 
         {user ? (
           <Link as={RouterLink} to="/profile" display="inline-flex" alignItems="center" _hover={{ opacity: 0.9 }}>
-            <Image src={pfp} alt="" boxSize={8} borderRadius="full" objectFit="cover" />
+            <Image src={pfp} alt="" boxSize={8} borderRadius="full" objectFit="cover" border="2px solid" borderColor="surface.border" />
           </Link>
         ) : (
-          <Button as={RouterLink} to="/login" size="sm" colorScheme="brand" variant="outline">
+          <Button as={RouterLink} to="/login" size="sm" colorScheme="brand" variant="outline" borderRadius="lg">
             Sign in
           </Button>
         )}

@@ -39,17 +39,19 @@ export default function DeletePostModal({ children }) {
       </Box>
       <Modal isOpen={isOpen} onClose={onClose} size="md">
         <ModalOverlay />
-        <ModalContent bg="surface.card" border="1px solid" borderColor="surface.border" color="text.secondary">
-          <ModalHeader color="text.primary">Delete post?</ModalHeader>
+        <ModalContent bg="surface.card" border="1px solid" borderColor="surface.border" borderRadius="2xl" boxShadow="xl">
+          <ModalHeader color="text.primary" fontWeight="600" fontSize="lg">
+            Delete post?
+          </ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
+          <ModalBody color="text.secondary" fontSize="md">
             This action cannot be undone. Your post will be permanently removed.
           </ModalBody>
-          <ModalFooter borderTop="1px solid" borderColor="surface.border" gap={2}>
-            <Button colorScheme="red" onClick={deletePost}>
+          <ModalFooter borderTop="1px solid" borderColor="surface.border" pt={4} gap={3}>
+            <Button colorScheme="red" onClick={deletePost} borderRadius="lg">
               Delete
             </Button>
-            <Button variant="outline" borderColor="surface.border" onClick={onClose}>
+            <Button variant="outline" borderRadius="lg" onClick={onClose}>
               Cancel
             </Button>
           </ModalFooter>

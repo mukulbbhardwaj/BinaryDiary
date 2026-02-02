@@ -1,10 +1,7 @@
 import { Box } from "@chakra-ui/react";
 
-const CONTAINER_MAX = { base: "100%", sm: "360px", md: "720px", lg: "800px" };
+const CONTAINER_MAX = { base: "100%", sm: "min(100% - 2rem, 640px)", md: "min(100% - 3rem, 720px)", lg: "min(100% - 4rem, 800px)" };
 
-/**
- * Consistent page layout: centered container, background, optional padding.
- */
 export function PageLayout({ children, withPadding = true, ...props }) {
   return (
     <Box
@@ -19,7 +16,7 @@ export function PageLayout({ children, withPadding = true, ...props }) {
       <Box
         w={CONTAINER_MAX}
         maxW="100%"
-        px={withPadding ? { base: 4, md: 6 } : 0}
+        px={withPadding ? { base: 4, sm: 6, md: 8 } : 0}
         flex="1"
         display="flex"
         flexDir="column"

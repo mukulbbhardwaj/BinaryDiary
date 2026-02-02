@@ -59,15 +59,19 @@ export default function PublishPostModal({ children, postBody, postTitle }) {
       </Box>
       <Modal isOpen={isOpen} onClose={onClose} size="md">
         <ModalOverlay />
-        <ModalContent bg="surface.card" border="1px solid" borderColor="surface.border" color="text.secondary">
-          <ModalHeader color="text.primary">Publish post?</ModalHeader>
+        <ModalContent bg="surface.card" border="1px solid" borderColor="surface.border" borderRadius="2xl" boxShadow="xl">
+          <ModalHeader color="text.primary" fontWeight="600" fontSize="lg">
+            Publish post?
+          </ModalHeader>
           <ModalCloseButton />
-          <ModalBody>Ready to share this with the world? Your post will be visible to everyone.</ModalBody>
-          <ModalFooter borderTop="1px solid" borderColor="surface.border" gap={2}>
-            <Button colorScheme="brand" onClick={publishPost}>
+          <ModalBody color="text.secondary" fontSize="md">
+            Ready to share this with the world? Your post will be visible to everyone.
+          </ModalBody>
+          <ModalFooter borderTop="1px solid" borderColor="surface.border" pt={4} gap={3}>
+            <Button colorScheme="brand" onClick={publishPost} borderRadius="lg">
               Publish
             </Button>
-            <Button variant="outline" borderColor="surface.border" onClick={onClose}>
+            <Button variant="outline" borderRadius="lg" onClick={onClose}>
               Cancel
             </Button>
           </ModalFooter>

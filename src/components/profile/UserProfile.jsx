@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Box, Button, Text, Spinner, Alert, AlertIcon, AlertTitle } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Box, Button, Text, Spinner, Alert, AlertIcon, AlertTitle, VStack } from "@chakra-ui/react";
+import { Link as RouterLink } from "react-router-dom";
 import moment from "moment";
 import { Query } from "appwrite";
 import { useAuth } from "../../utils/AuthContext";
@@ -62,12 +62,13 @@ export default function UserProfile() {
           <Box
             border="1px solid"
             borderColor="surface.border"
-            borderRadius="xl"
+            borderRadius="2xl"
             p={6}
             mb={8}
             bg="surface.card"
+            boxShadow="card"
           >
-            <Text fontSize="xl" fontWeight="700" color="text.primary">
+            <Text fontSize="xl" fontWeight="700" color="text.primary" letterSpacing="-0.02em">
               {user?.name}
             </Text>
             <Text fontSize="sm" color="text.muted" mt={1}>
@@ -75,7 +76,7 @@ export default function UserProfile() {
             </Text>
           </Box>
 
-          <Text as="h2" fontSize="2xl" fontWeight="600" color="text.primary" mb={4}>
+          <Text as="h2" fontSize="xl" fontWeight="600" color="text.primary" mb={4} letterSpacing="-0.02em">
             Your articles
           </Text>
 
@@ -84,7 +85,7 @@ export default function UserProfile() {
               size="sm"
               variant={activeTab === "published" ? "solid" : "outline"}
               colorScheme="brand"
-              borderColor="surface.border"
+              borderRadius="lg"
               onClick={() => setActiveTab("published")}
             >
               Published
@@ -93,7 +94,7 @@ export default function UserProfile() {
               size="sm"
               variant={activeTab === "drafts" ? "solid" : "outline"}
               colorScheme="brand"
-              borderColor="surface.border"
+              borderRadius="lg"
               onClick={() => setActiveTab("drafts")}
             >
               Drafts
@@ -101,13 +102,16 @@ export default function UserProfile() {
           </Box>
 
           {loading && (
-            <Box py={12} display="flex" justifyContent="center">
-              <Spinner size="lg" color="brand.500" />
-            </Box>
+            <VStack py={16} spacing={4}>
+              <Spinner size="lg" color="brand.500" thickness="3px" />
+              <Text color="text.muted" fontSize="sm">
+                Loading your posts...
+              </Text>
+            </VStack>
           )}
 
           {error && (
-            <Alert status="error" borderRadius="lg" mb={6}>
+            <Alert status="error" borderRadius="xl" mb={6} variant="subtle">
               <AlertIcon />
               <AlertTitle>{error}</AlertTitle>
             </Alert>
@@ -118,18 +122,20 @@ export default function UserProfile() {
               {activeTab === "published" && (
                 <>
                   {userPosts.length === 0 ? (
-                    <Text color="text.muted">No published posts yet.</Text>
+                    <Text color="text.muted" py={8}>
+                      No published posts yet.
+                    </Text>
                   ) : (
                     <Box as="ul" listStyleType="none" m={0} p={0}>
                       {userPosts.map((post) => (
                         <Box as="li" key={post.$id}>
-                          <Link to={`/post/${post.$id}`} style={{ textDecoration: "none" }}>
+                          <RouterLink to={`/post/${post.$id}`} style={{ textDecoration: "none" }}>
                             <BlogListItem
                               title={post.title}
                               date={moment(post.$createdAt).format("DD MMMM, YYYY")}
                               username={post.username}
                             />
-                          </Link>
+                          </RouterLink>
                         </Box>
                       ))}
                     </Box>
@@ -139,18 +145,20 @@ export default function UserProfile() {
               {activeTab === "drafts" && (
                 <>
                   {userDrafts.length === 0 ? (
-                    <Text color="text.muted">No drafts.</Text>
+                    <Text color="text.muted" py={8}>
+                      No drafts.
+                    </Text>
                   ) : (
                     <Box as="ul" listStyleType="none" m={0} p={0}>
                       {userDrafts.map((post) => (
                         <Box as="li" key={post.$id}>
-                          <Link to={`/post/${post.$id}`} style={{ textDecoration: "none" }}>
+                          <RouterLink to={`/post/${post.$id}`} style={{ textDecoration: "none" }}>
                             <BlogListItem
                               title={post.title}
                               date={moment(post.$createdAt).format("DD MMMM, YYYY")}
                               username={post.username}
                             />
-                          </Link>
+                          </RouterLink>
                         </Box>
                       ))}
                     </Box>

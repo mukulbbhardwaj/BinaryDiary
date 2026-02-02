@@ -9,7 +9,6 @@ import {
   ModalFooter,
   ModalBody,
   useDisclosure,
-  Spinner,
 } from "@chakra-ui/react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -24,24 +23,13 @@ export default function Write() {
   const [preview, setPreview] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  if (false) {
-    return (
-      <PageLayout>
-        <Box py={20} display="flex" justifyContent="center">
-          <Spinner size="xl" color="brand.500" />
-        </Box>
-      </PageLayout>
-    );
-  }
-
   return (
     <PageLayout>
       <Box display="flex" flexDir="column" minH="100vh" w="100%" color="text.secondary">
         <WriteNavBar postBody={postBody} postTitle={postTitle} />
 
-        <Box as="main" display="flex" flexDir="column" alignItems="center" w="100%" flex="1">
+        <Box as="main" display="flex" flexDir="column" alignItems="center" w="100%" flex="1" py={6}>
           <Textarea
-            as="h1"
             value={postTitle}
             onChange={(e) => setPostTitle(e.target.value)}
             placeholder="Title..."
@@ -59,39 +47,31 @@ export default function Write() {
             maxW="800px"
             py={4}
             mb={4}
+            letterSpacing="-0.02em"
           />
 
           <Box display="flex" gap={2} mb={6} flexWrap="wrap">
             <Button
               size="sm"
               variant="outline"
-              borderColor="surface.border"
-              color="text.secondary"
-              _hover={{ bg: "surface.muted", color: "text.primary" }}
+              borderRadius="lg"
               onClick={() => setPreview((p) => !p)}
             >
               {preview ? "Edit" : "Preview"}
             </Button>
-            <Button
-              size="sm"
-              variant="outline"
-              borderColor="surface.border"
-              color="text.secondary"
-              _hover={{ bg: "surface.muted", color: "text.primary" }}
-              onClick={onOpen}
-            >
+            <Button size="sm" variant="outline" borderRadius="lg" onClick={onOpen}>
               Info
             </Button>
           </Box>
 
           <Modal isOpen={isOpen} onClose={onClose} size="lg">
             <ModalOverlay />
-            <ModalContent bg="surface.card" borderColor="surface.border" border="1px solid">
+            <ModalContent bg="surface.card" border="1px solid" borderColor="surface.border" borderRadius="2xl">
               <ModalBody py={6} display="flex" justifyContent="center">
                 <Info />
               </ModalBody>
-              <ModalFooter borderTop="1px solid" borderColor="surface.border">
-                <Button colorScheme="brand" onClick={onClose}>
+              <ModalFooter borderTop="1px solid" borderColor="surface.border" pt={4}>
+                <Button colorScheme="brand" onClick={onClose} borderRadius="lg">
                   Close
                 </Button>
               </ModalFooter>
@@ -99,7 +79,7 @@ export default function Write() {
           </Modal>
 
           {preview ? (
-            <Box w="100%" maxW="800px" className="markdown" color="text.secondary" fontSize="lg">
+            <Box w="100%" maxW="800px" className="markdown" color="text.secondary" fontSize="lg" lineHeight="1.75">
               <ReactMarkdown remarkPlugins={[remarkGfm]}>{postBody}</ReactMarkdown>
             </Box>
           ) : (
@@ -117,6 +97,7 @@ export default function Write() {
               w="100%"
               maxW="800px"
               fontFamily="body"
+              lineHeight="1.75"
             />
           )}
         </Box>

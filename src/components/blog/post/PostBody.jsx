@@ -9,15 +9,17 @@ export default function PostBody({ postData }) {
     <Box
       as="article"
       w="100%"
-      py={8}
+      maxW="65ch"
+      mx="auto"
+      py={10}
       color="text.secondary"
       fontSize="lg"
-      lineHeight="tall"
+      lineHeight="1.75"
     >
-      <Box className="markdown" w="100%" maxW="100%">
+      <Box className="markdown" w="100%">
         <ReactMarkdown remarkPlugins={[remarkGfm]}>{body}</ReactMarkdown>
       </Box>
-      <Text textAlign="center" fontSize="4xl" color="text.muted" mt={12} aria-hidden>
+      <Text textAlign="center" fontSize="3xl" color="text.muted" mt={14} aria-hidden>
         · · ·
       </Text>
     </Box>
