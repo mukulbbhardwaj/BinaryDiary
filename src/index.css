@@ -9,6 +9,15 @@
   --bd-text-muted: #9ca3af;
 }
 
+/* Light mode: override CSS variables so markdown and global styles are visible */
+html[data-theme="light"] {
+  --bd-surface: #f5f6f8;
+  --bd-card: #ffffff;
+  --bd-border: #e2e8f0;
+  --bd-text: #1a202c;
+  --bd-text-muted: #4a5568;
+}
+
 *,
 *::before,
 *::after {

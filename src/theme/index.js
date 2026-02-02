@@ -100,11 +100,45 @@ const config = {
   useSystemColorMode: false,
 };
 
+const semanticTokens = {
+  colors: {
+    "surface.bg": {
+      default: "#0f1012",
+      _light: "#f5f6f8",
+    },
+    "surface.card": {
+      default: "#16171b",
+      _light: "#ffffff",
+    },
+    "surface.border": {
+      default: "#25262c",
+      _light: "#e2e8f0",
+    },
+    "surface.muted": {
+      default: "#2b2c33",
+      _light: "#edf2f7",
+    },
+    "text.primary": {
+      default: "#f0f1f3",
+      _light: "#1a202c",
+    },
+    "text.secondary": {
+      default: "#9ca3af",
+      _light: "#4a5568",
+    },
+    "text.muted": {
+      default: "#6b7280",
+      _light: "#718096",
+    },
+  },
+};
+
 export const theme = extendTheme({
   colors,
   fonts,
   styles,
   components,
   config,
+  semanticTokens,
   radii: { lg: "12px", xl: "16px" },
 });

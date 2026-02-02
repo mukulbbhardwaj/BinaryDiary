@@ -1,5 +1,5 @@
-import { Box, Button, Tooltip } from "@chakra-ui/react";
-import { EditIcon } from "@chakra-ui/icons";
+import { Box, Button, IconButton, Tooltip, useColorMode } from "@chakra-ui/react";
+import { EditIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../utils/AuthContext";
 import Logo from "./Logo";
@@ -7,6 +7,7 @@ import UserMenu from "./UserMenu";
 
 export default function NavBar() {
   const { user } = useAuth();
+  const { colorMode, toggleColorMode } = useColorMode();
 
   return (
     <Box
@@ -22,7 +23,20 @@ export default function NavBar() {
         <Logo />
       </Link>
 
-      <Box display="flex" alignItems="center" gap={4}>
+      <Box display="flex" alignItems="center" gap={2}>
+        <Tooltip label={colorMode === "dark" ? "Light mode" : "Dark mode"} hasArrow placement="bottom">
+          <IconButton
+            aria-label={colorMode === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+            icon={colorMode === "dark" ? <SunIcon boxSize={5} /> : <MoonIcon boxSize={5} />}
+            variant="ghost"
+            size="md"
+            borderRadius="lg"
+            color="text.muted"
+            _hover={{ color: "brand.400", bg: "surface.muted" }}
+            onClick={toggleColorMode}
+          />
+        </Tooltip>
+
         <Tooltip label="Write a post" hasArrow placement="bottom">
           <Box as="span">
             <Link to="/write" aria-label="Write your blog">
