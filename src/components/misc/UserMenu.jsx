@@ -1,45 +1,32 @@
-import React from "react";
-import {
-  Menu,
-  MenuItem,
-  MenuList,
-  IconButton,
-  MenuButton,
-  MenuDivider,
-} from "@chakra-ui/react";
+import { Menu, MenuButton, MenuList, MenuItem, MenuDivider, IconButton } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import { useAuth } from "../../utils/AuthContext";
-// import{logoutUser} from '../'
 
-const UserMenu = () => {
+export default function UserMenu() {
   const { logOutUser } = useAuth();
-  return (
-    <>
-      <Menu>
-        <MenuButton
-          as={IconButton}
-          aria-label="Options"
-          icon={<HamburgerIcon color={"white"} />}
-          variant="outline"
-          _hover={{ bgColor: "#2b2c33" }}
-        />
-        <MenuList bgColor={"#1a1b1f"} color={"white"}>
-          <MenuItem bgColor={"#1a1b1f"} _hover={{ bgColor: "#383942" }}>
-            <Link to={"/profile"}>Account</Link>
-          </MenuItem>
-          <MenuDivider />
-          <MenuItem
-            onClick={logOutUser}
-            bgColor={"#1a1b1f"}
-            _hover={{ bgColor: "#383942" }}
-          >
-            LogOut
-          </MenuItem>
-        </MenuList>
-      </Menu>
-    </>
-  );
-};
 
-export default UserMenu;
+  return (
+    <Menu>
+      <MenuButton
+        as={IconButton}
+        aria-label="Account menu"
+        icon={<HamburgerIcon boxSize={5} />}
+        variant="outline"
+        borderColor="surface.border"
+        color="text.primary"
+        _hover={{ bg: "surface.muted" }}
+        _active={{ bg: "surface.muted" }}
+      />
+      <MenuList bg="surface.card" borderColor="surface.border" color="text.primary" minW="160px">
+        <MenuItem as={RouterLink} to="/profile" bg="transparent" _hover={{ bg: "surface.muted" }}>
+          Account
+        </MenuItem>
+        <MenuDivider borderColor="surface.border" />
+        <MenuItem bg="transparent" _hover={{ bg: "surface.muted" }} onClick={logOutUser}>
+          Sign out
+        </MenuItem>
+      </MenuList>
+    </Menu>
+  );
+}

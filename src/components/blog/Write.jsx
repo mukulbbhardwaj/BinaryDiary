@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Box,
-  Text,
   Textarea,
   Button,
   Modal,
@@ -10,161 +9,120 @@ import {
   ModalFooter,
   ModalBody,
   useDisclosure,
+  Spinner,
 } from "@chakra-ui/react";
-
-// import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import WriteNavBar from "../misc/WriteNavBar";
 import Info from "../misc/Info";
-import TagsItem from "../misc/TagsItem";
-import AddTagsModal from "../modals/AddTagsMenu";
-import AddTagsMenu from "../modals/AddTagsMenu";
 import Footer from "../misc/Footer";
+import { PageLayout } from "../layout/PageLayout";
 
-const Write = () => {
+export default function Write() {
   const [postTitle, setPostTitle] = useState("");
-  const [postBody, setPostBody] = useState("Hello");
-  const [loading, setLoading] = useState(false);
+  const [postBody, setPostBody] = useState("");
   const [preview, setPreview] = useState(false);
-
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const addTags = () => {};
-  return loading ? (
-    "loading..."
-  ) : (
-    <>
-      <Box
-        display={"flex"}
-        flexDir={"column"}
-        alignItems={"center"}
-        bgColor={"#1a1b1f"}
-        color={"#838a8f"}
-      >
-        <Box width={{ base: "300px", md: "800px" }}>
-          <WriteNavBar
-            postBody={postBody}
-            postTitle={postTitle}
-            isDraft={false}
+
+  if (false) {
+    return (
+      <PageLayout>
+        <Box py={20} display="flex" justifyContent="center">
+          <Spinner size="xl" color="brand.500" />
+        </Box>
+      </PageLayout>
+    );
+  }
+
+  return (
+    <PageLayout>
+      <Box display="flex" flexDir="column" minH="100vh" w="100%" color="text.secondary">
+        <WriteNavBar postBody={postBody} postTitle={postTitle} />
+
+        <Box as="main" display="flex" flexDir="column" alignItems="center" w="100%" flex="1">
+          <Textarea
+            as="h1"
+            value={postTitle}
+            onChange={(e) => setPostTitle(e.target.value)}
+            placeholder="Title..."
+            fontSize={{ base: "2xl", md: "4xl" }}
+            fontWeight="700"
+            color="text.primary"
+            bg="transparent"
+            border="none"
+            borderBottom="2px solid"
+            borderColor="surface.border"
+            borderRadius={0}
+            resize="none"
+            _focus={{ boxShadow: "none", borderColor: "brand.500" }}
+            w="100%"
+            maxW="800px"
+            py={4}
+            mb={4}
           />
 
-          <Box
-            margin={0}
-            display={"flex"}
-            alignItems={"center"}
-            justifyContent={"center"}
-            flexDir={"column"}
-          >
-            <Textarea
-              type="text"
-              onChange={(e) => setPostTitle(e.target.value)}
-              fontSize={"48px"}
-              fontWeight={"800"}
-              borderBottom={"1px solid red"}
-              color={"#cfbccc"}
-              margin={0}
-              bgColor={"inherit"}
-              outline={0}
-              border={0}
-              placeholder="title..."
-              resize={"none"}
-              fontFamily={"helvetica"}
-              width={{ base: "300px", md: "800px" }}
-            />
-            <Box
-              width={"100%"}
-              display={"flex"}
-              gap={"1rem"}
-              marginBottom={"1rem"}
-              alignItems={"center"}
+          <Box display="flex" gap={2} mb={6} flexWrap="wrap">
+            <Button
+              size="sm"
+              variant="outline"
+              borderColor="surface.border"
+              color="text.secondary"
+              _hover={{ bg: "surface.muted", color: "text.primary" }}
+              onClick={() => setPreview((p) => !p)}
             >
-              {/* <Text>Tags:</Text>
-              <AddTagsMenu /> */}
-            </Box>
-
-            <Box
-              display={"flex"}
-              width={"-moz-max-content"}
-              textAlign={"center"}
-              gap={"4px"}
+              {preview ? "Edit" : "Preview"}
+            </Button>
+            <Button
+              size="sm"
+              variant="outline"
+              borderColor="surface.border"
+              color="text.secondary"
+              _hover={{ bg: "surface.muted", color: "text.primary" }}
+              onClick={onOpen}
             >
-              <Text
-                bgColor={"#1f222b"}
-                onClick={(e) => setPreview(!preview)}
-                cursor={"pointer"}
-                padding={"4px"}
-                borderRadius={"6px"}
-                _hover={{ color: "white" }}
-                border={"1px solid #5c595a"}
-              >
-                {preview ? "edit" : "preview"}
-              </Text>
-              <Text
-                bgColor={"#1f222b"}
-                onClick={onOpen}
-                cursor={"pointer"}
-                padding={"4px"}
-                borderRadius={"6px"}
-                _hover={{ color: "white" }}
-                textAlign={"center"}
-                border={"1px solid #5c595a"}
-              >
-                info
-              </Text>
-
-              <Box>
-                <Modal isOpen={isOpen} onClose={onClose}>
-                  <ModalOverlay />
-                  <ModalContent
-                    display={"flex"}
-                    flexDir={"column"}
-                    alignItems={"center"}
-                    justifyContent={"center"}
-                  >
-                    <ModalBody display={"flex"} justifyContent={"center"}>
-                      <Info />
-                    </ModalBody>
-
-                    <ModalFooter>
-                      <Button colorScheme="blue" mr={3} onClick={onClose}>
-                        Close
-                      </Button>
-                    </ModalFooter>
-                  </ModalContent>
-                </Modal>
-              </Box>
-            </Box>
-            {preview ? (
-              <Box>
-                <ReactMarkdown
-                  className="markdown"
-                  children={postBody}
-                  remarkPlugins={[remarkGfm]}
-                  width={{ base: "300px", md: "800px" }}
-                />
-              </Box>
-            ) : (
-              <Textarea
-                resize={"none"}
-                backgroundColor={"inherit"}
-                color={"#cfbccc"}
-                fontSize={"24px"}
-                fontFamily={"helvetica"}
-                height={"100vh"}
-                border={"none"}
-                outline={"none"}
-                value={postBody}
-                onChange={(e) => setPostBody(e.target.value)}
-                width={{ base: "300px", md: "800px" }}
-                boxShadow={"none"}
-              ></Textarea>
-            )}
+              Info
+            </Button>
           </Box>
+
+          <Modal isOpen={isOpen} onClose={onClose} size="lg">
+            <ModalOverlay />
+            <ModalContent bg="surface.card" borderColor="surface.border" border="1px solid">
+              <ModalBody py={6} display="flex" justifyContent="center">
+                <Info />
+              </ModalBody>
+              <ModalFooter borderTop="1px solid" borderColor="surface.border">
+                <Button colorScheme="brand" onClick={onClose}>
+                  Close
+                </Button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
+
+          {preview ? (
+            <Box w="100%" maxW="800px" className="markdown" color="text.secondary" fontSize="lg">
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>{postBody}</ReactMarkdown>
+            </Box>
+          ) : (
+            <Textarea
+              value={postBody}
+              onChange={(e) => setPostBody(e.target.value)}
+              placeholder="Write your post in Markdown..."
+              resize="none"
+              minH="60vh"
+              bg="transparent"
+              color="text.secondary"
+              fontSize="lg"
+              border="none"
+              _focus={{ boxShadow: "none" }}
+              w="100%"
+              maxW="800px"
+              fontFamily="body"
+            />
+          )}
         </Box>
+
         <Footer />
       </Box>
-    </>
+    </PageLayout>
   );
-};
-
-export default Write;
+}

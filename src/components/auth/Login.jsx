@@ -1,161 +1,137 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
+  Box,
+  Button,
   FormControl,
   FormLabel,
   Input,
-  Box,
-  Text,
-  Image,
-  Button,
-  InputRightElement,
   InputGroup,
+  InputRightElement,
+  Link,
+  Text,
+  VStack,
 } from "@chakra-ui/react";
-import { ViewIcon } from "@chakra-ui/icons";
-import { Link, useNavigate } from "react-router-dom";
-import home from "../../asset/home.png";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../utils/AuthContext";
-const Login = () => {
+import { PageLayout } from "../layout/PageLayout";
+
+export default function Login() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const { user, loginUser,googleLogin } = useAuth();
-  const [show, setShow] = useState(false);
-
-  const showPass = () => {
-    setShow(!show);
-  };
-
-  const guestLogin = async (e) => {
-    const userInfo = {
-      email: "guest@binary.com",
-      password: "binarydiary",
-    };
-    loginUser(userInfo);
-  };
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    const userInfo = { email, password };
-    loginUser(userInfo);
-  };
+  const { user, loginUser } = useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
-    if (user) {
-      navigate("/");
-    }
-  });
+    if (user) navigate("/", { replace: true });
+  }, [user, navigate]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    loginUser({ email, password });
+  };
+
+  const handleGuestLogin = (e) => {
+    e.preventDefault();
+    loginUser({ email: "guest@binary.com", password: "binarydiary" });
+  };
 
   return (
-    <>
-      <Box
-        display={"flex"}
-        alignItems={"left"}
-        flexDir={"column"}
-        justifyContent={"center"}
-        padding={"100px"}
-        bgColor={"#1a1b1f"}
-        color={"white"}
-      >
-        <Link to={"/"}>
-          <Image src={home} width={"24px"} height={"24px"} mt={"1rem"} />
-        </Link>
-        <Text
-          fontSize={{ base: "32px", md: "64px" }}
-          fontWeight={300}
-          color={"gray"}
-        >
-          welcome
-          <Text margin={0}>back :)</Text>
-        </Text>
-        <FormControl>
-          <FormLabel
-            fontSize={{ base: "14px", md: "24px" }}
-            fontWeight={300}
-            marginTop={"1rem"}
+    <PageLayout>
+      <Box as="main" py={{ base: 8, md: 12 }} maxW="400px" mx="auto">
+        <RouterLink to="/">
+          <Text
+            fontSize="sm"
+            color="text.muted"
+            _hover={{ color: "brand.400" }}
+            mb={8}
+            display="inline-block"
           >
-            email
-          </FormLabel>
-          <Input
-            type="email"
-            isRequired
-            onChange={(e) => setEmail(e.target.value)}
-            padding={"20px 0px 20px 10px"}
-            fontSize={{ base: "14px", md: "24px" }}
-            outline={"none"}
-            placeholder="mukul@google.com"
-            border={"1px solid gray"}
-            autoComplete="email"
-            name="email"
-            bgColor={"inherit"}
-            borderRadius={"9px"}
-            width={{ base: "200px", md: "400px" }}
-          />
-        </FormControl>
-        <FormControl>
-          <FormLabel
-            fontSize={{ base: "14px", md: "24px" }}
-            fontWeight={300}
-            marginTop={"1rem"}
-          >
-            password
-          </FormLabel>
-          <InputGroup width={{ base: "200px", md: "400px" }}>
-            <Input
-              type={show ? "text" : "password"}
-              onChange={(e) => setPassword(e.target.value)}
-              padding={"20px 0px 20px 10px"}
-              fontSize={{ base: "14px", md: "24px" }}
-              border={"1px solid gray"}
-              outline={"none"}
-              placeholder="mukul@google.com"
-              autoComplete="email"
-              name="email"
-              bgColor={"inherit"}
-              color={"#9c99bd"}
-              borderRadius={"9px"}
-              width={{ base: "200px", md: "400px" }}
-            />
-            <InputRightElement>
-              <ViewIcon onClick={showPass} color={show ? "white" : "black"} />
-            </InputRightElement>
-          </InputGroup>
-        </FormControl>
-        <Box
-          display={"flex"}
-          alignItems={"center"}
-          gap={"1rem"}
-          margin={"2rem 0 2rem 0"}
-        >
-          <Button onClick={handleLogin}>Login</Button>
-          <Button
-            variant={"outline"}
-            color={"#bfdbba"}
-            _hover={{ color: "#a2b0de" }}
-            onClick={guestLogin}
-          >
-            Guest Login
-          </Button>
-          {/* <Button onClick={handleGoogleLogin}>
-            Login with Google
-          </Button> */}
-          {/* TODO: Add forget password */}
-        </Box>
-
-        <Box
-          position={"relative"}
-          bottom={"1rem"}
-          display={"flex"}
-          gap={"4px"}
-          fontWeight={"200"}
-          alignItems={"center"}
-        >
-          not registered?{" "}
-          <Text color={"white"} _hover={{ color: "gray" }}>
-            <Link to="/register">register</Link>
+            ← Back to home
           </Text>
-        </Box>
-      </Box>
-    </>
-  );
-};
+        </RouterLink>
 
-export default Login;
+        <Text as="h1" fontSize={{ base: "2xl", md: "4xl" }} fontWeight="600" color="text.primary" mb={1}>
+          Welcome back
+        </Text>
+        <Text color="text.muted" mb={8}>
+          Sign in to continue to Binary Diary
+        </Text>
+
+        <form onSubmit={handleSubmit}>
+          <VStack align="stretch" spacing={5}>
+            <FormControl isRequired>
+              <FormLabel fontSize="sm" fontWeight="500" color="text.secondary">
+                Email
+              </FormLabel>
+              <Input
+                type="email"
+                placeholder="you@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                autoComplete="email"
+                bg="surface.card"
+                borderColor="surface.border"
+                _focus={{ borderColor: "brand.500", boxShadow: "0 0 0 1px var(--chakra-colors-brand-500)" }}
+              />
+            </FormControl>
+
+            <FormControl isRequired>
+              <FormLabel fontSize="sm" fontWeight="500" color="text.secondary">
+                Password
+              </FormLabel>
+              <InputGroup>
+                <Input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  autoComplete="current-password"
+                  bg="surface.card"
+                  borderColor="surface.border"
+                  _focus={{ borderColor: "brand.500", boxShadow: "0 0 0 1px var(--chakra-colors-brand-500)" }}
+                />
+                <InputRightElement>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    aria-label={showPassword ? "Hide password" : "Show password"}
+                    onClick={() => setShowPassword((p) => !p)}
+                  >
+                    {showPassword ? <ViewOffIcon /> : <ViewIcon />}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
+            </FormControl>
+
+            <VStack w="100%" align="stretch" spacing={3} pt={2}>
+              <Button type="submit" colorScheme="brand" size="lg" w="100%">
+                Sign in
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                size="lg"
+                w="100%"
+                onClick={handleGuestLogin}
+                borderColor="surface.border"
+                color="text.secondary"
+                _hover={{ bg: "surface.muted", color: "text.primary" }}
+              >
+                Continue as guest
+              </Button>
+            </VStack>
+          </VStack>
+        </form>
+
+        <Text mt={8} fontSize="sm" color="text.muted">
+          Don’t have an account?{" "}
+          <Link as={RouterLink} to="/register" color="brand.400" fontWeight="500" _hover={{ textDecoration: "underline" }}>
+            Sign up
+          </Link>
+        </Text>
+      </Box>
+    </PageLayout>
+  );
+}

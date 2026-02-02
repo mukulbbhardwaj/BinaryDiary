@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   Box,
-  Text,
   Textarea,
   Button,
   Modal,
@@ -10,164 +9,165 @@ import {
   ModalFooter,
   ModalBody,
   useDisclosure,
+  Spinner,
+  Alert,
+  AlertIcon,
+  AlertTitle,
 } from "@chakra-ui/react";
-import {
-  databases,
-  DATABASE_ID,
-  COLLECTION_ID_BLOGS,
-} from "../../api/appwrite";
-// import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { useParams } from "react-router-dom";
+import { databases, DATABASE_ID, COLLECTION_ID_BLOGS } from "../../api/appwrite";
 import EditPostNavBar from "../misc/EditPostNavBar";
-// import WriteNavBar from "../misc/WriteNavBar";
 import Info from "../misc/Info";
-import { useLocation } from "react-router-dom";
 import Footer from "../misc/Footer";
+import { PageLayout } from "../layout/PageLayout";
 
-const Edit = ({}) => {
-  const [loading, setLoading] = useState(false);
+export default function Edit() {
+  const { postId } = useParams();
+  const [postData, setPostData] = useState(null);
+  const [postTitle, setPostTitle] = useState("");
+  const [postBody, setPostBody] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [preview, setPreview] = useState(false);
-  const location = useLocation();
-  const POST_ID = location.pathname.split("/")[2];
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [postData, setPostData] = useState({});
+
   useEffect(() => {
-    getPost();
-  }, []);
-  const getPost = async () => {
-    const res = await databases.getDocument(
-      DATABASE_ID,
-      COLLECTION_ID_BLOGS,
-      POST_ID
+    if (!postId) return;
+    let cancelled = false;
+
+    async function fetchPost() {
+      try {
+        setError(null);
+        const res = await databases.getDocument(DATABASE_ID, COLLECTION_ID_BLOGS, postId);
+        if (!cancelled) {
+          setPostData(res);
+          setPostTitle(res.title ?? "");
+          setPostBody(res.body ?? "");
+        }
+      } catch (err) {
+        if (!cancelled) setError(err?.message ?? "Failed to load post");
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+
+    fetchPost();
+    return () => { cancelled = true; };
+  }, [postId]);
+
+  if (loading) {
+    return (
+      <PageLayout>
+        <Box py={20} display="flex" justifyContent="center">
+          <Spinner size="xl" color="brand.500" />
+        </Box>
+      </PageLayout>
     );
-    setPostData(res);
-  };
-  // console.log(postData);
-  const [postTitle, setPostTitle] = useState(postData.title);
-  const [postBody, setPostBody] = useState(postData.body);
+  }
 
-  return loading ? (
-    "loading..."
-  ) : (
-    <>
-      <Box
-        display={"flex"}
-        flexDir={"column"}
-        alignItems={"center"}
-        bgColor={"#1a1b1f"}
-        color={"#838a8f"}
-      >
-        <Box width={{ base: "300px", md: "800px" }}>
-          <EditPostNavBar postBody={postBody} postTitle={postTitle} />
-          <Box
-            margin={0}
-            display={"flex"}
-            alignItems={"center"}
-            justifyContent={"center"}
-            flexDir={"column"}
-          >
-            <Textarea
-              type="text"
-              onChange={(e) => setPostTitle(e.target.value)}
-              fontSize={"48px"}
-              fontWeight={"800"}
-              borderBottom={"1px solid red"}
-              color={"#cfbccc"}
-              margin={0}
-              bgColor={"inherit"}
-              outline={0}
-              border={0}
-              defaultValue={postData.title}
-              resize={"none"}
-              fontFamily={"helvetica"}
-              width={{ base: "300px", md: "800px" }}
-            />
+  if (error || !postData) {
+    return (
+      <PageLayout>
+        <Box py={12}>
+          <Alert status="error" borderRadius="lg">
+            <AlertIcon />
+            <AlertTitle>{error ?? "Post not found"}</AlertTitle>
+          </Alert>
+        </Box>
+      </PageLayout>
+    );
+  }
 
-            <Box
-              display={"flex"}
-              width={"-moz-max-content"}
-              textAlign={"center"}
-              gap={"4px"}
+  return (
+    <PageLayout>
+      <Box display="flex" flexDir="column" minH="100vh" w="100%" color="text.secondary">
+        <EditPostNavBar postBody={postBody} postTitle={postTitle} postId={postId} />
+
+        <Box as="main" display="flex" flexDir="column" alignItems="center" w="100%" flex="1">
+          <Textarea
+            value={postTitle}
+            onChange={(e) => setPostTitle(e.target.value)}
+            placeholder="Title..."
+            fontSize={{ base: "2xl", md: "4xl" }}
+            fontWeight="700"
+            color="text.primary"
+            bg="transparent"
+            border="none"
+            borderBottom="2px solid"
+            borderColor="surface.border"
+            borderRadius={0}
+            resize="none"
+            _focus={{ boxShadow: "none", borderColor: "brand.500" }}
+            w="100%"
+            maxW="800px"
+            py={4}
+            mb={4}
+          />
+
+          <Box display="flex" gap={2} mb={6} flexWrap="wrap">
+            <Button
+              size="sm"
+              variant="outline"
+              borderColor="surface.border"
+              color="text.secondary"
+              _hover={{ bg: "surface.muted", color: "text.primary" }}
+              onClick={() => setPreview((p) => !p)}
             >
-              <Text
-                bgColor={"#1f222b"}
-                onClick={(e) => setPreview(!preview)}
-                cursor={"pointer"}
-                padding={"4px"}
-                borderRadius={"6px"}
-                _hover={{ color: "white" }}
-                border={"1px solid #5c595a"}
-              >
-                {preview ? "edit" : "preview"}
-              </Text>
-              <Text
-                bgColor={"#1f222b"}
-                onClick={onOpen}
-                cursor={"pointer"}
-                padding={"4px"}
-                borderRadius={"6px"}
-                _hover={{ color: "white" }}
-                textAlign={"center"}
-                border={"1px solid #5c595a"}
-              >
-                info
-              </Text>
+              {preview ? "Edit" : "Preview"}
+            </Button>
+            <Button
+              size="sm"
+              variant="outline"
+              borderColor="surface.border"
+              color="text.secondary"
+              _hover={{ bg: "surface.muted", color: "text.primary" }}
+              onClick={onOpen}
+            >
+              Info
+            </Button>
+          </Box>
 
-              <Box>
-                <Modal isOpen={isOpen} onClose={onClose}>
-                  <ModalOverlay />
-                  <ModalContent
-                    display={"flex"}
-                    flexDir={"column"}
-                    alignItems={"center"}
-                    justifyContent={"center"}
-                  >
-                    <ModalBody display={"flex"} justifyContent={"center"}>
-                      <Info />
-                    </ModalBody>
+          <Modal isOpen={isOpen} onClose={onClose} size="lg">
+            <ModalOverlay />
+            <ModalContent bg="surface.card" borderColor="surface.border" border="1px solid">
+              <ModalBody py={6} display="flex" justifyContent="center">
+                <Info />
+              </ModalBody>
+              <ModalFooter borderTop="1px solid" borderColor="surface.border">
+                <Button colorScheme="brand" onClick={onClose}>
+                  Close
+                </Button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
 
-                    <ModalFooter>
-                      <Button colorScheme="blue" mr={3} onClick={onClose}>
-                        Close
-                      </Button>
-                    </ModalFooter>
-                  </ModalContent>
-                </Modal>
-              </Box>
+          {preview ? (
+            <Box w="100%" maxW="800px" className="markdown" color="text.secondary" fontSize="lg">
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>{postBody}</ReactMarkdown>
             </Box>
-            {preview ? (
-              <Box>
-                <ReactMarkdown
-                  className="markdown"
-                  remarkPlugins={[remarkGfm]}
-                  width={{ base: "300px", md: "800px" }}
-                >
-                  {postBody}
-                </ReactMarkdown>
-              </Box>
-            ) : (
-              <Textarea
-                resize={"none"}
-                backgroundColor={"inherit"}
-                color={"#cfbccc"}
-                fontSize={"24px"}
-                fontFamily={"helvetica"}
-                height={"100vh"}
-                border={"none"}
-                outline={"none"}
-                defaultValue={postData.body}
-                onChange={(e) => setPostBody(e.target.value)}
-                width={{ base: "300px", md: "800px" }}
-                boxShadow={"none"}
-              ></Textarea>
-            )}
-          </Box>
-          </Box>
-          <Footer/>
-      </Box>
-    </>
-  );
-};
+          ) : (
+            <Textarea
+              value={postBody}
+              onChange={(e) => setPostBody(e.target.value)}
+              placeholder="Write your post in Markdown..."
+              resize="none"
+              minH="60vh"
+              bg="transparent"
+              color="text.secondary"
+              fontSize="lg"
+              border="none"
+              _focus={{ boxShadow: "none" }}
+              w="100%"
+              maxW="800px"
+              fontFamily="body"
+            />
+          )}
+        </Box>
 
-export default Edit;
+        <Footer />
+      </Box>
+    </PageLayout>
+  );
+}

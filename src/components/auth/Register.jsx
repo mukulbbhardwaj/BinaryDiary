@@ -1,172 +1,135 @@
-import React, { useState, useEffect } from "react";
-import { ViewIcon } from "@chakra-ui/icons";
+import { useEffect, useState } from "react";
 import {
+  Box,
+  Button,
   FormControl,
   FormLabel,
   Input,
-  Box,
-  Text,
-  Image,
   InputGroup,
   InputRightElement,
-  Button,
+  Link,
+  Text,
+  VStack,
 } from "@chakra-ui/react";
-import { Link, useNavigate } from "react-router-dom";
-import home from "../../asset/home.png";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../utils/AuthContext";
+import { PageLayout } from "../layout/PageLayout";
 
-const Register = () => {
+export default function Register() {
+  const navigate = useNavigate();
+  const { user, registerUser } = useAuth();
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
-  const { registerUser, user } = useAuth();
+  const [showPassword, setShowPassword] = useState(false);
+
   useEffect(() => {
-    if (user) {
-      navigate("/");
-    }
-  });
+    if (user) navigate("/", { replace: true });
+  }, [user, navigate]);
 
-  const [show, setShow] = useState(false);
-
-  const showPass = () => {
-    setShow(!show);
-  };
-
-  const handleRegister = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const userInfo = { email, username, password };
-    registerUser(userInfo);
+    registerUser({ email, username, password });
   };
 
   return (
-    <>
-      <Box
-        display={"flex"}
-        alignItems={"left"}
-        flexDir={"column"}
-        justifyContent={"center"}
-        padding={"100px"}
-        bgColor={"#1a1b1f"}
-        color={"white"}
-      >
-        <Link to={"/"}>
-          <Image src={home} width={"24px"} height={"24px"} mt={"1rem"} />
-        </Link>
-        <Text
-          fontSize={{ base: "32px", md: "64px" }}
-          fontWeight={300}
-          color={"gray"}
-        >
-          new here?
-          <Text margin={0} color={"#c7f2c9"}>
-            register now!
+    <PageLayout>
+      <Box as="main" py={{ base: 8, md: 12 }} maxW="400px" mx="auto">
+        <RouterLink to="/">
+          <Text
+            fontSize="sm"
+            color="text.muted"
+            _hover={{ color: "brand.400" }}
+            mb={8}
+            display="inline-block"
+          >
+            ← Back to home
           </Text>
+        </RouterLink>
+
+        <Text as="h1" fontSize={{ base: "2xl", md: "4xl" }} fontWeight="600" color="text.primary" mb={1}>
+          Create an account
         </Text>
-        <FormControl>
-          <FormLabel
-            fontSize={{ base: "14px", md: "24px" }}
-            fontWeight={300}
-            marginTop={"1rem"}
-          >
-            email
-          </FormLabel>
-          <Input
-            type="email"
-            isRequired
-            onChange={(e) => setEmail(e.target.value)}
-            padding={"20px 0px 20px 10px"}
-            fontSize={{ base: "14px", md: "24px" }}
-            outline={"none"}
-            placeholder="mukul@google.com"
-            border={"1px solid gray"}
-            autoComplete="email"
-            name="email"
-            bgColor={"inherit"}
-            borderRadius={"9px"}
-            width={{ base: "200px", md: "400px" }}
-          />
-        </FormControl>
-        <FormControl>
-          <FormLabel
-            fontSize={{ base: "14px", md: "24px" }}
-            fontWeight={300}
-            marginTop={"1rem"}
-          >
-            username
-          </FormLabel>
-          <Input
-            type="text"
-            isRequired
-            onChange={(e) => setUsername(e.target.value)}
-            padding={"20px 0px 20px 10px"}
-            fontSize={{ base: "14px", md: "24px" }}
-            outline={"none"}
-            placeholder="mukulbhardwaj"
-            border={"1px solid gray"}
-            autoComplete="email"
-            name="email"
-            bgColor={"inherit"}
-            borderRadius={"9px"}
-            width={{ base: "200px", md: "400px" }}
-          />
-        </FormControl>
-        <FormControl>
-          <FormLabel
-            fontSize={{ base: "14px", md: "24px" }}
-            fontWeight={300}
-            marginTop={"1rem"}
-          >
-            password
-          </FormLabel>
+        <Text color="text.muted" mb={8}>
+          Join Binary Diary to write and share your stories
+        </Text>
 
-          <InputGroup width={{ base: "200px", md: "400px" }}>
-            <Input
-              type={show ? "text" : "password"}
-              onChange={(e) => setPassword(e.target.value)}
-              padding={"20px 0px 20px 10px"}
-              fontSize={{ base: "14px", md: "24px" }}
-              border={"1px solid gray"}
-              outline={"none"}
-              placeholder="********"
-              autoComplete="email"
-              name="email"
-              bgColor={"inherit"}
-              color={"#9c99bd"}
-              borderRadius={"9px"}
-              width={{ base: "200px", md: "400px" }}
-            />
-            <InputRightElement>
-              <ViewIcon onClick={showPass} color={show ? "white" : "black"} />
-            </InputRightElement>
-          </InputGroup>
-        </FormControl>
-        <Box
-          display={"flex"}
-          alignItems={"center"}
-          gap={"1rem"}
-          margin={"2rem 0 2rem 0"}
-        >
-          <Button onClick={handleRegister}>register!</Button>
-        </Box>
-        <Box
-          position={"relative"}
-          bottom={"1rem"}
-          display={"flex"}
-          gap={"4px"}
-          fontWeight={"200"}
-          alignItems={"center"}
-        >
-          already registered?{" "}
-          <Text color={"white"} _hover={{ color: "gray" }}>
-            <Link to="/login" style={{ cursor: "pointer" }}>
-              login
-            </Link>
-          </Text>
-        </Box>
+        <form onSubmit={handleSubmit}>
+          <VStack align="stretch" spacing={5}>
+            <FormControl isRequired>
+              <FormLabel fontSize="sm" fontWeight="500" color="text.secondary">
+                Email
+              </FormLabel>
+              <Input
+                type="email"
+                placeholder="you@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                autoComplete="email"
+                bg="surface.card"
+                borderColor="surface.border"
+                _focus={{ borderColor: "brand.500", boxShadow: "0 0 0 1px var(--chakra-colors-brand-500)" }}
+              />
+            </FormControl>
+
+            <FormControl isRequired>
+              <FormLabel fontSize="sm" fontWeight="500" color="text.secondary">
+                Username
+              </FormLabel>
+              <Input
+                type="text"
+                placeholder="yourname"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                autoComplete="username"
+                bg="surface.card"
+                borderColor="surface.border"
+                _focus={{ borderColor: "brand.500", boxShadow: "0 0 0 1px var(--chakra-colors-brand-500)" }}
+              />
+            </FormControl>
+
+            <FormControl isRequired>
+              <FormLabel fontSize="sm" fontWeight="500" color="text.secondary">
+                Password
+              </FormLabel>
+              <InputGroup>
+                <Input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  autoComplete="new-password"
+                  bg="surface.card"
+                  borderColor="surface.border"
+                  _focus={{ borderColor: "brand.500", boxShadow: "0 0 0 1px var(--chakra-colors-brand-500)" }}
+                />
+                <InputRightElement>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    aria-label={showPassword ? "Hide password" : "Show password"}
+                    onClick={() => setShowPassword((p) => !p)}
+                  >
+                    {showPassword ? <ViewOffIcon /> : <ViewIcon />}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
+            </FormControl>
+
+            <Button type="submit" colorScheme="brand" size="lg" w="100%" mt={2}>
+              Sign up
+            </Button>
+          </VStack>
+        </form>
+
+        <Text mt={8} fontSize="sm" color="text.muted">
+          Already have an account?{" "}
+          <Link as={RouterLink} to="/login" color="brand.400" fontWeight="500" _hover={{ textDecoration: "underline" }}>
+            Sign in
+          </Link>
+        </Text>
       </Box>
-    </>
+    </PageLayout>
   );
-};
-
-export default Register;
+}

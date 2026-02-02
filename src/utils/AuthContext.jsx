@@ -1,167 +1,121 @@
-import { useContext, useState, useEffect, createContext } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
+import { useToast } from "@chakra-ui/react";
 import { account } from "../api/appwrite";
 import { ID } from "appwrite";
-import { Spinner, Box, useToast } from "@chakra-ui/react";
+import { Spinner, Box } from "@chakra-ui/react";
 
-const AuthContext = createContext();
+const AuthContext = createContext(null);
 
-export const AuthProvider = ({ children }) => {
+export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState(false);
+  const [user, setUser] = useState(null);
   const toast = useToast();
+
+  const checkUserStatus = async () => {
+    try {
+      const accountDetails = await account.get();
+      setUser(accountDetails);
+    } catch {
+      setUser(null);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     checkUserStatus();
   }, []);
 
-  // const googleLogin = async (e) => {
-  //   e.preventDefault();
-
-  //   try {
-  //     account.createOAuth2Session(
-  //       "google",
-  //       "http://localhost:3000/",
-  //       "http://localhost:3000/login"
-  //     );
-  //     let accountDetails = await account.get();
-  //     console.log("mukul");
-  //     setUser(accountDetails);
-  //     console.log(user);
-  //   } catch (error) {
-  //     console.log(error.message);
-  //   }
-  // };
-
   const loginUser = async (userInfo) => {
     setLoading(true);
     try {
-      if (!userInfo.email || !userInfo.password) {
-        toast({
-          title: "fill password and email",
-          status: "warning",
-          duration: 2000,
-          isClosable: true,
-        });
+      if (!userInfo?.email || !userInfo?.password) {
+        toast({ title: "Please enter email and password", status: "warning", duration: 3000, isClosable: true });
         setLoading(false);
         return;
       }
       if (userInfo.password.length < 8) {
-        toast({
-          title: "password must be atleast 8 characters",
-          status: "warning",
-          duration: 2000,
-          isClosable: true,
-        });
+        toast({ title: "Password must be at least 8 characters", status: "warning", duration: 3000, isClosable: true });
         setLoading(false);
         return;
       }
       await account.createEmailSession(userInfo.email, userInfo.password);
-      let accountDetails = await account.get();
+      const accountDetails = await account.get();
       setUser(accountDetails);
+      toast({ title: "Welcome back!", status: "success", duration: 2000, isClosable: true });
     } catch (error) {
-      // console.error(error);
-      alert("Something went wrong try again");
+      const message = error?.message?.toLowerCase?.().includes("invalid") ? "Invalid email or password" : "Something went wrong. Please try again.";
+      toast({ title: message, status: "error", duration: 4000, isClosable: true });
+    } finally {
       setLoading(false);
     }
+  };
 
-    setLoading(false);
-  };
   const logOutUser = async () => {
-    await account.deleteSession("current");
-    setUser(null);
+    try {
+      await account.deleteSession("current");
+      setUser(null);
+      toast({ title: "Signed out", status: "info", duration: 2000, isClosable: true });
+    } catch {
+      setUser(null);
+    }
   };
+
   const registerUser = async (userInfo) => {
     setLoading(true);
-    // console.log(userInfo)
-    if (!userInfo.email || !userInfo.password || !userInfo.username) {
-      toast({
-        title: "fill all fields",
-        status: "warning",
-        duration: 2000,
-        isClosable: true,
-      });
-      setLoading(false);
-      return;
-    }
-    if (userInfo.password.length < 8) {
-      toast({
-        title: "password must be atleast 8 characters",
-        status: "warning",
-        duration: 2000,
-        isClosable: true,
-      });
-      setLoading(false);
-      return;
-    }
-    if (userInfo.username.length < 6) {
-      toast({
-        title: "username must be atleast 6 characters",
-        status: "warning",
-        duration: 2000,
-        isClosable: true,
-      });
-      setLoading(false);
-      return;
-    }
-
     try {
-      await account.create(
-        ID.unique(),
-        userInfo.email,
-        userInfo.password,
-        userInfo.username
-      );
+      if (!userInfo?.email || !userInfo?.password || !userInfo?.username) {
+        toast({ title: "Please fill all fields", status: "warning", duration: 3000, isClosable: true });
+        setLoading(false);
+        return;
+      }
+      if (userInfo.password.length < 8) {
+        toast({ title: "Password must be at least 8 characters", status: "warning", duration: 3000, isClosable: true });
+        setLoading(false);
+        return;
+      }
+      if (userInfo.username.length < 6) {
+        toast({ title: "Username must be at least 6 characters", status: "warning", duration: 3000, isClosable: true });
+        setLoading(false);
+        return;
+      }
+      await account.create(ID.unique(), userInfo.email, userInfo.password, userInfo.username);
       await account.createEmailSession(userInfo.email, userInfo.password);
-      let accountDetails = await account.get();
+      const accountDetails = await account.get();
       setUser(accountDetails);
+      toast({ title: "Account created. Welcome!", status: "success", duration: 2000, isClosable: true });
     } catch (error) {
-      // console.error(error);
-      alert(error);
+      const msg = error?.message ?? "Registration failed. Please try again.";
+      toast({ title: msg, status: "error", duration: 4000, isClosable: true });
+    } finally {
       setLoading(false);
     }
-    setLoading(false);
   };
-  const checkUserStatus = async () => {
-    try {
-      let accountDetails = await account.get();
-      setUser(accountDetails);
-    } catch (error) {}
 
-    setLoading(false);
-  };
-  const contextdata = {
+  const value = {
     user,
     loginUser,
     logOutUser,
     registerUser,
-    // googleLogin,
   };
+
   return (
-    <AuthContext.Provider value={contextdata}>
+    <AuthContext.Provider value={value}>
       {loading ? (
-        <Box
-          height={"100vh"}
-          bgColor={"black"}
-          display={"flex"}
-          alignItems={"center"}
-          justifyContent={"center"}
-        >
-          <Spinner
-            thickness="4px"
-            speed="0.65s"
-            emptyColor="gray.200"
-            size="xl"
-          />
+        <Box h="100vh" bg="surface.bg" display="flex" alignItems="center" justifyContent="center">
+          <Spinner size="xl" color="brand.500" thickness="3px" />
         </Box>
       ) : (
         children
       )}
     </AuthContext.Provider>
   );
-};
+}
 
-export const useAuth = () => {
-  return useContext(AuthContext);
-};
+export function useAuth() {
+  const ctx = useContext(AuthContext);
+  if (!ctx) throw new Error("useAuth must be used within AuthProvider");
+  return ctx;
+}
 
 export default AuthContext;

@@ -1,33 +1,29 @@
 import { Box, Text } from "@chakra-ui/react";
-import React from "react";
+import { Link } from "react-router-dom";
 
-const Logo = () => {
+export default function Logo() {
   return (
-    <>
+    <Link to="/">
       <Box
-        display={"flex"}
-        alignItems={"center"}
-        justifyContent={"center"}
-        gap={"2px"}
-        fontSize={"20px"}
-        fontWeight={800}
-        padding={"1rem"}
-        border={"0.5px solid #2b2c33"}
-        borderRadius={"1rem"}
-        _hover={{ bgColor: "#2b2c33" }}
+        display="inline-flex"
+        alignItems="center"
+        gap={1}
+        fontSize="lg"
+        fontWeight="700"
+        px={3}
+        py={2}
+        borderRadius="lg"
+        border="1px solid"
+        borderColor="surface.border"
+        color="text.primary"
+        _hover={{ bg: "surface.muted", borderColor: "surface.muted" }}
+        transition="all 0.15s"
       >
-        <Text
-          color={"white"}
-          bgColor={"#89b1c9"}
-          borderRadius={"4px"}
-          padding={"2px"}
-        >
+        <Text as="span" bg="brand.500" color="white" px={1.5} py={0.5} borderRadius="md">
           B
         </Text>
-        <Text color={"#89b1c9"}>D</Text>
+        <Text as="span" color="brand.400">D</Text>
       </Box>
-    </>
+    </Link>
   );
-};
-
-export default Logo;
+}

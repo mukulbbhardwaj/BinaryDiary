@@ -1,36 +1,117 @@
-html{
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap");
 
-background-color:#1a1b1f;
-    color: #838a8f;
+:root {
+  --bd-surface: #0f1012;
+  --bd-card: #16171b;
+  --bd-border: #25262c;
+  --bd-brand: #3da1be;
+  --bd-text: #f0f1f3;
+  --bd-text-muted: #9ca3af;
 }
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background-color: var(--bd-surface);
+  color: var(--bd-text-muted);
+  scroll-behavior: smooth;
+}
+
 body {
-  
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: ui-monospace, "Cascadia Code", "Source Code Pro", monospace;
 }
+
+/* Markdown content (posts) */
+.markdown {
+  line-height: 1.75;
+  max-width: 100%;
+}
+
 .markdown > * {
   all: revert;
 }
 
-.btn{
-  font-size: 18px;
-  font-weight: 400;
-  padding: 4px;
-  border-radius: 9px;
-  box-sizing:content-box;
-  cursor: pointer;
-  color: gray;
-  border: 1px solid white;
-}
-.btn:hover{
-  color: white;
+.markdown h1,
+.markdown h2,
+.markdown h3 {
+  color: var(--bd-text);
+  font-weight: 600;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
 }
 
+.markdown h1 { font-size: 1.75rem; }
+.markdown h2 { font-size: 1.4rem; }
+.markdown h3 { font-size: 1.2rem; }
+
+.markdown p {
+  margin-bottom: 1em;
+}
+
+.markdown ul,
+.markdown ol {
+  margin-bottom: 1em;
+  padding-left: 1.5em;
+}
+
+.markdown pre,
+.markdown code {
+  background: var(--bd-card);
+  border: 1px solid var(--bd-border);
+  border-radius: 8px;
+}
+
+.markdown pre {
+  padding: 1rem;
+  overflow-x: auto;
+  margin-bottom: 1em;
+}
+
+.markdown code {
+  padding: 0.2em 0.4em;
+  font-size: 0.9em;
+}
+
+.markdown pre code {
+  padding: 0;
+  background: transparent;
+  border: none;
+}
+
+.markdown a {
+  color: var(--bd-brand);
+  text-decoration: none;
+}
+
+.markdown a:hover {
+  text-decoration: underline;
+}
+
+.markdown blockquote {
+  border-left: 4px solid var(--bd-border);
+  padding-left: 1em;
+  margin: 1em 0;
+  color: var(--bd-text-muted);
+}
+
+/* Focus visible for accessibility */
+:focus-visible {
+  outline: 2px solid var(--bd-brand);
+  outline-offset: 2px;
+}
+
+/* Transitions for interactive elements */
+button, a, [role="button"] {
+  transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+}

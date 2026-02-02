@@ -1,164 +1,166 @@
-import React, { useEffect, useState } from "react";
-import { Box, Button, Text } from "@chakra-ui/react";
-import BlogListItem from "../blog/BlogListItem";
-import NavBar from "../misc/NavBar";
-import moment from "moment";
-import { useAuth } from "../../utils/AuthContext";
-import {
-  databases,
-  COLLECTION_ID_BLOGS,
-  DATABASE_ID,
-} from "../../api/appwrite";
-import { Query } from "appwrite";
+import { useEffect, useState } from "react";
+import { Box, Button, Text, Spinner, Alert, AlertIcon, AlertTitle } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-const UserProfile = () => {
+import moment from "moment";
+import { Query } from "appwrite";
+import { useAuth } from "../../utils/AuthContext";
+import { databases, DATABASE_ID, COLLECTION_ID_BLOGS } from "../../api/appwrite";
+import NavBar from "../misc/NavBar";
+import BlogListItem from "../blog/BlogListItem";
+import { PageLayout } from "../layout/PageLayout";
+
+export default function UserProfile() {
   const { user } = useAuth();
   const [userPosts, setUserPosts] = useState([]);
   const [userDrafts, setUserDrafts] = useState([]);
-  const [draftBtnState, setDraftBtnState] = useState(false);
-  useEffect(() => {
-    getPublishedPosts();
-    getDraftPosts();
-  }, []);
-  const getPublishedPosts = async () => {
-    const res = await databases.listDocuments(
-      DATABASE_ID,
-      COLLECTION_ID_BLOGS,
-      [
-        Query.equal("username", [user.name]),
-        Query.orderDesc("$createdAt"),
-        Query.equal("isDraft", "false"),
-      ]
-    );
-    setUserPosts(res.documents);
-  };
+  const [activeTab, setActiveTab] = useState("published");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const getDraftPosts = async () => {
-    const res = await databases.listDocuments(
-      DATABASE_ID,
-      COLLECTION_ID_BLOGS,
-      [
-        Query.equal("username", [user.name]),
-        Query.orderDesc("$createdAt"),
-        Query.equal("isDraft", "true"),
-      ]
-    );
-    setUserDrafts(res.documents);
-  };
+  const username = user?.name ?? "";
+
+  useEffect(() => {
+    if (!username) return;
+    let cancelled = false;
+
+    async function fetchPosts() {
+      try {
+        setError(null);
+        const [publishedRes, draftsRes] = await Promise.all([
+          databases.listDocuments(DATABASE_ID, COLLECTION_ID_BLOGS, [
+            Query.equal("username", [username]),
+            Query.orderDesc("$createdAt"),
+            Query.equal("isDraft", "false"),
+          ]),
+          databases.listDocuments(DATABASE_ID, COLLECTION_ID_BLOGS, [
+            Query.equal("username", [username]),
+            Query.orderDesc("$createdAt"),
+            Query.equal("isDraft", "true"),
+          ]),
+        ]);
+        if (!cancelled) {
+          setUserPosts(publishedRes.documents);
+          setUserDrafts(draftsRes.documents);
+        }
+      } catch (err) {
+        if (!cancelled) setError(err?.message ?? "Failed to load posts");
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+
+    fetchPosts();
+    return () => { cancelled = true; };
+  }, [username]);
 
   return (
-    <>
-      <Box
-        display={"flex"}
-        flexDir={"column"}
-        alignItems={"center"}
-        justifyContent={"center"}
-        bgColor={"#1a1b1f"}
-        color={"#838a8f"}
-      >
-        <Box width={{ base: "300px", md: "800px" }}>
-          <NavBar />
+    <PageLayout>
+      <Box display="flex" flexDir="column" minH="100vh" w="100%">
+        <NavBar />
+
+        <Box as="main" py={8}>
           <Box
-            display={"flex"}
-            flexDir={"column"}
-            alignItems={"center"}
-            justifyContent={"center"}
+            border="1px solid"
+            borderColor="surface.border"
+            borderRadius="xl"
+            p={6}
+            mb={8}
+            bg="surface.card"
           >
-            <Box>
-              <Box
-                border={"1px solid #26282e"}
-                padding={"2rem"}
-                borderRadius={"1rem"}
-                margin={{ base: "10px", lg: "100px" }}
-              >
-                <Text fontSize={"24px"} fontWeight={700} color={"#ebc5c3"}>
-                  {user.name}
-                </Text>
-                <Text fontWeight={400} fontSize={"18px"} color={"#b8b1b0"}>
-                  {user.email}
-                </Text>
-              </Box>
-              <Box>
-                <Text
-                  fontSize={{ base: "32px", lg: "48px" }}
-                  fontWeight={"600"}
-                  borderBottom={"1px solid #332c32"}
-                  color={"gray"}
-                  margin={"2rem"}
-                >
-                  Your Articles:
-                </Text>
-
-                <Box
-                  display={"flex"}
-                  justifyContent={"center"}
-                  gap={"4px"}
-                  marginBottom={"8px"}
-                >
-                  <Text
-                    bgColor={"#1f222b"}
-                    cursor={"pointer"}
-                    padding={"4px"}
-                    borderRadius={"6px"}
-                    _hover={{ color: "white" }}
-                    border={"1px solid #5c595a"}
-                    onClick={(e) => setDraftBtnState(false)}
-                  >
-                    Published
-                  </Text>
-                  <Text
-                    bgColor={"#1f222b"}
-                    cursor={"pointer"}
-                    padding={"4px"}
-                    borderRadius={"6px"}
-                    border={"1px solid #5c595a"}
-                    _hover={{ color: "white" }}
-                    onClick={(e) => setDraftBtnState(true)}
-                  >
-                    Drafts
-                  </Text>
-                </Box>
-
-                {draftBtnState ? (
-                  <>
-                    {userDrafts.map((post) => (
-                      <Link
-                        to={`/post/${post.$id}`}
-                        style={{ textDecoration: "none" }}
-                        key={post.$id}
-                      >
-                        <BlogListItem
-                          title={post.title}
-                          date={moment(post.$createdAt).format("DD MMMM,YYYY")}
-                          username={post.name}
-                        />
-                      </Link>
-                    ))}
-                  </>
-                ) : (
-                  <>
-                    {userPosts.map((post) => (
-                      <Link
-                        to={`/post/${post.$id}`}
-                        style={{ textDecoration: "none" }}
-                        key={post.$id}
-                      >
-                        <BlogListItem
-                          title={post.title}
-                          date={moment(post.$createdAt).format("DD MMMM,YYYY")}
-                          username={post.name}
-                        />
-                      </Link>
-                    ))}
-                  </>
-                )}
-              </Box>
-            </Box>
+            <Text fontSize="xl" fontWeight="700" color="text.primary">
+              {user?.name}
+            </Text>
+            <Text fontSize="sm" color="text.muted" mt={1}>
+              {user?.email}
+            </Text>
           </Box>
+
+          <Text as="h2" fontSize="2xl" fontWeight="600" color="text.primary" mb={4}>
+            Your articles
+          </Text>
+
+          <Box display="flex" gap={2} mb={6}>
+            <Button
+              size="sm"
+              variant={activeTab === "published" ? "solid" : "outline"}
+              colorScheme="brand"
+              borderColor="surface.border"
+              onClick={() => setActiveTab("published")}
+            >
+              Published
+            </Button>
+            <Button
+              size="sm"
+              variant={activeTab === "drafts" ? "solid" : "outline"}
+              colorScheme="brand"
+              borderColor="surface.border"
+              onClick={() => setActiveTab("drafts")}
+            >
+              Drafts
+            </Button>
+          </Box>
+
+          {loading && (
+            <Box py={12} display="flex" justifyContent="center">
+              <Spinner size="lg" color="brand.500" />
+            </Box>
+          )}
+
+          {error && (
+            <Alert status="error" borderRadius="lg" mb={6}>
+              <AlertIcon />
+              <AlertTitle>{error}</AlertTitle>
+            </Alert>
+          )}
+
+          {!loading && !error && (
+            <>
+              {activeTab === "published" && (
+                <>
+                  {userPosts.length === 0 ? (
+                    <Text color="text.muted">No published posts yet.</Text>
+                  ) : (
+                    <Box as="ul" listStyleType="none" m={0} p={0}>
+                      {userPosts.map((post) => (
+                        <Box as="li" key={post.$id}>
+                          <Link to={`/post/${post.$id}`} style={{ textDecoration: "none" }}>
+                            <BlogListItem
+                              title={post.title}
+                              date={moment(post.$createdAt).format("DD MMMM, YYYY")}
+                              username={post.username}
+                            />
+                          </Link>
+                        </Box>
+                      ))}
+                    </Box>
+                  )}
+                </>
+              )}
+              {activeTab === "drafts" && (
+                <>
+                  {userDrafts.length === 0 ? (
+                    <Text color="text.muted">No drafts.</Text>
+                  ) : (
+                    <Box as="ul" listStyleType="none" m={0} p={0}>
+                      {userDrafts.map((post) => (
+                        <Box as="li" key={post.$id}>
+                          <Link to={`/post/${post.$id}`} style={{ textDecoration: "none" }}>
+                            <BlogListItem
+                              title={post.title}
+                              date={moment(post.$createdAt).format("DD MMMM, YYYY")}
+                              username={post.username}
+                            />
+                          </Link>
+                        </Box>
+                      ))}
+                    </Box>
+                  )}
+                </>
+              )}
+            </>
+          )}
         </Box>
       </Box>
-    </>
+    </PageLayout>
   );
-};
-
-export default UserProfile;
+}

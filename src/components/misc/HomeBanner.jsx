@@ -1,47 +1,42 @@
 import { Box, Text } from "@chakra-ui/react";
-import React from "react";
-// import banner from "../../asset/big-banner.png";
-const HomeBanner = () => {
-  return (
-    <>
-      <Box
-        display={"flex"}
-        justifyContent={"center"}
-        alignItems={"center"}
-        margin={{base:"10px","lg":"100px"}}
-        flexDir={"column"}
-        border={"0.5px solid #2b2c33"}
-        borderRadius={'1rem'}
-      >
-        <Box
-          display={"flex"}
-          justifyContent={"center"}
-          alignItems={"center"}
-          fontSize={"48px"}
-          margin={"30px"}
-          fontWeight={600}
-          flexDir={"column"}
-          mb={"0px"}
-        >
-          <Text
-            color={"white"}
-            bgColor={"#89b1c9"}
-            padding={"4px"}
-            borderRadius={"9px"}
-            fontFamily={"PT Sans"}
-          >
-            Binary
-          </Text>
-          <Text color={"#89b1c9"}>Diary</Text>
-        </Box>
-        <Box color={"#66747d"} fontSize={"20px"} display={"flex"} gap={"1rem"}>
-          <Text>Read.</Text>
-          <Text>Write.</Text>
-          <Text>Share.</Text>
-        </Box>
-      </Box>
-    </>
-  );
-};
 
-export default HomeBanner;
+export default function HomeBanner() {
+  return (
+    <Box
+      as="section"
+      display="flex"
+      flexDir="column"
+      alignItems="center"
+      justifyContent="center"
+      py={{ base: 10, md: 16 }}
+      my={{ base: 6, md: 10 }}
+      borderRadius="xl"
+      border="1px solid"
+      borderColor="surface.border"
+      bg="surface.card"
+    >
+      <Box display="flex" alignItems="center" gap={2} mb={3}>
+        <Text
+          as="span"
+          color="white"
+          bg="brand.500"
+          px={2}
+          py={1}
+          borderRadius="lg"
+          fontWeight="700"
+          fontSize={{ base: "xl", md: "2xl" }}
+        >
+          Binary
+        </Text>
+        <Text color="brand.400" fontWeight="700" fontSize={{ base: "xl", md: "2xl" }}>
+          Diary
+        </Text>
+      </Box>
+      <Text color="text.muted" fontSize="md" display="flex" gap={2}>
+        <span>Read.</span>
+        <span>Write.</span>
+        <span>Share.</span>
+      </Text>
+    </Box>
+  );
+}

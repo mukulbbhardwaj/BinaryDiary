@@ -1,78 +1,109 @@
-import { Box, Text, Button, Tooltip } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
-import NavBar from "../../misc/NavBar";
-import { Link, useLocation } from "react-router-dom";
-import {
-  databases,
-  DATABASE_ID,
-  COLLECTION_ID_BLOGS,
-} from "../../../api/appwrite";
+import { useEffect, useState } from "react";
+import { Box, Spinner, Alert, AlertIcon, AlertTitle, Tooltip } from "@chakra-ui/react";
+import { ChevronUpIcon } from "@chakra-ui/icons";
+import { Link, useParams } from "react-router-dom";
 import moment from "moment";
-import { ChevronUpIcon, DeleteIcon } from "@chakra-ui/icons";
+import { databases, DATABASE_ID, COLLECTION_ID_BLOGS } from "../../../api/appwrite";
 import { useAuth } from "../../../utils/AuthContext";
-import ShareLinks from "../SharLinks";
-import ReactMarkdown from "react-markdown";
-import DeletePostModal from "../../modals/DeletePostModal";
-import Footer from "../../misc/Footer";
+import NavBar from "../../misc/NavBar";
 import PostHeading from "./PostHeading";
 import PostBody from "./PostBody";
+import Footer from "../../misc/Footer";
+import { PageLayout } from "../../layout/PageLayout";
 
-const Main = () => {
-  const [postData, setPostData] = useState({});
+export default function Main() {
+  const { postId } = useParams();
   const { user } = useAuth();
+  const [postData, setPostData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   useEffect(() => {
-    getPost();
-  }, []);
+    if (!postId) return;
+    let cancelled = false;
 
-  const location = useLocation();
-  const DOCUMENT_ID = location.pathname.split("/")[2];
-  const getPost = async () => {
-    const res = await databases.getDocument(
-      DATABASE_ID,
-      COLLECTION_ID_BLOGS,
-      DOCUMENT_ID
-    );
-    setPostData(res);
-  };
-  const date = moment(postData.$createdAt).format("DD MMMM,YYYY");
-  const isAuthor = user.name === postData.username;
-  return (
-    <>
-      <Box
-        display={"flex"}
-        flexDir={"column"}
-        alignItems={"center"}
-        justifyContent={"center"}
-        bgColor={"#1a1b1f"}
-      >
-        <Box width={{ base: "300px", md: "800px" }}>
-          <Box id="top">
-            <NavBar />
-          </Box>
-          <PostHeading postData={postData} isAuthor={isAuthor} date={date} />
-          <PostBody postData={postData} />
-      
-            <a href="#top">
-              <Box
-                position={"fixed"}
-                bottom={{ base: "2rem", lg: "4rem" }}
-                right={{ base: "2rem", lg: "4rem" }}
-                border={"0.5px solid #2b2c33"}
-                borderRadius={"1rem"}
-                _hover={{ bgColor: "#2b2c33" }}
-            >
-              <Tooltip label={"Go to top"} hasArrow>
-                
-                <ChevronUpIcon fontSize={"48px"} color={"white"} />
-                  </Tooltip>
-              </Box>
-            </a>
+    async function fetchPost() {
+      try {
+        setError(null);
+        const res = await databases.getDocument(DATABASE_ID, COLLECTION_ID_BLOGS, postId);
+        if (!cancelled) setPostData(res);
+      } catch (err) {
+        if (!cancelled) setError(err?.message ?? "Failed to load post");
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
 
+    fetchPost();
+    return () => { cancelled = true; };
+  }, [postId]);
+
+  if (loading) {
+    return (
+      <PageLayout>
+        <Box py={20} display="flex" justifyContent="center">
+          <Spinner size="xl" color="brand.500" />
         </Box>
+      </PageLayout>
+    );
+  }
+
+  if (error || !postData) {
+    return (
+      <PageLayout>
+        <Box py={12}>
+          <Alert status="error" borderRadius="lg">
+            <AlertIcon />
+            <AlertTitle>{error ?? "Post not found"}</AlertTitle>
+          </Alert>
+        </Box>
+      </PageLayout>
+    );
+  }
+
+  const date = moment(postData.$createdAt).format("DD MMMM, YYYY");
+  const isAuthor = user?.name === postData.username;
+
+  return (
+    <PageLayout>
+      <Box id="top" display="flex" flexDir="column" minH="100vh" w="100%">
+        <NavBar />
+        <PostHeading
+          postData={postData}
+          documentId={postData.$id}
+          date={date}
+          isAuthor={isAuthor}
+        />
+        <PostBody postData={postData} />
+
+        <Tooltip label="Back to top" hasArrow placement="left">
+          <Box
+            as={Link}
+            to="#top"
+            aria-label="Go to top"
+            position="fixed"
+            bottom={{ base: 6, lg: 8 }}
+            right={{ base: 6, lg: 8 }}
+            w={12}
+            h={12}
+            borderRadius="full"
+            bg="surface.card"
+            border="1px solid"
+            borderColor="surface.border"
+            color="text.primary"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            _hover={{ bg: "surface.muted" }}
+            boxShadow="lg"
+            transition="all 0.15s"
+          >
+            <ChevronUpIcon boxSize={6} />
+          </Box>
+        </Tooltip>
+
         <Footer />
       </Box>
-    </>
+    </PageLayout>
   );
-};
-
-export default Main;
+}

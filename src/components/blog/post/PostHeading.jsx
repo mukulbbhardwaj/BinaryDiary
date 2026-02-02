@@ -1,54 +1,60 @@
-import React from "react";
-import { DeleteIcon, TimeIcon } from "@chakra-ui/icons";
 import { Box, Text, Button } from "@chakra-ui/react";
-import moment from "moment";
-import { Link, useLocation } from "react-router-dom";
+import { TimeIcon } from "@chakra-ui/icons";
+import { Link } from "react-router-dom";
 import ShareLinks from "../SharLinks";
 import DeletePostModal from "../../modals/DeletePostModal";
-import { useAuth } from "../../../utils/AuthContext";
-const PostHeading = ({ postData, DOCUMENT_ID, date, isAuthor }) => {
+
+export default function PostHeading({ postData, documentId, date, isAuthor }) {
   return (
     <Box
-      border={"0.5px solid #2b2c33"}
-      borderRadius={"1rem"}
-      display={"flex"}
-      flexDir={"column"}
-      color={"#d1d1d1"}
-      justifyContent={"center"}
-      alignItems={"center"}
-      height={"60vh"}
-      margin={"8px"}
+      as="header"
+      border="1px solid"
+      borderColor="surface.border"
+      borderRadius="xl"
+      display="flex"
+      flexDir="column"
+      alignItems="center"
+      justifyContent="center"
+      minH={{ base: "40vh", md: "50vh" }}
+      py={10}
+      px={6}
+      my={4}
+      bg="surface.card"
     >
-      <Text textAlign={"center"} fontSize={{ base: "32px", md: "48px" }}>
+      <Text
+        as="h1"
+        textAlign="center"
+        fontSize={{ base: "2xl", md: "4xl" }}
+        fontWeight="700"
+        color="text.primary"
+        mb={4}
+        lineHeight="tall"
+      >
         {postData.title}
       </Text>
 
-      {/* POST DETAILS */}
-      <Text m={0}>{postData.username}</Text>
-      <Text fontSize={"12px"} m={0}>
-        <TimeIcon /> {date}
-      </Text>
+      <Box display="flex" flexDir="column" alignItems="center" gap={1} color="text.muted" fontSize="sm">
+        <Text>{postData.username}</Text>
+        <Text display="flex" alignItems="center" gap={2}>
+          <TimeIcon /> {date}
+        </Text>
+      </Box>
 
-      {/* OPTIONS  */}
-      <Box display={"flex"} alignItems={"center"} gap={"4px"} margin={"20px"}>
+      <Box display="flex" alignItems="center" gap={3} mt={6} flexWrap="wrap" justifyContent="center">
         <ShareLinks />
-        {isAuthor ? (
-          <Box display={"flex"} gap={"4px"}>
-            <Link to={`/edit/${DOCUMENT_ID}`}>
-              <Button size={"sm"}>edit</Button>
-            </Link>
+        {isAuthor && documentId && (
+          <Box display="flex" gap={2}>
+            <Button as={Link} to={`/edit/${documentId}`} size="sm" colorScheme="brand" variant="outline">
+              Edit
+            </Button>
             <DeletePostModal>
-              <Button size={"sm"}>
-                <DeleteIcon />
+              <Button size="sm" variant="outline" borderColor="red.500" color="red.400" _hover={{ bg: "red.900" }}>
+                Delete
               </Button>
             </DeletePostModal>
           </Box>
-        ) : (
-          ""
         )}
       </Box>
     </Box>
   );
-};
-
-export default PostHeading;
+}

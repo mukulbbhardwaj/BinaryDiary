@@ -1,48 +1,57 @@
-import React from "react";
-import { Box, Button,Tooltip } from "@chakra-ui/react";
+import { Box, Button, Tooltip } from "@chakra-ui/react";
+import { EditIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../utils/AuthContext";
-import { EditIcon } from "@chakra-ui/icons";
 import Logo from "./Logo";
 import UserMenu from "./UserMenu";
 
-const NavBar = () => {
+export default function NavBar() {
   const { user } = useAuth();
-  return (
-    <div>
-      <Box
-        display={"flex"}
-        alignItems={"center"}
-        justifyContent={"space-evenly"}
-        marginTop={"2rem"}
-      >
-        <Link to={"/"}>
-          <Logo/>
-        </Link>
-        <Link to={"/write"} style={{ textDecoration: "none", color: "black" }} aria-label="write your blog">
-          <Box display={"flex"} alignItems={"center"}>
-            <Tooltip label="write" hasArrow>
-              <EditIcon
-                fontWeight={100}
-                fontSize={28}
-                color={"gray"}
-                _hover={{ color: "white" }}
 
-              />
-            </Tooltip>
+  return (
+    <Box
+      as="nav"
+      display="flex"
+      alignItems="center"
+      justifyContent="space-between"
+      py={6}
+      borderBottom="1px solid"
+      borderColor="surface.border"
+    >
+      <Link to="/" aria-label="Binary Diary home">
+        <Logo />
+      </Link>
+
+      <Box display="flex" alignItems="center" gap={4}>
+        <Tooltip label="Write a post" hasArrow placement="bottom">
+          <Box as="span">
+            <Link to="/write" aria-label="Write your blog">
+              <Box
+                as="span"
+                display="inline-flex"
+                alignItems="center"
+                justifyContent="center"
+                w={10}
+                h={10}
+                borderRadius="lg"
+                color="text.muted"
+                _hover={{ color: "brand.400", bg: "surface.muted" }}
+                transition="all 0.15s"
+              >
+                <EditIcon boxSize={5} />
+              </Box>
+            </Link>
           </Box>
-        </Link>
+        </Tooltip>
 
         {user ? (
-       <UserMenu/>
+          <UserMenu />
         ) : (
-          <Link to={"/login"} style={{ textDecoration: "none" }}>
-            <Button>login</Button>
-          </Link>
+          <Button as={Link} to="/login" size="md" colorScheme="brand">
+            Sign in
+          </Button>
         )}
       </Box>
-    </div>
+    </Box>
   );
-};
-
-export default NavBar;
+}

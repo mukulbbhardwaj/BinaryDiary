@@ -2,34 +2,27 @@ import { Button, useToast } from "@chakra-ui/react";
 import { useLocation } from "react-router-dom";
 import { LinkIcon } from "@chakra-ui/icons";
 
-
-const SharLinks = () => {
+export default function SharLinks() {
   const toast = useToast();
   const location = useLocation();
-  const postLink = `https://binarydiary.vercel.app${location.pathname}`;
-  const handleShareClick = () => {
-    navigator.clipboard.writeText(postLink);
-    toast({
-      title: "Link Copied",
-      duration: 1000,
-      position: "top",
-      status: "success",
-      size: "sm",
-      variant: "subtle",
-    });
-  };
-  return (
-    <div>
-      <Button
-        variant="outline"
-        _hover={{ bgColor: "#2b2c33" }}
-        size={"sm"}
-        onClick={handleShareClick}
-      >
-        <LinkIcon color={"white"} />
-      </Button>
-    </div>
-  );
-};
+  const postLink = `${typeof window !== "undefined" ? window.location.origin : ""}${location.pathname}`;
 
-export default SharLinks;
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(postLink);
+    toast({ title: "Link copied", status: "success", duration: 2000, position: "top", isClosable: true });
+  };
+
+  return (
+    <Button
+      variant="outline"
+      size="sm"
+      borderColor="surface.border"
+      color="text.secondary"
+      _hover={{ bg: "surface.muted", color: "text.primary" }}
+      leftIcon={<LinkIcon />}
+      onClick={handleCopyLink}
+    >
+      Copy link
+    </Button>
+  );
+}
